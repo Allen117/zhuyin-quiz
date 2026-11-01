@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168"><g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#ffeec4" stroke="none"/>
+<path d="M40 104 v-10 M18 112 l-8 -6 M62 112 l8 -6 M24 98 l-5 -8 M56 98 l5 -8" stroke="#f08a00" stroke-width="3"/>
+<circle cx="40" cy="132" r="22" fill="#ffb627"/>
+<path d="M0 130 Q50 110 100 132 Q160 112 240 130 L240 168 L0 168Z" fill="#8fd16a"/>
+<path d="M240 104 Q170 106 84 122 L86 130 Q170 118 240 116Z" fill="#8a5a3c"/>
+<path d="M200 108 q6 -14 -6 -24 M170 112 q-2 -12 8 -18" fill="none" stroke="#8a5a3c" stroke-width="3"/>
+<ellipse cx="192" cy="80" rx="9" ry="5" fill="#5aa93e" transform="rotate(-30 192 80)"/><ellipse cx="182" cy="92" rx="9" ry="5" fill="#5aa93e" transform="rotate(30 182 92)"/><ellipse cx="220" cy="100" rx="9" ry="5" fill="#5aa93e" transform="rotate(-20 220 100)"/><ellipse cx="100" cy="128" rx="9" ry="5" fill="#5aa93e" transform="rotate(20 100 128)"/>
+<path d="M128 116 v8 M138 115 v8" stroke="#f08a00" stroke-width="2.5"/>
+<path d="M148 96 l22 -6 l-4 14z" fill="#3f8fd0"/>
+<ellipse cx="134" cy="100" rx="20" ry="16" fill="#5dade2"/>
+<ellipse cx="128" cy="106" rx="11" ry="8" fill="#fff3b0" stroke="none"/>
+<path d="M136 94 q12 -2 16 8 q-10 4 -16 -8z" fill="#3f8fd0"/>
+<circle cx="116" cy="84" r="12" fill="#5dade2"/>
+<circle cx="113" cy="81" r="2" fill="#333" stroke="none"/>
+<circle cx="112" cy="88" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/>
+<path d="M105 81 l-10 1 l9 4z" fill="#ffb627" stroke-width="1.5"/><path d="M105 87 l-9 4 l10 -1z" fill="#ffb627" stroke-width="1.5"/>
+<ellipse cx="80" cy="70" rx="5" ry="4" fill="#e74c3c" transform="rotate(-20 80 70)"/><path d="M84.5 68 v-18 q8 4 6 12" fill="none"/>
+<ellipse cx="50" cy="52" rx="5" ry="4" fill="#a569bd" transform="rotate(-20 50 52)"/><ellipse cx="66" cy="48" rx="5" ry="4" fill="#a569bd" transform="rotate(-20 66 48)"/><path d="M54.5 50 v-16 M70.5 46 v-16" fill="none"/><path d="M54.5 34 L70.5 30 L70.5 35 L54.5 39Z" fill="#333"/>
+<ellipse cx="96" cy="40" rx="5" ry="4" fill="#ff8fab" transform="rotate(-20 96 40)"/><path d="M100.5 38 v-18 q8 4 6 12" fill="none"/>
+</g></svg>

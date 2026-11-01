@@ -79,7 +79,7 @@ window.GEN = (() => {
   const B = window.BANK;
   const SINGLE = B.single.map(([w, z, e, c]) => ({ w, z: [z], e, c }));
   const WORDS = B.words.map(([w, z, e, c]) => ({ w, z: z.split(' '), e, c }));
-  const SENTS = B.sentences.map(([e, text]) => ({ e, text, ...parseSentence(text) }));
+  const SENTS = B.sentences.map(([e, text, scene]) => ({ e, text, scene, ...parseSentence(text) }));
   const TONES = B.toneSentences.map(([e, text]) => ({ e, text, ...parseSentence(text) }));
   const DICT = B.dictation.map(([w, z]) => ({ w, z: z.split(' ') }));
   const PICKS = B.pickWords.map(parsePick);
@@ -104,6 +104,7 @@ window.GEN = (() => {
       [...x.blank, ...x.ctx].forEach(z => syl(x.text, z));
       if (x.groups.length !== 2 || x.groups.some(n => n !== 1)) bad.push(`${x.text}：要有兩組 [ ]，各包住一個字`);
       if (x.blank.some(z => z.includes('˙'))) bad.push(`${x.text}：挖空的字不能是輕聲`);
+      if (!/^scenes\/.+\.svg$/.test(x.scene ?? '')) bad.push(`${x.text}：缺少情境插圖（scenes/….svg）`);
     });
     PICKS.forEach(x => {
       x.syls.forEach(z => syl(x.text, z));
@@ -217,7 +218,7 @@ window.GEN = (() => {
     // 句子和聽寫的限制最多，先抽；排版順序照大題
     const sentence = draw(SENTS, 6, x => ({
       ans: x.blank, shown: x.ctx, emojis: [x.e], weight: weightOf(x.blank),
-      item: { type: 'sentence', emoji: x.e, text: x.text },
+      item: { type: 'sentence', emoji: x.e, scene: x.scene, text: x.text },
     }));
     const toneSentence = draw(TONES, 6, x => {
       const t = x.blank[0].slice(-1);

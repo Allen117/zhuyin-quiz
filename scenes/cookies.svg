@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168"><g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#fff4dc" stroke="none"/>
+<rect x="160" y="14" width="64" height="48" rx="4" fill="#cdeeff"/><line x1="192" y1="14" x2="192" y2="62"/><line x1="160" y1="38" x2="224" y2="38"/>
+<rect x="62" y="82" width="36" height="40" rx="12" fill="#5dade2"/>
+<circle cx="80" cy="66" r="14" fill="#ffd9b8"/><path d="M66 66 A14 14 0 0 1 94 66 Q86 58 66 66Z" fill="#3b2a20"/><path d="M73 67 q2 -2 4 0 M83 67 q2 -2 4 0" fill="none" stroke-width="1.5"/><circle cx="72" cy="72" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/><circle cx="88" cy="72" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/><path d="M76 72 q4 6 8 0z" fill="#c0392b" stroke-width="1.5"/>
+<path d="M94 96 l8 -10" stroke-width="4"/>
+<path d="M107.4 66.3 A12 12 0 1 1 98.6 72 Q103 72 102 69 Q106 70 107.4 66.3Z" fill="#e0a45a"/>
+<g fill="#4a2a14" stroke="none"><circle cx="104" cy="76" r="2"/><circle cx="112" cy="72" r="1.8"/><circle cx="113" cy="82" r="2"/><circle cx="105" cy="85" r="1.8"/></g>
+<circle cx="101" cy="86" r="4.5" fill="#ffd9b8"/>
+<path d="M66 100 l-4 14" stroke-width="4"/>
+<circle cx="96" cy="64" r="1.2" fill="#c98c5a" stroke="none"/><circle cx="99" cy="60" r="1" fill="#c98c5a" stroke="none"/>
+<rect x="0" y="118" width="240" height="50" fill="#c98c5a"/>
+<line x1="0" y1="118" x2="240" y2="118"/>
+<ellipse cx="160" cy="124" rx="42" ry="9" fill="#fff"/>
+<circle cx="142" cy="114" r="12" fill="#e0a45a"/><circle cx="178" cy="114" r="12" fill="#e0a45a"/><circle cx="160" cy="104" r="12" fill="#e0a45a"/>
+<g fill="#4a2a14" stroke="none"><circle cx="138" cy="111" r="2"/><circle cx="146" cy="116" r="2"/><circle cx="141" cy="119" r="1.6"/><circle cx="174" cy="110" r="2"/><circle cx="182" cy="116" r="2"/><circle cx="176" cy="119" r="1.6"/><circle cx="156" cy="100" r="2"/><circle cx="164" cy="104" r="2"/><circle cx="158" cy="109" r="1.6"/><circle cx="165" cy="98" r="1.6"/></g>
+<path d="M206 92 l3 34 h14 l3 -34z" fill="#e3f2fb"/>
+<path d="M207 100 l2 26 h14 l2 -26z" fill="#fff"/>
+<circle cx="120" cy="132" r="1.5" fill="#e0a45a" stroke="none"/><circle cx="110" cy="138" r="1.5" fill="#e0a45a" stroke="none"/>
+</g></svg>
