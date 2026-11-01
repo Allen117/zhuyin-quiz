@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>朗讀練習</title>
+<style>
+  * { box-sizing: border-box; }
+  html { touch-action: manipulation; }
+  body {
+    margin: 0; background: #eee; color: #000;
+    font-family: "DFKai-SB", "BiauKai", "標楷體", "Kaiti TC", serif;
+    font-size: 26px;
+  }
+  .toolbar { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; padding: 10px; background: #333; font-family: system-ui, sans-serif; }
+  .toolbar button { font-size: 20px; padding: 8px 28px; cursor: pointer; border: 0; border-radius: 6px; background: #fff; }
+  main { max-width: 900px; margin: 16px auto; padding: 20px; background: #fff; min-height: calc(100dvh - 100px); }
+  button { white-space: nowrap; cursor: pointer; font-family: inherit; -webkit-tap-highlight-color: transparent; }
+
+  /* 注音：符號直排，聲調在右，輕聲點在上（和 index.html 相同） */
+  .zy { display: inline-flex; align-items: flex-end; vertical-align: middle; line-height: 1; }
+  .zy-col { display: inline-flex; flex-direction: column; align-items: center; }
+  .zy-s { display: block; height: 1em; }
+  .zy-light { display: block; font-size: .6em; height: .7em; line-height: .7em; }
+  .zy-tone { display: inline-block; width: .8em; font-size: .6em; margin-bottom: 1.1em; }
+  .tn { display: block; width: .8em; height: 1em; }
+  .zy-light .tn { width: 1em; height: .7em; }
+  .hz { display: inline-flex; align-items: center; margin: 0 .05em; }
+  .hz .zy { font-size: .5em; margin-left: .1em; }
+  button .hz .zy { font-size: .62em; font-weight: normal; }
+
+  /* 首頁 */
+  .tips { font: 18px/1.6 system-ui, sans-serif; background: #fff8e1; border-radius: 12px; padding: 12px 18px; margin-bottom: 18px; }
+  .tips ol { margin: 4px 0 0; padding-left: 1.3em; }
+  .review { display: block; width: 100%; font-size: 30px; padding: 14px; margin-bottom: 18px; border: 3px solid #e65100; border-radius: 14px; background: #fff3e0; }
+  .day { border: 2px solid #ccc; border-radius: 14px; padding: 12px 16px; margin-bottom: 14px; }
+  .day h2 { margin: 0 0 10px; font: bold 22px system-ui, sans-serif; }
+  .day h2 small { font-weight: normal; color: #666; margin-left: 8px; }
+  .steps { display: flex; flex-wrap: wrap; gap: 10px; }
+  .steps button { font-size: 26px; padding: 10px 18px; border: 2px solid #999; border-radius: 12px; background: #f5f5f5; }
+  .steps button.done { border-color: #2e7d32; background: #e8f5e9; }
+  .steps button.done::after { content: " ✓"; color: #2e7d32; font-family: system-ui, sans-serif; }
+
+  /* 卡片 */
+  .progress { text-align: center; font: 20px system-ui, sans-serif; color: #888; }
+  .card { display: flex; align-items: center; justify-content: center; gap: .25em; min-height: 46dvh; margin: 10px 0 20px; border: 4px solid #1565c0; border-radius: 24px; font-size: clamp(80px, 20vw, 170px); }
+  .card.word { font-size: clamp(64px, 13vw, 120px); }
+  .card.missed { border-color: #e65100; background: #fff3e0; }
+  .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .actions button { font-size: 34px; padding: 16px 28px; border-radius: 16px; border: 3px solid #999; background: #fff; min-width: 180px; }
+  .actions .yes { background: #2e7d32; border-color: #2e7d32; color: #fff; }
+  .actions .no { background: #fff3e0; border-color: #e65100; }
+  .actions .listen { background: #e3f2fd; border-color: #1565c0; }
+
+  /* 短文 */
+  .story-title { text-align: center; font-size: 40px; margin: 0 0 18px; }
+  .story { font-size: clamp(34px, 5.6vw, 48px); }
+  .line { display: flex; flex-wrap: wrap; align-items: center; gap: .1em .3em; padding: .25em .3em; margin-bottom: .35em; border-radius: 12px; }
+  .line.now { background: #e3f2fd; }
+  .w { display: inline-flex; align-items: center; padding: .08em .1em; border-radius: 10px; cursor: pointer; user-select: none; -webkit-user-select: none; }
+  .w.stuck { background: #ffcc80; }
+  .punct { margin: 0 -.15em; }
+  .say-line { font-size: 26px; width: 48px; height: 48px; border-radius: 50%; border: 2px solid #90caf9; background: #fff; padding: 0; margin-left: .2em; font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif; }
+
+  /* 練完 */
+  .summary { text-align: center; }
+  .summary .big { font: bold 40px system-ui, sans-serif; margin: 20px 0; }
+  .summary .missed-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px 30px; font-size: 56px; margin: 20px 0 30px; }
+  .note { font: 18px system-ui, sans-serif; color: #888; text-align: center; margin-top: 16px; }
+</style>
+</head>
+<body>
+<div class="toolbar">
+  <button onclick="location.href = 'index.html'" data-label="← 考(ㄎㄠˇ)卷(ㄐㄩㄢˋ)"></button>
+  <button id="home-btn" data-label="📖 朗(ㄌㄤˇ)讀(ㄉㄨˊ)練(ㄌㄧㄢˋ)習(ㄒㄧˊ)"></button>
+</div>
+<main id="main"></main>
+
+<script src="reading.js"></script>
+<script>
+// ---- 注音排版（和 index.html 相同） ----
+const TONES = 'ˊˇˋ';
+const TONE_PATH = {
+  'ˊ': '<path d="M2.5 8 L5.5 2"/>',
+  'ˇ': '<path d="M1.5 3 L4 7.5 L6.5 3"/>',
+  'ˋ': '<path d="M2.5 2 L5.5 8"/>',
+  '˙': '<circle cx="4" cy="5" r="1.4" fill="currentColor" stroke="none"/>',
+};
+const toneSVG = t => TONE_PATH[t]
+  ? `<svg class="tn" viewBox="0 0 8 10" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">${TONE_PATH[t]}</svg>`
+  : '';
+function zy(z) {
+  const light = z.includes('˙');
+  z = z.replace('˙', '');
+  let tone = '';
+  if (TONES.includes(z.slice(-1))) { tone = z.slice(-1); z = z.slice(0, -1); }
+  const syms = [...z].map(s => `<span class="zy-s">${s}</span>`).join('');
+  return `<span class="zy"><span class="zy-col">${light ? `<span class="zy-light">${toneSVG('˙')}</span>` : ''}${syms}</span><span class="zy-tone">${toneSVG(tone)}</span></span>`;
+}
+const ruby = s => s.replace(/([^()\s])\(([^)]+)\)/g, (_, c, z) => `<span class="hz">${c}${zy(z)}</span>`);
+const zyOnly = s => [...s.matchAll(/([^()\s])\(([^)]+)\)|([^()\s])/g)]
+  .map(m => m[2] ? zy(m[2]) : `<span class="punct">${m[3]}</span>`).join('');
+const plain = s => s.replace(/\([^)]*\)|\s/g, '');
+const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+document.querySelectorAll('[data-label]').forEach(el => { el.innerHTML = ruby(el.dataset.label); });
+
+// ---- 語音：和聽寫一樣用「美佳」、速度 0.7 ----
+function zhVoice() {
+  const vs = speechSynthesis.getVoices().filter(v => /^zh[-_]TW/i.test(v.lang));
+  return vs.find(v => /mei-?jia|美佳/i.test(v.name)) ?? vs[0];
+}
+function utter(text) {
+  const u = new SpeechSynthesisUtterance(text);
+  const v = zhVoice();
+  if (v) u.voice = v;
+  u.lang = 'zh-TW';
+  u.rate = 0.7;
+  return u;
+}
+function say(text) {
+  speechSynthesis.cancel();
+  speechSynthesis.speak(utter(text));
+}
+
+// ---- 紀錄（只存在這台裝置）：stuck 是念不出來的音節／詞 → 次數，done 是練完的段落 ----
+const KEY = 'zhuyin-read-v1';
+function load() {
+  try { return { stuck: {}, done: {}, ...JSON.parse(localStorage.getItem(KEY)) }; } catch { return { stuck: {}, done: {} }; }
+}
+function save(st) { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch {} }
+function markStuck(item) { const st = load(); st.stuck[item] = (st.stuck[item] ?? 0) + 1; save(st); }
+function unStuck(item) { const st = load(); delete st.stuck[item]; save(st); }
+function markDone(key) { const st = load(); st.done[key] = Date.now(); save(st); }
+
+const main = document.getElementById('main');
+const items = s => s.trim().split(/\s+/);
+
+// ---- 首頁 ----
+function home() {
+  speechSynthesis.cancel();
+  main.onclick = null;
+  const st = load();
+  const nStuck = Object.keys(st.stuck).length;
+  const step = (key, label) => `<button data-go="${key}" class="${st.done[key] ? 'done' : ''}">${ruby(label)}</button>`;
+  main.innerHTML = `
+    <div class="tips"><b>給爸媽：</b>每天照 ①→②→③ 練，一次 15 分鐘左右，一天兩三次。
+      <ol>
+        <li>讓孩子<b>先自己念</b>，不要急著幫他，等 3 秒。</li>
+        <li>卡片：念對按「✓ 會」；念錯或要拼很久，按「再練」，會念一次給他聽，請他跟著念。</li>
+        <li>短文：念不出來的詞，點一下就會念給他聽，同時記進「再練」。整句念完可以按句子後面的 🔊 對對看。</li>
+        <li>目標是<b>看到就念出來</b>，不用一個一個符號拼。同一張卡、同一篇短文多念幾次沒關係。</li>
+      </ol>
+    </div>
+    ${nStuck ? `<button class="review" data-go="review">${ruby('🔁 再(ㄗㄞˋ)練(ㄌㄧㄢˋ)')}（${nStuck}）</button>` : ''}
+    ${window.READING.map(d => `
+      <div class="day">
+        <h2>第 ${d.day} 天<small>練 ${d.focus}</small></h2>
+        <div class="steps">
+          ${step(`${d.day}-syl`, '① 音(ㄧㄣ)節(ㄐㄧㄝˊ)')}
+          ${step(`${d.day}-word`, '② 詞(ㄘˊ)語(ㄩˇ)')}
+          ${d.stories.map((s, k) => step(`${d.day}-story${k}`, `③ ${s.title}`)).join('')}
+        </div>
+      </div>`).join('')}`;
+}
+
+main.addEventListener('click', e => {
+  const b = e.target.closest('[data-go]');
+  if (!b) return;
+  const go = b.dataset.go;
+  if (go === 'review') return cards(Object.keys(load().stuck), { review: true });
+  const [day, part] = go.split('-');
+  const d = window.READING.find(x => x.day === Number(day));
+  if (part === 'syl') cards(items(d.syls), { key: go });
+  else if (part === 'word') cards(items(d.words), { key: go });
+  else story(d.stories[Number(part.slice(5))], go);
+});
+document.getElementById('home-btn').onclick = home;
+
+// ---- 卡片：一次一張，念對按 ✓、念不出來按「再練」 ----
+// review：從「再練」清單來的，念對就從清單拿掉
+function cards(list, { key, review = false }) {
+  const deck = shuffle(list);
+  const missed = [];
+  let i = 0;
+  function show() {
+    if (i >= deck.length) return finish();
+    const it = deck[i];
+    main.innerHTML = `
+      <div class="progress">${i + 1} / ${deck.length}</div>
+      <div class="card${[...plain(it)].length > 1 ? ' word' : ''}">${zyOnly(it)}</div>
+      <div class="actions">
+        <button class="listen" data-a="listen">${ruby('🔊 聽(ㄊㄧㄥ)')}</button>
+        <button class="no" data-a="no">${ruby('✗ 再(ㄗㄞˋ)練(ㄌㄧㄢˋ)')}</button>
+        <button class="yes" data-a="yes">${ruby('✓ 會(ㄏㄨㄟˋ)')}</button>
+      </div>`;
+  }
+  function finish() {
+    if (key) markDone(key);
+    main.innerHTML = `
+      <div class="summary">
+        <div class="big">${ruby('會(ㄏㄨㄟˋ)')} ${deck.length - missed.length}　${ruby('再(ㄗㄞˋ)練(ㄌㄧㄢˋ)')} ${missed.length}</div>
+        ${missed.length ? `<div class="missed-list">${missed.map(zyOnly).join('')}</div>` : '<div class="big">🎉</div>'}
+        <div class="actions">
+          ${missed.length ? `<button class="no" data-a="again">${ruby('🔁 再(ㄗㄞˋ)練(ㄌㄧㄢˋ)這(ㄓㄜˋ)些(ㄒㄧㄝ)')}</button>` : ''}
+          <button class="yes" data-a="home">${ruby('回(ㄏㄨㄟˊ)去(ㄑㄩˋ)')}</button>
+        </div>
+      </div>`;
+  }
+  main.onclick = e => {
+    const a = e.target.closest('[data-a]')?.dataset.a;
+    if (!a) return;
+    const it = deck[i];
+    if (a === 'listen') say(plain(it));
+    if (a === 'yes') { if (review) unStuck(it); i++; show(); }
+    // 再練：念一次給他聽，卡片變橘色，按「繼續」才換下一張（讓他跟著念）
+    if (a === 'no') {
+      missed.push(it);
+      markStuck(it);
+      say(plain(it));
+      main.querySelector('.card').classList.add('missed');
+      main.querySelector('.actions').innerHTML = `
+        <button class="listen" data-a="listen">${ruby('🔊 聽(ㄊㄧㄥ)')}</button>
+        <button class="yes" data-a="next">${ruby('→ 繼(ㄐㄧˋ)續(ㄒㄩˋ)')}</button>`;
+    }
+    if (a === 'next') { i++; show(); }
+    if (a === 'again') { main.onclick = null; cards(missed, { review }); }
+    if (a === 'home') { main.onclick = null; home(); }
+  };
+  show();
+}
+
+// ---- 短文：點一個詞就念那個詞（並記進再練），每句後面的 🔊 念整句 ----
+// 詞的切法：空白和標點把句子切開，連在一起的「字(注音)」是同一個詞
+function story(s, key) {
+  const lines = s.text.trim().split('\n').map(l => l.trim());
+  const lineHTML = (l, n) => {
+    const parts = [];
+    let word = '';
+    const flush = () => { if (word) parts.push(`<span class="w" data-w="${word}">${zyOnly(word)}</span>`); word = ''; };
+    for (const m of l.matchAll(/([^()\s])\(([^)]+)\)|(\s+)|([^()\s])/g)) {
+      if (m[1]) word += m[0];
+      else { flush(); if (m[4]) parts.push(`<span class="punct">${m[4]}</span>`); }
+    }
+    flush();
+    return `<div class="line" data-n="${n}">${parts.join('')}<button class="say-line" data-line="${n}">🔊</button></div>`;
+  };
+  main.innerHTML = `
+    <h1 class="story-title">${zyOnly(s.title)}</h1>
+    <div class="story">${lines.map(lineHTML).join('')}</div>
+    <div class="actions" style="margin-top: 24px">
+      <button class="listen" data-a="all">${ruby('🔊 聽(ㄊㄧㄥ)整(ㄓㄥˇ)篇(ㄆㄧㄢ)')}</button>
+      <button class="yes" data-a="done">${ruby('✓ 念(ㄋㄧㄢˋ)完(ㄨㄢˊ)了(˙ㄌㄜ)')}</button>
+    </div>
+    <p class="note">點了的詞會變橘色，記進「再練」。</p>`;
+  const st = load();
+  main.querySelectorAll('.w').forEach(w => { if (st.stuck[w.dataset.w]) w.classList.add('stuck'); });
+
+  const lineEls = [...main.querySelectorAll('.line')];
+  const highlight = n => lineEls.forEach((el, k) => el.classList.toggle('now', k === n));
+  // 一句一句念，念到哪句就把哪句標藍
+  function read(ns) {
+    speechSynthesis.cancel();
+    ns.forEach((n, k) => {
+      const u = utter(plain(lines[n]));
+      u.onstart = () => highlight(n);
+      if (k === ns.length - 1) u.onend = u.onerror = () => highlight(-1);
+      speechSynthesis.speak(u);
+    });
+  }
+  main.onclick = e => {
+    const w = e.target.closest('.w');
+    if (w) {
+      say(plain(w.dataset.w));
+      if (!w.classList.contains('stuck')) { w.classList.add('stuck'); markStuck(w.dataset.w); }
+      return;
+    }
+    const ln = e.target.closest('[data-line]');
+    if (ln) return read([Number(ln.dataset.line)]);
+    const a = e.target.closest('[data-a]')?.dataset.a;
+    if (a === 'all') read(lines.map((_, n) => n));
+    if (a === 'done') { markDone(key); main.onclick = null; home(); }
+  };
+}
+
+home();
+</script>
+</body>
+</html>
