@@ -14,10 +14,13 @@
   }
   .toolbar { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; padding: 10px; background: #333; font-family: system-ui, sans-serif; }
   .toolbar button { font-size: 20px; padding: 8px 28px; cursor: pointer; border: 0; border-radius: 6px; background: #fff; }
+  /* 切到另一頁的按鈕固定在最右上角 */
+  .toolbar { padding-right: 190px; padding-left: 190px; }
+  .toolbar .corner { position: absolute; top: 10px; right: 10px; background: #ffb74d; font-weight: bold; }
   main { max-width: 900px; margin: 16px auto; padding: 20px; background: #fff; min-height: calc(100dvh - 100px); }
   button { white-space: nowrap; cursor: pointer; font-family: inherit; -webkit-tap-highlight-color: transparent; }
 
-  /* 注音：符號直排，聲調在右，輕聲點在上（和 index.html 相同） */
+  /* 注音：符號直排，聲調在右，輕聲點在上（和 exam.html 相同） */
   .zy { display: inline-flex; align-items: flex-end; vertical-align: middle; line-height: 1; }
   .zy-col { display: inline-flex; flex-direction: column; align-items: center; }
   .zy-s { display: block; height: 1em; }
@@ -87,14 +90,14 @@
 </head>
 <body>
 <div class="toolbar">
-  <button onclick="location.href = 'index.html'" data-label="← 考(ㄎㄠˇ)卷(ㄐㄩㄢˋ)"></button>
   <button id="home-btn" data-label="📖 朗(ㄌㄤˇ)讀(ㄉㄨˊ)練(ㄌㄧㄢˋ)習(ㄒㄧˊ)"></button>
+  <button class="corner" onclick="location.href = 'exam.html'" data-label="📝 考(ㄎㄠˇ)卷(ㄐㄩㄢˋ)"></button>
 </div>
 <main id="main"></main>
 
 <script src="reading.js"></script>
 <script>
-// ---- 注音排版（和 index.html 相同） ----
+// ---- 注音排版（和 exam.html 相同） ----
 const TONES = 'ˊˇˋ';
 const TONE_PATH = {
   'ˊ': '<path d="M2.5 8 L5.5 2"/>',
