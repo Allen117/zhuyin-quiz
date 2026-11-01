@@ -2,7 +2,7 @@
 <html lang="zh-Hant-TW">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <title>注音符號測驗</title>
 <style>
   @page { size: A4; margin: 12mm; }
@@ -14,7 +14,7 @@
   }
   .page { width: 210mm; min-height: 297mm; margin: 16px auto; padding: 12mm; background: #fff; }
 
-  .toolbar { position: sticky; top: 0; z-index: 10; display: flex; justify-content: center; gap: 12px; padding: 10px; background: #333; font-family: system-ui, sans-serif; }
+  .toolbar { position: sticky; top: 0; z-index: 10; display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; padding: 10px; background: #333; font-family: system-ui, sans-serif; }
   .toolbar button { font-size: 20px; padding: 8px 28px; cursor: pointer; border: 0; border-radius: 6px; background: #fff; }
   .toolbar .tabs { display: flex; gap: 6px; margin-right: 24px; }
   .toolbar .tabs button { background: #666; color: #fff; }
@@ -107,9 +107,12 @@
   .locked .submit { background: #9e9e9e; }
 
   /* 大視窗（注音鍵盤、成績） */
-  .overlay { position: fixed; inset: 0; z-index: 100; background: rgba(0, 0, 0, .45); display: flex; align-items: center; justify-content: center; }
+  /* 平板：點兩下不會放大（manipulation）；視窗打開時後面的考卷不跟著捲 */
+  html { touch-action: manipulation; }
+  body.pad-open { overflow: hidden; }
+  .overlay { overscroll-behavior: contain; position: fixed; inset: 0; z-index: 100; background: rgba(0, 0, 0, .45); display: flex; align-items: center; justify-content: center; }
   .overlay[hidden] { display: none; }
-  .panel { background: #fff; border-radius: 18px; padding: 20px; width: min(780px, 96vw); max-height: 96vh; overflow: auto; }
+  .panel { background: #fff; border-radius: 18px; padding: 20px; width: min(780px, 96vw); max-height: 96vh; max-height: 96dvh; overflow: auto; overscroll-behavior: contain; }
   .pad-preview { font-size: 76px; height: 3.4em; display: flex; align-items: center; justify-content: center; border: 3px dashed #1565c0; border-radius: 14px; margin-bottom: 14px; color: #1565c0; }
   .pad-keys { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
   .pad-keys button { font: inherit; font-size: 34px; width: 64px; height: 64px; border-radius: 10px; border: 2px solid #999; background: #f5f5f5; cursor: pointer; padding: 0; }
@@ -117,18 +120,24 @@
   .pad-keys.tones button { width: 96px; background: #fff3e0; font-family: system-ui, sans-serif; font-weight: bold; }
   .pad-keys.tones button.on { background: #ffb74d; border-color: #e65100; }
   [hidden] { display: none !important; }
+  /* 按鈕上的注音：比內文的注音大一點，一年級才看得清楚 */
+  button .hz .zy { font-size: .62em; font-weight: normal; }
+  button { white-space: nowrap; }
   /* 先選作答方式 */
   .pad-choose { display: flex; gap: 16px; margin-bottom: 14px; font-family: system-ui, sans-serif; }
   .pad-choose button { flex: 1; font-size: 64px; padding: 24px 10px; border-radius: 16px; border: 3px solid #999; background: #fff; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 8px; }
   .pad-choose button span { font-size: 30px; font-weight: bold; }
   .pad-choose button.last { border-color: #1565c0; background: #e3f2fd; }
   /* 手寫樣板：左邊一直排三格寫符號、右邊長格寫聲調；每格右邊是那格的候選字 */
-  .hw { --c: 120px; display: flex; gap: 14px; }
+  /* 格子邊長 --c 依螢幕高度放大：直拿時扣掉上面的預覽和下面的按鈕 */
+  /* dvh：iPad Safari 的 vh 會算進網址列底下，要用實際看得到的高度，視窗才不會超出畫面要捲動 */
+  .hw { --c: clamp(96px, calc((96vh - 440px) / 3), 170px); --c: clamp(96px, calc((96dvh - 440px) / 3), 170px); display: flex; gap: 14px; }
+  .panel.hw-mode .pad-preview { font-size: 52px; }   /* 手寫時預覽縮小，讓格子大一點 */
   .hw-board { width: calc(var(--c) * 1.6); height: calc(var(--c) * 3); flex: none; border: 3px solid #1565c0; border-radius: 12px; touch-action: none; background: #fff; overflow: hidden; }
   .hw-board canvas { width: 100%; height: 100%; display: block; }
-  .hw-rows { flex: 1; display: flex; flex-direction: column; }
+  .hw-rows { flex: none; width: 328px; display: flex; flex-direction: column; }   /* 固定寬度：候選字出現時手寫板才不會跳動 */
   .hw-row { height: var(--c); display: flex; align-items: center; gap: 8px; }
-  .hw-row button { font: inherit; font-size: 40px; width: 70px; height: 70px; border-radius: 12px; border: 2px solid #999; background: #f5f5f5; cursor: pointer; padding: 0; }
+  .hw-row button { font: inherit; font-size: 44px; width: 76px; height: 76px; border-radius: 12px; border: 2px solid #999; background: #f5f5f5; cursor: pointer; padding: 0; }
   .hw-row button.on { border: 3px solid #1565c0; background: #bbdefb; }
   .hw-bottom { display: flex; align-items: center; gap: 10px; margin: 10px 0 12px; font-family: system-ui, sans-serif; }
   .hw-hint { flex: 1; font-size: 18px; color: #666; }
@@ -138,10 +147,23 @@
   .pad-actions .ok { background: #1565c0; border-color: #1565c0; color: #fff; font-weight: bold; padding: 12px 56px; }
   .result { text-align: center; padding: 20px 10px; }
   .result .score { font-size: 120px; color: #c62828; font-family: system-ui, sans-serif; font-weight: bold; margin: 10px 0 20px; }
-  .result button { font-size: 28px; padding: 12px 60px; border-radius: 12px; border: 0; background: #1565c0; color: #fff; cursor: pointer; }
+  .result button { font-family: system-ui, sans-serif; font-size: 28px; padding: 12px 60px; border-radius: 12px; border: 0; background: #1565c0; color: #fff; cursor: pointer; }
 
   @media (max-width: 840px) { .page { width: auto; margin: 0; } }
-  @media (max-height: 900px) { .pad-preview { font-size: 56px; } .hw { --c: 96px; } }
+  @media (max-height: 900px) { .pad-preview { font-size: 56px; } }
+  /* 橫拿：手寫時預覽和按鈕移到右邊一欄，格子可以用滿整個高度 */
+  @media (orientation: landscape) and (min-width: 900px) {
+    .panel.hw-mode { width: auto; max-width: 98vw; display: grid; grid-template-columns: auto 290px; grid-template-rows: auto auto 1fr auto; column-gap: 20px; }
+    .panel.hw-mode #pad-hw { display: contents; }
+    .panel.hw-mode .hw { --c: clamp(96px, calc((96vh - 50px) / 3), 180px); --c: clamp(96px, calc((96dvh - 50px) / 3), 180px); grid-column: 1; grid-row: 1 / -1; }
+    .panel.hw-mode .pad-preview { grid-column: 2; grid-row: 1; font-size: 60px; }
+    .panel.hw-mode .hw-bottom { grid-column: 2; grid-row: 2; flex-wrap: wrap; margin: 0; }
+    .panel.hw-mode .hw-hint { flex-basis: 100%; font-size: 16px; }
+    .panel.hw-mode .hw-bottom button { flex: 1; font-size: 20px; padding: 10px 6px; }
+    .panel.hw-mode .pad-actions { grid-column: 2; grid-row: 4; flex-wrap: wrap; }
+    .panel.hw-mode .pad-actions button { flex: 1; font-size: 20px; padding: 12px 6px; }
+    .panel.hw-mode .pad-actions .ok { flex-basis: 100%; }
+  }
   @media print {
     body { background: #fff; }
     .page { margin: 0; padding: 0; width: auto; min-height: 0; }
@@ -152,8 +174,10 @@
 <body>
 <div class="toolbar">
   <div class="tabs" id="tabs"></div>
-  <button id="clear">清除作答</button>
-  <button onclick="window.print()">列印</button>
+  <button id="gen" data-label="🎲 出(ㄔㄨ)新(ㄒㄧㄣ)卷(ㄐㄩㄢˋ)"></button>
+  <button id="clear" data-label="清(ㄑㄧㄥ)除(ㄔㄨˊ)作(ㄗㄨㄛˋ)答(ㄉㄚˊ)"></button>
+  <button onclick="window.print()" data-label="列(ㄌㄧㄝˋ)印(ㄧㄣˋ)"></button>
+  <button onclick="location.href = 'report.html'" data-label="📊 紀(ㄐㄧˋ)錄(ㄌㄨˋ)"></button>
 </div>
 <div id="pages"></div>
 
@@ -162,8 +186,8 @@
   <div class="panel">
     <div class="pad-preview" id="pad-preview"></div>
     <div class="pad-choose" id="pad-choose">
-      <button data-mode="keys">⌨<span>鍵盤</span></button>
-      <button data-mode="hw">✍<span>手寫</span></button>
+      <button data-mode="keys">⌨<span data-label="鍵(ㄐㄧㄢˋ)盤(ㄆㄢˊ)"></span></button>
+      <button data-mode="hw">✍<span data-label="手(ㄕㄡˇ)寫(ㄒㄧㄝˇ)"></span></button>
     </div>
     <div id="pad-syms"></div>
     <div id="pad-hw">
@@ -173,16 +197,16 @@
       </div>
       <div class="hw-bottom">
         <div class="hw-hint">由上往下，一格寫一個符號；聲調寫在右邊長格。認錯了就點右邊的字換一個。</div>
-        <button data-hw="undo">↶ 上一筆</button>
-        <button data-hw="clear">🗑 清除</button>
+        <button data-hw="undo" data-label="↶ 上(ㄕㄤˋ)一(ㄧ)筆(ㄅㄧˇ)"></button>
+        <button data-hw="clear" data-label="🗑 清(ㄑㄧㄥ)除(ㄔㄨˊ)"></button>
       </div>
     </div>
     <div class="pad-keys tones" id="pad-tones"></div>
     <div class="pad-actions">
-      <button data-pad="switch" id="pad-switch">↩ 換方式</button>
-      <button data-pad="back" id="pad-back">⌫ 刪除</button>
-      <button data-pad="cancel">取消</button>
-      <button data-pad="ok" class="ok" id="pad-ok">確定</button>
+      <button data-pad="switch" id="pad-switch" data-label="↩ 換(ㄏㄨㄢˋ)方(ㄈㄤ)式(ㄕˋ)"></button>
+      <button data-pad="back" id="pad-back" data-label="⌫ 刪(ㄕㄢ)除(ㄔㄨˊ)"></button>
+      <button data-pad="cancel" data-label="取(ㄑㄩˇ)消(ㄒㄧㄠ)"></button>
+      <button data-pad="ok" class="ok" id="pad-ok" data-label="確(ㄑㄩㄝˋ)定(ㄉㄧㄥˋ)"></button>
     </div>
   </div>
 </div>
@@ -192,7 +216,8 @@
   <div class="panel result">
     <div id="result-title"></div>
     <div class="score" id="result-score"></div>
-    <button id="result-close">好</button>
+    <p id="result-note" style="font: 18px system-ui, sans-serif; color: #888"></p>
+    <button id="result-close" data-label="好(ㄏㄠˇ)"></button>
   </div>
 </div>
 
@@ -202,7 +227,13 @@
 <script src="questions3.js"></script>
 <script src="hw-templates.js"></script>
 <script src="handwriting.js"></script>
+<script src="bank.js"></script>
+<script src="log.js"></script>
+<script src="generator.js"></script>
 <script>
+const FIXED_EXAMS = window.EXAMS.length;
+window.EXAMS.push(...GEN.saved());   // 自動出的試卷（存在這台裝置上），排在固定試卷後面
+
 const TONES = 'ˊˇˋ';
 const CIRCLED = '①②③④⑤⑥';
 
@@ -383,6 +414,48 @@ const fixAnswer = {
 };
 fixAnswer.wordBlank = fixAnswer.sentence = fixAnswer.toneSentence = fixAnswer.dictation = fixAnswer.fill;
 
+// 交卷時記下每一格考什麼、學生寫什麼（log.js 拿來找弱點）
+const pickedOf = (q, it) => it.options[CIRCLED.indexOf(q.querySelector('.opt.picked')?.dataset.n)];
+const READING = Object.fromEntries(BANK.single.map(([, z, e]) => [e, z]));   // 圖 → 讀音
+const partsOf = {
+  choice: (q, it) => [LOG.part(it.answer, pickedOf(q, it))],
+  // 選錯圖：圖在用字庫裡就知道他以為念什麼，不在就記成看不出原因
+  pickPic: (q, it) => {
+    const e = pickedOf(q, it);
+    return [LOG.part(it.zhuyin, !e ? '' : e === it.answer ? it.zhuyin : READING[e] ?? '?')];
+  },
+  // 錯的那題打○：表示他把寫錯的注音當成對的
+  judge: (q, it) => {
+    const said = q.querySelector('.user').textContent;
+    if (it.correct) return [{ ans: it.zhuyin.join(' '), got: said, tested: [], errs: said === '○' ? [] : said ? ['?'] : ['空白'] }];
+    const wrong = it.zhuyin.find(z => z !== it.fix && !LOG.diff(it.fix, z).includes('?')) ?? '?';
+    return [LOG.part(it.fix, { '×': it.fix, '○': wrong }[said])];
+  },
+  match: (q, it) => {
+    const links = q.querySelector('.match')._links ?? new Map();
+    return it.pairs.map(([, z], i) => {
+      const r = links.get(i);
+      return LOG.part(z, r === undefined ? '' : it.pairs[it.right[r]][1]);
+    });
+  },
+  // 多圈了哪個符號，就是把它看成目標符號
+  findSym: (q, it) => {
+    const syms = [...q.querySelectorAll('.sym')];
+    const circled = syms.filter(s => s.classList.contains('circled'));
+    const errs = [...new Set(circled.filter(s => !s.classList.contains('hit')).map(s => `${it.target}→${s.textContent}`))];
+    if (!errs.length && syms.some(s => s.classList.contains('hit') && !s.classList.contains('circled'))) errs.push(circled.length ? '?' : '空白');
+    return [{ ans: it.target, got: circled.map(s => s.textContent).join(''), tested: [it.target], errs }];
+  },
+  fill: q => fillsOf(q).map(b => b.dataset.mode === 'tone'
+    ? LOG.tonePart(b.dataset.base, b.dataset.answer, b.dataset.val)
+    : LOG.part(b.dataset.answer, b.dataset.val)),
+};
+partsOf.wordBlank = partsOf.sentence = partsOf.toneSentence = partsOf.dictation = partsOf.fill;
+const wordOf = it => it.word
+  ?? it.pairs?.map(p => p[2]).join('、')
+  ?? it.text?.replace(/\([^)]*\)|\[|\]/g, '')
+  ?? it.target;
+
 // 每份試卷一個 .page，各自記住題目（page._questions）、作答與交卷狀態（.locked）
 function build(E) {
   const page = document.createElement('div');
@@ -423,7 +496,11 @@ const curPage = () => PAGES.find(p => !p.hidden);
 
 // ---- 切換試卷（網址 ?exam=2 可直接開第 2 份；切換時作答會保留） ----
 const tabs = document.getElementById('tabs');
-tabs.innerHTML = window.EXAMS.map((E, k) => `<button data-k="${k}">${E.name}</button>`).join('');
+// 按鈕上的字都加注音：HTML 裡寫在 data-label（「字(注音)」寫法），試卷名稱查 TAB_ZY
+document.querySelectorAll('[data-label]').forEach(el => { el.innerHTML = ruby(el.dataset.label); });
+const TAB_ZY = { 試: 'ㄕˋ', 新: 'ㄒㄧㄣ', 卷: 'ㄐㄩㄢˋ' };
+const tabLabel = name => ruby(name.replace(/[試新卷]/g, c => `${c}(${TAB_ZY[c]})`));
+tabs.innerHTML = window.EXAMS.map((E, k) => `<button data-k="${k}">${tabLabel(E.name)}</button>`).join('');
 function showExam(k) {
   PAGES.forEach((p, i) => { p.hidden = i !== k; });
   tabs.querySelectorAll('button').forEach((b, i) => b.classList.toggle('on', i === k));
@@ -489,6 +566,7 @@ function padRender() {
   show('pad-switch', step === 'keys' || step === 'hw');
   show('pad-back', step === 'keys' || step === 'tone');
   show('pad-ok', step !== 'choose');
+  pad.querySelector('.panel').classList.toggle('hw-mode', step === 'hw');
   document.querySelectorAll('#pad-choose button').forEach(b => b.classList.toggle('last', b.dataset.mode === padLast));
   const tones = tone ? ['ˊ', 'ˇ', 'ˋ', '˙'] : ['', 'ˊ', 'ˇ', 'ˋ', '˙'];
   document.getElementById('pad-tones').innerHTML = tones.map(t =>
@@ -509,19 +587,29 @@ function padOpen(box) {
     : { syms: p.syms, tone: p.light ? '˙' : p.tone };
   padStep = 'choose';
   pad.hidden = false;
+  document.body.classList.add('pad-open');
   hwClear();
   padRender();
+}
+
+function padClose() {
+  pad.hidden = true;
+  document.body.classList.remove('pad-open');
 }
 
 function padCommit() {
   const val = padBox.dataset.mode === 'tone' ? padCur.tone : (padCur.syms.length ? padValue() : '');
   if (val) padBox.dataset.val = val; else delete padBox.dataset.val;
   padBox.querySelector('.user').innerHTML = padBox.dataset.mode === 'tone' ? toneSVG(val) : (val ? zy(val) : '');
-  pad.hidden = true;
+  padClose();
 }
 
+// iPad Safari 不理 user-scalable=no，兩指縮放要另外擋
+document.addEventListener('gesturestart', e => e.preventDefault());
+document.addEventListener('touchmove', e => { if (e.touches.length > 1) e.preventDefault(); }, { passive: false });
+
 pad.addEventListener('click', e => {
-  if (e.target === pad) { pad.hidden = true; return; }     // 點視窗外面＝取消
+  if (e.target === pad) { padClose(); return; }     // 點視窗外面＝取消
   const b = e.target.closest('button');
   if (!b) return;
   if (b.dataset.mode) {
@@ -536,7 +624,7 @@ pad.addEventListener('click', e => {
     if (st) { hwDirty.add(st.cell); hwRedraw(); hwRecognize(); }
     return;
   }
-  if (b.dataset.pick) { hwPick[b.dataset.cell] = Number(b.dataset.pick); hwApply(); return; }
+  if (b.dataset.pick) { hwPick[b.dataset.cell] = Number(b.dataset.pick); hwRank(); hwApply(); return; }   // 前一格換了，後一格的權重也會變
   if (b.dataset.sym && padCur.syms.length < 3) padCur.syms.push(b.dataset.sym);
   if (b.dataset.tone !== undefined) padCur.tone = b.dataset.tone;
   if (b.dataset.pad === 'back') {
@@ -544,7 +632,7 @@ pad.addEventListener('click', e => {
     else padCur.syms.pop();
   }
   if (b.dataset.pad === 'switch') { padStep = 'choose'; hwClear(); }
-  if (b.dataset.pad === 'cancel') { pad.hidden = true; return; }
+  if (b.dataset.pad === 'cancel') { padClose(); return; }
   if (b.dataset.pad === 'ok') { padCommit(); return; }
   padRender();
 });
@@ -556,7 +644,8 @@ const HW_TONE = 3;                       // 聲調格的編號（0～2 是符號
 const hwCanvas = document.getElementById('hw-canvas');
 const hwCtx = hwCanvas.getContext('2d');
 let hwStrokes = [];                      // [{ pts: [{x, y}...], cell }]
-let hwCands = [[], [], []];              // 每個符號格的候選字
+let hwRaw = [[], [], []];                // 每個符號格、全部 37 個符號的筆跡分數（越小越像，還沒加權）
+let hwCands = [[], [], []];              // 每個符號格的候選字（加權後的前 4 名）
 let hwPick = [0, 0, 0];                  // 每格選了第幾個候選
 const hwDirty = new Set();               // 筆畫有變、要重新辨識的格子
 let hwTimer = null;
@@ -612,6 +701,7 @@ function hwRedraw() {
 // 只清手寫板，不動目前的答案（開視窗、換方式時用）
 function hwClear() {
   hwStrokes = [];
+  hwRaw = [[], [], []];
   hwCands = [[], [], []];
   hwPick = [0, 0, 0];
   hwDirty.clear();
@@ -629,11 +719,38 @@ function hwRecognize() {
   clearTimeout(hwTimer);
   for (const i of hwDirty) {
     if (i === HW_TONE) continue;
-    hwCands[i] = HW.recognize(hwStrokes.filter(s => s.cell === i).map(s => s.pts), 4);
-    hwPick[i] = 0;
+    hwRaw[i] = HW.recognize(hwStrokes.filter(s => s.cell === i).map(s => s.pts), HW.SYMS.length);
+    hwCands[i] = [];               // 重寫的格子不保留之前點選的候選
   }
   hwDirty.clear();
+  hwRank();
   hwApply();
+}
+// 依位置加權：注音一個字是「聲母 → 介音（ㄧㄨㄩ）→ 韻母」，照寫了字的格子排第幾個來判斷
+// 這格可能是哪一類；不可能出現的符號分數乘上倍數（變差），筆跡很像的話還是可以排前面。
+const HW_INIT = 'ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗㄘㄙ';
+const HW_MED = 'ㄧㄨㄩ';
+const HW_ALONE = 'ㄓㄔㄕㄖㄗㄘㄙ';                    // 可以單獨成字的聲母
+const hwRole = s => HW_INIT.includes(s) ? 'I' : HW_MED.includes(s) ? 'M' : 'F';
+function hwWeight(sym, k, n, prev) {
+  const r = hwRole(sym);
+  if (n === 3) return r === 'IMF'[k] ? 1 : 2;                              // 三格都寫：一定是聲母、介音、韻母
+  if (n === 2 && k === 0) return r === 'F' ? 1.4 : 1;                       // 兩格：第一格是聲母或介音
+  if (n === 2) return r === 'I' || (hwRole(prev) === 'M' && r === 'M') ? 1.4 : 1;   // 第二格不會是聲母；介音後面接韻母
+  return r === 'I' && !HW_ALONE.includes(sym) ? 1.2 : 1;                   // 只寫一格
+}
+function hwRank() {
+  const filled = [0, 1, 2].filter(i => hwRaw[i].length);
+  let prev = '';
+  filled.forEach((i, k) => {
+    const was = hwCands[i][hwPick[i]]?.sym;                   // 重排後保留原本點選的那個字
+    hwCands[i] = hwRaw[i]
+      .map(c => ({ sym: c.sym, score: c.score * hwWeight(c.sym, k, filled.length, prev) }))
+      .sort((a, b) => a.score - b.score).slice(0, 4);
+    hwPick[i] = Math.max(0, hwCands[i].findIndex(c => c.sym === was));
+    prev = hwCands[i][hwPick[i]].sym;
+  });
+  for (const i of [0, 1, 2]) if (!hwRaw[i].length) { hwCands[i] = []; hwPick[i] = 0; }
 }
 // 把各格的辨識結果拼成整個字（空的格子跳過）
 function hwApply() {
@@ -662,6 +779,14 @@ function hwEnd() {
   hwTimer = setTimeout(hwRecognize, 400);   // 停筆一下才辨識，寫多筆畫不會被打斷
 }
 hwCanvas.addEventListener('pointerup', hwEnd);
+// 平板轉方向時格子大小會變，畫布要跟著調
+window.addEventListener('resize', () => {
+  if (pad.hidden || padStep !== 'hw' || !hwH) return;
+  const k = hwCanvas.getBoundingClientRect().height / hwH;
+  if (Math.abs(k - 1) < .01) return;
+  for (const st of hwStrokes) st.pts = st.pts.map(p => ({ x: p.x * k, y: p.y * k }));   // 格子等比例縮放，筆跡跟著縮
+  hwFit();
+});
 hwCanvas.addEventListener('pointercancel', hwEnd);
 
 // ---- 聽寫的語音：用裝置內建的台灣中文聲音（iPad 是「美佳」） ----
@@ -726,20 +851,40 @@ function submit(page) {
     const blank = QUESTIONS.filter(x => g(x) && !g(x).answered(x.el, x.it)).length;
     if (blank && !confirm(`還有 ${blank} 題沒有寫，確定要交卷嗎？`)) return;
     let right = 0;
-    for (const { it, el } of QUESTIONS) {
-      if (!g({ it })) continue;
-      if (g({ it }).correct(el, it)) { right++; continue; }
+    const items = [];
+    QUESTIONS.forEach(({ it, el }, k) => {
+      if (!g({ it })) return;
+      const ok = g({ it }).correct(el, it);
+      try {
+        items.push({ n: k + 1, type: it.type, word: wordOf(it), ok, parts: partsOf[it.type](el, it) });
+      } catch (e) { console.warn('記錄第', k + 1, '題失敗', e); }
+      if (ok) { right++; return; }
       el.classList.add('wrong');
       if (fixAnswer[it.type]) el.insertAdjacentHTML('beforeend', `<span class="fix">${fixAnswer[it.type](it, el)}</span>`);
-    }
+    });
     page.querySelector('.score-line').textContent = `${right} / ${QUESTIONS.length}`;
     page.classList.add('locked');
+    const name = window.EXAMS[PAGES.indexOf(page)].name;
+    const saved = LOG.add({ t: Date.now(), exam: name, score: right, total: QUESTIONS.length, items });
+    document.getElementById('result-note').textContent = saved ? '' : '（這台裝置沒辦法存作答紀錄，可能是無痕模式）';
   }
   document.getElementById('result-title').innerHTML = ruby('答(ㄉㄚˊ)對(ㄉㄨㄟˋ)');
   document.getElementById('result-score').textContent = score();
   result.hidden = false;
 }
 document.getElementById('result-close').onclick = () => { result.hidden = true; };
+
+// 自動出一份新卷，存好後重新載入頁面並切到那一份
+document.getElementById('gen').onclick = () => {
+  const full = GEN.saved().length >= GEN.MAX_SAVED;
+  if (!confirm(`要自動出一份新的考卷嗎？\n・有作答紀錄的話，會多考學生常錯的符號\n・還沒交卷的作答會清掉${full ? `\n・自出的試卷最多留 ${GEN.MAX_SAVED} 份，最舊的「${GEN.saved()[0].name}」會被刪掉` : ''}`)) return;
+  try {
+    GEN.create();
+    location.search = `?exam=${FIXED_EXAMS + GEN.saved().length}`;
+  } catch (e) {
+    alert(`出題失敗：${e.message}`);
+  }
+};
 
 // 只清除目前這份試卷
 document.getElementById('clear').onclick = () => {

@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>作答紀錄（老師用）</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #f4f4f4; color: #222; font: 17px/1.6 system-ui, "Microsoft JhengHei", "PingFang TC", sans-serif; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 16px; }
+  header { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+  header h1 { font-size: 26px; margin: 0; flex: 1; }
+  button, .btn { font: inherit; font-size: 16px; padding: 6px 14px; border-radius: 8px; border: 1px solid #bbb; background: #fff; color: #222; cursor: pointer; text-decoration: none; display: inline-block; }
+  button.primary { background: #1565c0; border-color: #1565c0; color: #fff; }
+  button.danger { color: #c62828; border-color: #e0a0a0; }
+  section { background: #fff; border-radius: 12px; padding: 16px 20px; margin-bottom: 14px; }
+  h2 { font-size: 20px; margin: 0 0 4px; }
+  .hint { color: #777; font-size: 15px; margin: 0 0 10px; }
+  .note { background: #fff8e1; border: 1px solid #ffe082; border-radius: 10px; padding: 10px 14px; font-size: 15px; margin-bottom: 14px; }
+  .warn { background: #ffebee; border-color: #ef9a9a; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+  .card { background: #f7f9fc; border-radius: 10px; padding: 10px 14px; }
+  .card b { display: block; font-size: 30px; font-variant-numeric: tabular-nums; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #eee; vertical-align: middle; }
+  th { font-size: 14px; color: #777; font-weight: normal; }
+  .zy { font-family: "DFKai-SB", "BiauKai", "標楷體", "Kaiti TC", serif; font-size: 22px; }
+  .sym { font-family: "DFKai-SB", "BiauKai", "標楷體", "Kaiti TC", serif; font-size: 28px; white-space: nowrap; }
+  .tag { display: inline-block; padding: 1px 10px; border-radius: 99px; font-size: 14px; }
+  .tag.bad { background: #ffcdd2; color: #b71c1c; }
+  .tag.mid { background: #ffe0b2; color: #e65100; }
+  .tag.ok { background: #c8e6c9; color: #1b5e20; }
+  .bar { height: 10px; background: #eee; border-radius: 5px; overflow: hidden; min-width: 80px; }
+  .bar i { display: block; height: 100%; background: #e57373; }
+  .bar.score i { background: #66bb6a; }
+  .wrong { color: #c62828; }
+  .right { color: #2e7d32; }
+  details summary { cursor: pointer; }
+  .attempt-detail { padding: 6px 0 10px 18px; }
+  .empty { color: #999; padding: 10px 0; }
+  .row-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+  .scroll { overflow-x: auto; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>📊 作答紀錄（老師用）</h1>
+    <a class="btn" href="index.html">← 回考卷</a>
+  </header>
+
+  <div class="note">
+    紀錄只存在<b>這台裝置的這個瀏覽器</b>裡。iPad 請用 Safari「分享 → 加入主畫面」開考卷，否則太久沒開，紀錄可能會被系統清掉。記得偶爾按下面的「匯出紀錄」備份。
+  </div>
+  <div id="bank-check"></div>
+
+  <section>
+    <h2>總覽</h2>
+    <div class="cards" id="summary"></div>
+  </section>
+
+  <section>
+    <h2>需要加強的符號</h2>
+    <p class="hint">「目前」看的是最近的表現：錯了會變紅，之後連續答對幾次就會慢慢轉綠。出新卷時，紅色和橘色的符號會多考。</p>
+    <div class="scroll" id="weak"></div>
+  </section>
+
+  <section>
+    <h2>常搞混的組合</h2>
+    <p class="hint">出新卷時，看圖選注音的誘答選項會優先用這些組合。</p>
+    <div class="scroll" id="pairs"></div>
+  </section>
+
+  <section>
+    <h2>各題型答對率</h2>
+    <div class="scroll" id="types"></div>
+  </section>
+
+  <section>
+    <h2>每次交卷</h2>
+    <p class="hint">點一下可以看那次錯了哪些題。</p>
+    <div id="attempts"></div>
+  </section>
+
+  <section>
+    <h2>自動出的試卷</h2>
+    <p class="hint">存在這台裝置上，最多留 <span id="max-saved"></span> 份。想變成固定試卷，就按「下載 .js」，把檔案放進專案，再到 index.html 加一行 &lt;script&gt;。</p>
+    <div class="scroll" id="gen-list"></div>
+    <p><button class="primary" id="gen">🎲 出新卷</button></p>
+  </section>
+
+  <section>
+    <h2>備份</h2>
+    <p class="hint">匯出會下載一個檔案（含作答紀錄和自出試卷）。匯入會合併到這台裝置現有的紀錄，不會覆蓋。</p>
+    <div class="row-actions">
+      <button id="export">⬇ 匯出紀錄</button>
+      <button id="import">⬆ 匯入紀錄</button>
+      <input type="file" id="import-file" accept=".json,application/json" hidden>
+      <button class="danger" id="clear-log">清除全部作答紀錄</button>
+    </div>
+  </section>
+</div>
+
+<script src="questions1.js"></script>
+<script src="questions2.js"></script>
+<script src="questions3.js"></script>
+<script src="bank.js"></script>
+<script src="log.js"></script>
+<script src="generator.js"></script>
+<script>
+const FIXED_EXAMS = window.EXAMS.length;
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+const NAMES = { 'ˉ': '一聲', 'ˊ': '二聲', 'ˇ': '三聲', 'ˋ': '四聲', '˙': '輕聲', '∅': '（沒寫）' };
+const symName = s => NAMES[s] ?? s;
+const TYPE_NAMES = {
+  match: '連連看', findSym: '圈出相同的符號', choice: '看圖選注音', pickPic: '看注音選圖', judge: '對錯判斷',
+  wordBlank: '看圖補注音', sentence: '看圖完成句子', toneSentence: '補聲調', dictation: '聽寫', combine: '拼拼看', blank: '補注音',
+};
+const fmtDate = t => { const d = new Date(t); return `${d.getMonth() + 1}/${d.getDate()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`; };
+const pct = (a, b) => b ? Math.round(a / b * 100) : 0;
+const level = w => w >= 1 ? ['bad', '要加強'] : w >= 0.4 ? ['mid', '注意'] : ['ok', '已進步'];
+function download(name, text, type) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([text], { type }));
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+function render() {
+  const list = LOG.load();
+  const st = LOG.stats(list);
+
+  // 用字庫檢查
+  const bad = GEN.check();
+  $('bank-check').innerHTML = bad.length
+    ? `<div class="note warn"><b>用字庫（bank.js）有 ${bad.length} 個問題：</b><ul>${bad.map(b => `<li>${esc(b)}</li>`).join('')}</ul></div>` : '';
+
+  // 總覽
+  const last = list[list.length - 1];
+  const avg = list.length ? Math.round(list.reduce((a, x) => a + x.score / x.total, 0) / list.length * 100) : 0;
+  const weakCount = Object.values(st.syms).filter(s => s.w >= 1).length;
+  $('summary').innerHTML = [
+    ['交卷次數', list.length],
+    ['最近一次', last ? `${last.score}/${last.total}` : '—'],
+    ['平均答對率', list.length ? `${avg}%` : '—'],
+    ['要加強的符號', weakCount],
+  ].map(([k, v]) => `<div class="card">${k}<b>${v}</b></div>`).join('');
+
+  // 弱點符號
+  const weak = Object.entries(st.syms).filter(([, s]) => s.wrong > 0).sort((a, b) => b[1].w - a[1].w || b[1].wrong - a[1].wrong);
+  $('weak').innerHTML = weak.length ? `<table>
+    <tr><th>符號</th><th>目前</th><th>考過</th><th>錯</th><th>錯誤率</th><th></th><th>最近錯</th></tr>
+    ${weak.map(([s, x]) => {
+      const [cls, txt] = level(x.w);
+      return `<tr><td class="sym">${esc(symName(s))}</td><td><span class="tag ${cls}">${txt}</span></td>
+        <td>${x.n}</td><td>${x.wrong}</td><td>${pct(x.wrong, x.n)}%</td>
+        <td><div class="bar"><i style="width:${pct(x.wrong, x.n)}%"></i></div></td><td>${fmtDate(x.last)}</td></tr>`;
+    }).join('')}</table>` : '<div class="empty">還沒有錯過的符號。</div>';
+
+  // 混淆組合
+  const pairs = Object.values(st.pairs).sort((a, b) => b.n - a.n);
+  $('pairs').innerHTML = pairs.length ? `<table>
+    <tr><th>組合</th><th>次數</th><th>細節</th><th>最近</th></tr>
+    ${pairs.map(p => `<tr><td class="zy">${esc(symName(p.pair[0]))} ↔ ${esc(symName(p.pair[1]))}</td><td>${p.n}</td>
+      <td>${Object.entries(p.dirs).map(([d, n]) => { const [a, b] = d.split('→'); return `該寫 <span class="zy">${esc(symName(a))}</span> 寫成 <span class="zy">${esc(symName(b))}</span>：${n} 次`; }).join('<br>')}</td>
+      <td>${fmtDate(p.last)}</td></tr>`).join('')}</table>` : '<div class="empty">還沒有紀錄。</div>';
+
+  // 題型
+  const types = Object.entries(st.types);
+  $('types').innerHTML = types.length ? `<table>
+    <tr><th>題型</th><th>答對 / 題數</th><th>答對率</th><th></th></tr>
+    ${types.sort((a, b) => a[1].ok / a[1].n - b[1].ok / b[1].n).map(([t, x]) => `<tr><td>${TYPE_NAMES[t] ?? t}</td><td>${x.ok} / ${x.n}</td><td>${pct(x.ok, x.n)}%</td>
+      <td><div class="bar score"><i style="width:${pct(x.ok, x.n)}%"></i></div></td></tr>`).join('')}</table>` : '<div class="empty">還沒有紀錄。</div>';
+
+  // 每次交卷（新的在上面）
+  $('attempts').innerHTML = list.length ? [...list].reverse().map(a => {
+    const wrong = a.items.filter(it => !it.ok);
+    return `<details><summary><b>${fmtDate(a.t)}</b>　${esc(a.exam)}　<span class="${a.score / a.total >= 0.8 ? 'right' : 'wrong'}">${a.score} / ${a.total}</span>　（錯 ${wrong.length} 題）</summary>
+      <div class="attempt-detail scroll">${wrong.length ? `<table><tr><th>題號</th><th>題型</th><th>內容</th><th>正確</th><th>學生寫的</th></tr>
+        ${wrong.map(it => {
+          const ps = it.parts.filter(p => p.errs.length);
+          return `<tr><td>${it.n}</td><td>${TYPE_NAMES[it.type] ?? it.type}</td><td>${esc(it.word ?? '')}</td>
+            <td class="zy right">${ps.map(p => esc(p.ans)).join('　')}</td>
+            <td class="zy wrong">${ps.map(p => esc(p.got || '（空白）')).join('　')}</td></tr>`;
+        }).join('')}</table>` : '全對！'}</div></details>`;
+  }).join('') : '<div class="empty">還沒有交過卷。</div>';
+
+  // 自出試卷
+  $('max-saved').textContent = GEN.MAX_SAVED;
+  const saved = GEN.saved();
+  $('gen-list').innerHTML = saved.length ? `<table>
+    <tr><th>名稱</th><th>出題時間</th><th>交卷</th><th></th></tr>
+    ${saved.map((ex, i) => {
+      const k = FIXED_EXAMS + i + 1;
+      const done = list.filter(a => a.exam === ex.name);
+      return `<tr><td>${esc(ex.name)}</td><td>${ex.created ? fmtDate(ex.created) : ''}</td>
+        <td>${done.length ? done.map(a => `${a.score}/${a.total}`).join('、') : '還沒考'}</td>
+        <td class="row-actions">
+          <a class="btn" href="index.html?exam=${k}">開啟</a>
+          <a class="btn" href="index.html?exam=${k}&answers">答案卷</a>
+          <button data-dl="${i}">下載 .js</button>
+          <button class="danger" data-del="${esc(ex.name)}">刪除</button>
+        </td></tr>`;
+    }).join('')}</table>` : '<div class="empty">還沒有自動出的試卷。</div>';
+}
+
+$('gen-list').addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  if (b.dataset.dl) {
+    const ex = GEN.saved()[b.dataset.dl];
+    download(`questions-${ex.name}.js`, GEN.toJS(ex), 'text/javascript');
+  }
+  if (b.dataset.del && confirm(`確定要刪除「${b.dataset.del}」嗎？（作答紀錄會保留）`)) {
+    GEN.remove(b.dataset.del);
+    render();
+  }
+});
+
+$('gen').onclick = () => {
+  try {
+    GEN.create();
+    render();
+  } catch (e) {
+    alert(`出題失敗：${e.message}`);
+  }
+};
+
+$('export').onclick = () => {
+  const d = new Date();
+  const data = { app: 'zhuyin-quiz', version: 1, exported: Date.now(), log: LOG.load(), gen: GEN.dump() };
+  download(`注音紀錄-${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, '0')}${String(d.getDate()).padStart(2, '0')}.json`, JSON.stringify(data), 'application/json');
+};
+
+$('import').onclick = () => $('import-file').click();
+$('import-file').onchange = async e => {
+  const f = e.target.files[0];
+  e.target.value = '';
+  if (!f) return;
+  try {
+    const data = JSON.parse(await f.text());
+    if (data.app !== 'zhuyin-quiz') throw new Error('這不是注音考卷的紀錄檔');
+    // 作答紀錄：用交卷時間去掉重複的
+    const log = LOG.load();
+    const seen = new Set(log.map(a => a.t));
+    const add = (data.log ?? []).filter(a => !seen.has(a.t));
+    LOG.save([...log, ...add].sort((a, b) => a.t - b.t));
+    // 自出試卷：名稱沒有的才加
+    const g = GEN.dump();
+    const names = new Set(g.exams.map(x => x.name));
+    const exams = (data.gen?.exams ?? []).filter(x => !names.has(x.name));
+    g.exams = [...g.exams, ...exams].sort((a, b) => (a.created ?? 0) - (b.created ?? 0)).slice(-GEN.MAX_SAVED);
+    g.seq = Math.max(g.seq, data.gen?.seq ?? 0);
+    GEN.restore(g);
+    alert(`匯入完成：新增 ${add.length} 次交卷紀錄、${exams.length} 份試卷。`);
+    render();
+  } catch (err) {
+    alert(`匯入失敗：${err.message}`);
+  }
+};
+
+$('clear-log').onclick = () => {
+  if (!confirm('確定要清除這台裝置上的全部作答紀錄嗎？清除後沒辦法復原（建議先匯出備份）。')) return;
+  LOG.clear();
+  render();
+};
+
+render();
+</script>
+</body>
+</html>
