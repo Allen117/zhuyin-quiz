@@ -33,9 +33,9 @@
   .tips { font: 18px/1.6 system-ui, sans-serif; background: #fff8e1; border-radius: 12px; padding: 12px 18px; margin-bottom: 18px; }
   .tips ol { margin: 4px 0 0; padding-left: 1.3em; }
   .review { display: block; width: 100%; font-size: 30px; padding: 14px; margin-bottom: 18px; border: 3px solid #e65100; border-radius: 14px; background: #fff3e0; }
-  .day { border: 2px solid #ccc; border-radius: 14px; padding: 12px 16px; margin-bottom: 14px; }
-  .day h2 { margin: 0 0 10px; font: bold 22px system-ui, sans-serif; }
-  .day h2 small { font-weight: normal; color: #666; margin-left: 8px; }
+  .group { border: 2px solid #ccc; border-radius: 14px; padding: 12px 16px; margin-bottom: 14px; }
+  .group h2 { margin: 0 0 10px; font: bold 22px system-ui, sans-serif; }
+  .group h2 small { font-weight: normal; color: #666; margin-left: 8px; }
   .steps { display: flex; flex-wrap: wrap; gap: 10px; }
   .steps button { font-size: 26px; padding: 10px 18px; border: 2px solid #999; border-radius: 12px; background: #f5f5f5; }
   .steps button.done { border-color: #2e7d32; background: #e8f5e9; }
@@ -139,6 +139,7 @@ const main = document.getElementById('main');
 const items = s => s.trim().split(/\s+/);
 
 // ---- 首頁 ----
+const NUM = [...'〇一二三四五六七八九十'];
 function home() {
   speechSynthesis.cancel();
   main.onclick = null;
@@ -146,7 +147,7 @@ function home() {
   const nStuck = Object.keys(st.stuck).length;
   const step = (key, label) => `<button data-go="${key}" class="${st.done[key] ? 'done' : ''}">${ruby(label)}</button>`;
   main.innerHTML = `
-    <div class="tips"><b>給爸媽：</b>每天照 ①→②→③ 練，一次 15 分鐘左右，一天兩三次。
+    <div class="tips"><b>給爸媽：</b>一次練一組，照 ①→②→③ 的順序，大約 15 分鐘，一天兩三次。
       <ol>
         <li>讓孩子<b>先自己念</b>，不要急著幫他，等 3 秒。</li>
         <li>卡片：念對按「✓ 會」；念錯或要拼很久，按「再練」，會念一次給他聽，請他跟著念。</li>
@@ -156,12 +157,12 @@ function home() {
     </div>
     ${nStuck ? `<button class="review" data-go="review">${ruby('🔁 再(ㄗㄞˋ)練(ㄌㄧㄢˋ)')}（${nStuck}）</button>` : ''}
     ${window.READING.map(d => `
-      <div class="day">
-        <h2>第 ${d.day} 天<small>練 ${d.focus}</small></h2>
+      <div class="group">
+        <h2>第${NUM[d.group]}組<small>練 ${d.focus}</small></h2>
         <div class="steps">
-          ${step(`${d.day}-syl`, '① 音(ㄧㄣ)節(ㄐㄧㄝˊ)')}
-          ${step(`${d.day}-word`, '② 詞(ㄘˊ)語(ㄩˇ)')}
-          ${d.stories.map((s, k) => step(`${d.day}-story${k}`, `③ ${s.title}`)).join('')}
+          ${step(`${d.group}-syl`, '① 音(ㄧㄣ)節(ㄐㄧㄝˊ)')}
+          ${step(`${d.group}-word`, '② 詞(ㄘˊ)語(ㄩˇ)')}
+          ${d.stories.map((s, k) => step(`${d.group}-story${k}`, `③ ${s.title}`)).join('')}
         </div>
       </div>`).join('')}`;
 }
@@ -171,8 +172,8 @@ main.addEventListener('click', e => {
   if (!b) return;
   const go = b.dataset.go;
   if (go === 'review') return cards(Object.keys(load().stuck), { review: true });
-  const [day, part] = go.split('-');
-  const d = window.READING.find(x => x.day === Number(day));
+  const [g, part] = go.split('-');
+  const d = window.READING.find(x => x.group === Number(g));
   if (part === 'syl') cards(items(d.syls), { key: go });
   else if (part === 'word') cards(items(d.words), { key: go });
   else story(d.stories[Number(part.slice(5))], go);
