@@ -49,6 +49,7 @@
   .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
   .actions button { font-size: 34px; padding: 16px 28px; border-radius: 16px; border: 3px solid #999; background: #fff; min-width: 180px; }
   .actions .yes { background: #2e7d32; border-color: #2e7d32; color: #fff; }
+  .actions .yes:disabled { opacity: .4; cursor: default; }
   .actions .no { background: #fff3e0; border-color: #e65100; }
   .actions .listen { background: #e3f2fd; border-color: #1565c0; }
 
@@ -104,7 +105,9 @@ const plain = s => s.replace(/\([^)]*\)|\s/g, '');
 const shuffle = a => { a = [...a]; for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 document.querySelectorAll('[data-label]').forEach(el => { el.innerHTML = ruby(el.dataset.label); });
 
-// ---- 語音：和聽寫一樣用「美佳」、速度 0.7 ----
+// ---- 語音：和聽寫一樣用「美佳」；單一個字速度 0.7，兩個字以上（詞、句子）放慢成三分之一，讓孩子聽清楚每個字 ----
+const RATE = 0.7;
+const SLOW = RATE / 3;
 function zhVoice() {
   const vs = speechSynthesis.getVoices().filter(v => /^zh[-_]TW/i.test(v.lang));
   return vs.find(v => /mei-?jia|美佳/i.test(v.name)) ?? vs[0];
@@ -114,7 +117,7 @@ function utter(text) {
   const v = zhVoice();
   if (v) u.voice = v;
   u.lang = 'zh-TW';
-  u.rate = 0.7;
+  u.rate = text.match(/\p{Script=Han}/gu)?.length > 1 ? SLOW : RATE;
   return u;
 }
 function say(text) {
@@ -177,12 +180,26 @@ main.addEventListener('click', e => {
 document.getElementById('home-btn').onclick = home;
 
 // ---- 卡片：一次一張，念對按 ✓、念不出來按「再練」 ----
-// review：從「再練」清單來的，念對就從清單拿掉
+// review：從「再練」清單來的，念對就從清單拿掉；「✓ 會」要等 3 秒才能按，讓孩子先真的念一次
+const WAIT = 3;
 function cards(list, { key, review = false }) {
   const deck = shuffle(list);
   const missed = [];
   let i = 0;
+  let timer = null;
+  function countdown() {
+    const yes = main.querySelector('[data-a="yes"]');
+    let left = WAIT;
+    const tick = () => {
+      yes.disabled = left > 0;
+      yes.innerHTML = ruby('✓ 會(ㄏㄨㄟˋ)') + (left > 0 ? ` ${left}` : '');
+      if (left-- <= 0) clearInterval(timer);
+    };
+    tick();
+    timer = setInterval(tick, 1000);
+  }
   function show() {
+    clearInterval(timer);
     if (i >= deck.length) return finish();
     const it = deck[i];
     main.innerHTML = `
@@ -193,6 +210,7 @@ function cards(list, { key, review = false }) {
         <button class="no" data-a="no">${ruby('✗ 再(ㄗㄞˋ)練(ㄌㄧㄢˋ)')}</button>
         <button class="yes" data-a="yes">${ruby('✓ 會(ㄏㄨㄟˋ)')}</button>
       </div>`;
+    if (review) countdown();
   }
   function finish() {
     if (key) markDone(key);
@@ -207,13 +225,15 @@ function cards(list, { key, review = false }) {
       </div>`;
   }
   main.onclick = e => {
-    const a = e.target.closest('[data-a]')?.dataset.a;
-    if (!a) return;
+    const btn = e.target.closest('[data-a]');
+    if (!btn || btn.disabled) return;
+    const a = btn.dataset.a;
     const it = deck[i];
     if (a === 'listen') say(plain(it));
     if (a === 'yes') { if (review) unStuck(it); i++; show(); }
     // 再練：念一次給他聽，卡片變橘色，按「繼續」才換下一張（讓他跟著念）
     if (a === 'no') {
+      clearInterval(timer);
       missed.push(it);
       markStuck(it);
       say(plain(it));
