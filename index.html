@@ -47,7 +47,7 @@
   .q { display: flex; align-items: center; gap: 10px; break-inside: avoid; min-height: 90px; }
   .q.wide { grid-column: 1 / -1; }
   .big-zy { font-size: 34px; min-width: 64px; text-align: center; }
-  .q-no { font-size: 20px; }
+  .q-no { font-size: 20px; display: inline-grid; place-items: center; min-width: 2em; height: 2em; border: 2px solid transparent; border-radius: 50%; flex: none; }
   .emoji { font-size: 56px; line-height: 1; font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif; }
   .paren { white-space: nowrap; }
   .slot { display: inline-grid; width: 1.2em; justify-items: center; }
@@ -74,6 +74,10 @@
   .target-sym { font-size: 34px; border: 2px solid #000; padding: 2px 10px; margin: 0 16px 0 4px; }
   .sym-row { display: flex; gap: 14px; font-size: 34px; }
   .sym { border: 2px solid transparent; border-radius: 50%; padding: 2px 10px; }
+  /* 聽寫：按喇叭播放 */
+  .speak { font-size: 40px; width: 72px; height: 72px; border-radius: 50%; border: 3px solid #1565c0; background: #e3f2fd; cursor: pointer; padding: 0; flex: none; font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif; }
+  .speak:active, .speak.playing { background: #90caf9; }
+  .q-dictation { flex-wrap: wrap; }
 
   /* 學生作答（藍色） */
   [data-act] { cursor: pointer; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
@@ -81,6 +85,13 @@
   .opt.picked { border-color: #1565c0; }
   .sym.circled { border-color: #1565c0; }
   .locked [data-act] { cursor: default; }
+
+  /* 交卷後：錯的題目題號圈紅，正確答案用紅字寫在題目後面 */
+  .q.wrong .q-no { border-color: #d00; color: #d00; }
+  .fix { display: inline-flex; align-items: center; gap: 10px; color: #d00; margin-left: 16px; white-space: nowrap; }
+  .fix .emoji { font-size: 44px; }
+  .q.wrong .match .ans { visibility: visible; }
+  .q.wrong .sym.hit { box-shadow: 0 0 0 3px #d00; }
 
   /* 教師版（網址加 ?answers）：紅色正確答案 */
   .ans { visibility: hidden; }
@@ -134,7 +145,7 @@
   @media print {
     body { background: #fff; }
     .page { margin: 0; padding: 0; width: auto; min-height: 0; }
-    .toolbar, .submit-wrap, .overlay { display: none; }
+    .toolbar, .submit-wrap, .overlay, .tablet-only { display: none; }
   }
 </style>
 </head>
@@ -325,6 +336,11 @@ const render = {
     return `<span class="emoji">${it.emoji}</span>${parts}<span class="op">＝</span>
       <span class="answer-box"><span class="ans">${zy(it.answer)}</span></span>${teacher(it)}`;
   },
+  // 聽寫：按喇叭念 word，每個字一個填空框
+  dictation(it) {
+    return `<button class="speak" data-say="${it.word}">🔊</button>
+      <span class="syls">${it.zhuyin.map(sylBox).join('')}</span>${teacher(it)}`;
+  },
 };
 
 // 改分數：每種題型「有沒有作答」與「對不對」
@@ -352,7 +368,20 @@ const grade = {
   },
 };
 grade.pickPic = grade.choice;
-grade.wordBlank = grade.sentence = grade.toneSentence = grade.fill;
+grade.wordBlank = grade.sentence = grade.toneSentence = grade.dictation = grade.fill;
+
+// 交卷後寫在錯題後面的正確答案；連連看、圈符號直接在原處用紅色標出，不另外寫
+const fixAnswer = {
+  choice: it => `${CIRCLED[it.options.indexOf(it.answer)]}${zy(it.answer)}`,
+  pickPic: it => `${CIRCLED[it.options.indexOf(it.answer)]}<span class="emoji">${it.answer}</span>`,
+  judge: it => it.correct ? '○' : `×${it.fix ? zy(it.fix) : ''}`,
+  fill: (it, q) => fillsOf(q).map(b => {
+    const a = b.dataset.answer;
+    if (b.dataset.mode !== 'tone') return zy(a);
+    return zy(a === '˙' ? '˙' + b.dataset.base : b.dataset.base + a);
+  }).join(''),
+};
+fixAnswer.wordBlank = fixAnswer.sentence = fixAnswer.toneSentence = fixAnswer.dictation = fixAnswer.fill;
 
 // 每份試卷一個 .page，各自記住題目（page._questions）、作答與交卷狀態（.locked）
 function build(E) {
@@ -361,14 +390,18 @@ function build(E) {
   page.hidden = true;
   const QUESTIONS = page._questions = [];   // { it, el }
   let n = 0;
-  const sections = E.sections.map(sec => `
-    <h2${sec.sub ? ' class="sub"' : ''}>${ruby(sec.title)}</h2>
-    ${sec.items.length ? `<div class="items">${sec.items.map(it => {
+  const sections = E.sections.map(sec => {
+    // 整個大題都是聽寫：紙本沒有聲音，列印時不印
+    const tablet = sec.items.length && sec.items.every(it => it.type === 'dictation') ? ' tablet-only' : '';
+    return `
+    <h2 class="${sec.sub ? 'sub' : ''}${tablet}">${ruby(sec.title)}</h2>
+    ${sec.items.length ? `<div class="items${tablet}">${sec.items.map(it => {
       QUESTIONS.push({ it });
       const body = render[it.type] ? render[it.type](it) : `<span class="warn">未知題型 ${it.type}</span>`;
       const wide = ['choice', 'pickPic', 'sentence', 'toneSentence', 'match', 'findSym', 'judge'].includes(it.type);
-      return `<div class="q${wide ? ' wide' : ''}" data-q="${n++}"><span class="q-no">${n}.</span>${body}</div>`;
-    }).join('')}</div>` : ''}`).join('');
+      return `<div class="q q-${it.type}${wide ? ' wide' : ''}" data-q="${n++}"><span class="q-no">${n}.</span>${body}</div>`;
+    }).join('')}</div>` : ''}`;
+  }).join('');
 
   page.innerHTML = `
     <h1>${ruby(E.title)}</h1>
@@ -631,11 +664,30 @@ function hwEnd() {
 hwCanvas.addEventListener('pointerup', hwEnd);
 hwCanvas.addEventListener('pointercancel', hwEnd);
 
+// ---- 聽寫的語音：用裝置內建的台灣中文聲音（iPad 是「美佳」） ----
+function zhVoice() {
+  const vs = speechSynthesis.getVoices().filter(v => /^zh[-_]TW/i.test(v.lang));
+  return vs.find(v => /mei-?jia|美佳/i.test(v.name)) ?? vs[0];
+}
+function say(btn) {
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(btn.dataset.say);
+  const v = zhVoice();
+  if (v) u.voice = v;
+  u.lang = 'zh-TW';
+  u.rate = 0.8;
+  btn.classList.add('playing');
+  u.onend = u.onerror = () => btn.classList.remove('playing');
+  speechSynthesis.speak(u);
+}
+
 // ---- 作答 ----
 document.getElementById('pages').addEventListener('click', e => {
   const page = e.target.closest('.page');
   if (!page) return;
   if (e.target.closest('.submit')) { submit(page); return; }
+  const sp = e.target.closest('.speak');
+  if (sp) { say(sp); return; }
   if (page.classList.contains('locked')) return;
   const t = e.target.closest('[data-act]');
   if (!t) return;
@@ -673,7 +725,13 @@ function submit(page) {
     const g = ({ it }) => grade[it.type];
     const blank = QUESTIONS.filter(x => g(x) && !g(x).answered(x.el, x.it)).length;
     if (blank && !confirm(`還有 ${blank} 題沒有寫，確定要交卷嗎？`)) return;
-    const right = QUESTIONS.filter(x => g(x)?.correct(x.el, x.it)).length;
+    let right = 0;
+    for (const { it, el } of QUESTIONS) {
+      if (!g({ it })) continue;
+      if (g({ it }).correct(el, it)) { right++; continue; }
+      el.classList.add('wrong');
+      if (fixAnswer[it.type]) el.insertAdjacentHTML('beforeend', `<span class="fix">${fixAnswer[it.type](it, el)}</span>`);
+    }
     page.querySelector('.score-line').textContent = `${right} / ${QUESTIONS.length}`;
     page.classList.add('locked');
   }
@@ -694,6 +752,8 @@ document.getElementById('clear').onclick = () => {
   page.querySelectorAll('[data-val]').forEach(el => { delete el.dataset.val; });
   page.querySelectorAll('.match .sel').forEach(el => el.classList.remove('sel'));
   page.querySelectorAll('.match').forEach(m => { m._links = new Map(); m._pending = null; drawLinks(m); });
+  page.querySelectorAll('.fix').forEach(el => el.remove());
+  page.querySelectorAll('.q.wrong').forEach(el => el.classList.remove('wrong'));
   page.querySelector('.score-line').textContent = '';
   page.classList.remove('locked');
 };

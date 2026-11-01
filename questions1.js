@@ -79,5 +79,16 @@
         { type: 'toneSentence', emoji: '🐘', text: '動(ㄉㄨㄥˋ)物(ㄨˋ)園(ㄩㄢˊ)有(ㄧㄡˇ)大(ㄉㄚˋ)[象(ㄒㄧㄤˋ)]。' },
       ],
     },
+    {
+      title: '八、聽(ㄊㄧㄥ)寫(ㄒㄧㄝˇ)（按(ㄢˋ)🔊聽(ㄊㄧㄥ)）',
+      // 只在平板上考，列印時不印。用字避開變調：三聲連三聲、一、不、輕聲
+      items: [
+        { type: 'dictation', word: '老師', zhuyin: ['ㄌㄠˇ', 'ㄕ'] },
+        { type: 'dictation', word: '青菜', zhuyin: ['ㄑㄧㄥ', 'ㄘㄞˋ'] },
+        { type: 'dictation', word: '電腦', zhuyin: ['ㄉㄧㄢˋ', 'ㄋㄠˇ'] },
+        { type: 'dictation', word: '跳繩', zhuyin: ['ㄊㄧㄠˋ', 'ㄕㄥˊ'] },
+        { type: 'dictation', word: '游泳池', zhuyin: ['ㄧㄡˊ', 'ㄩㄥˇ', 'ㄔˊ'] },
+      ],
+    },
   ],
 });

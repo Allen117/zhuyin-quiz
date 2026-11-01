@@ -79,5 +79,16 @@
         { type: 'toneSentence', emoji: '🐭', text: '老(ㄌㄠˇ)[鼠(ㄕㄨˇ)]愛(ㄞˋ)偷(ㄊㄡ)吃(ㄔ)。' },
       ],
     },
+    {
+      title: '八、聽(ㄊㄧㄥ)寫(ㄒㄧㄝˇ)（按(ㄢˋ)🔊聽(ㄊㄧㄥ)）',
+      // 只在平板上考，列印時不印。用字避開變調：三聲連三聲、一、不、輕聲
+      items: [
+        { type: 'dictation', word: '球鞋', zhuyin: ['ㄑㄧㄡˊ', 'ㄒㄧㄝˊ'] },
+        { type: 'dictation', word: '排隊', zhuyin: ['ㄆㄞˊ', 'ㄉㄨㄟˋ'] },
+        { type: 'dictation', word: '冰淇淋', zhuyin: ['ㄅㄧㄥ', 'ㄑㄧˊ', 'ㄌㄧㄣˊ'] },
+        { type: 'dictation', word: '消防車', zhuyin: ['ㄒㄧㄠ', 'ㄈㄤˊ', 'ㄔㄜ'] },
+        { type: 'dictation', word: '橡皮擦', zhuyin: ['ㄒㄧㄤˋ', 'ㄆㄧˊ', 'ㄘㄚ'] },
+      ],
+    },
   ],
 });

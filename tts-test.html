@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>聽寫語音測試</title>
+<style>
+  body { font-family: "PingFang TC", "Microsoft JhengHei", sans-serif; margin: 0; padding: 16px; background: #fff; color: #222; max-width: 720px; margin: auto; }
+  h1 { font-size: 22px; }
+  .bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 12px 0; padding: 12px; background: #f4f4f4; border-radius: 8px; }
+  select, button { font-size: 17px; }
+  .row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #ddd; }
+  .row button { font-size: 26px; width: 56px; height: 56px; border-radius: 50%; border: 1px solid #aaa; background: #fff; }
+  .word { font-size: 24px; width: 90px; }
+  .zy { font-size: 20px; color: #555; flex: 1; }
+  .note { font-size: 14px; color: #b00; }
+  h2 { font-size: 18px; margin-top: 24px; }
+  #warn { color: #b00; }
+</style>
+</head>
+<body>
+<h1>聽寫語音測試</h1>
+<p>請用 iPad 的 Safari 打開，一個一個按 🔊，聽聽看腔調和聲調對不對。</p>
+
+<div class="bar">
+  <label>聲音：<select id="voice"></select></label>
+  <label>速度：<select id="rate">
+    <option value="0.6">很慢</option>
+    <option value="0.8" selected>慢</option>
+    <option value="1">正常</option>
+  </select></label>
+</div>
+<p id="warn"></p>
+
+<h2>考卷裡的聽寫詞（試卷1～3，各 5 個）</h2>
+<div id="main"></div>
+
+<h2>對照組（故意放的，預計不考）</h2>
+<p>這幾個詞念出來的音和課本寫的注音不一樣，學生容易寫錯。聽聽看就知道為什麼要避開。</p>
+<div id="trap"></div>
+
+<script>
+const MAIN = [
+  // 試卷1
+  ['老師', 'ㄌㄠˇ ㄕ'],
+  ['青菜', 'ㄑㄧㄥ ㄘㄞˋ'],
+  ['電腦', 'ㄉㄧㄢˋ ㄋㄠˇ'],
+  ['跳繩', 'ㄊㄧㄠˋ ㄕㄥˊ'],
+  ['游泳池', 'ㄧㄡˊ ㄩㄥˇ ㄔˊ'],
+  // 試卷2
+  ['球鞋', 'ㄑㄧㄡˊ ㄒㄧㄝˊ'],
+  ['排隊', 'ㄆㄞˊ ㄉㄨㄟˋ'],
+  ['冰淇淋', 'ㄅㄧㄥ ㄑㄧˊ ㄌㄧㄣˊ'],
+  ['消防車', 'ㄒㄧㄠ ㄈㄤˊ ㄔㄜ'],
+  ['橡皮擦', 'ㄒㄧㄤˋ ㄆㄧˊ ㄘㄚ'],
+  // 試卷3
+  ['牛奶', 'ㄋㄧㄡˊ ㄋㄞˇ'],
+  ['口罩', 'ㄎㄡˇ ㄓㄠˋ'],
+  ['午餐', 'ㄨˇ ㄘㄢ'],
+  ['鉛筆盒', 'ㄑㄧㄢ ㄅㄧˇ ㄏㄜˊ'],
+  ['運動會', 'ㄩㄣˋ ㄉㄨㄥˋ ㄏㄨㄟˋ'],
+];
+const TRAP = [
+  ['小狗', 'ㄒㄧㄠˇ ㄍㄡˇ', '兩個三聲連在一起，前面那個會念成二聲'],
+  ['洗手', 'ㄒㄧˇ ㄕㄡˇ', '同上'],
+  ['衣服', 'ㄧ ˙ㄈㄨ', '輕聲：看語音有沒有念輕'],
+  ['一個', 'ㄧ ˙ㄍㄜ', '「一」會變調'],
+];
+
+const voiceSel = document.getElementById('voice');
+let voices = [];
+
+function loadVoices() {
+  const all = speechSynthesis.getVoices();
+  // 台灣腔排前面，其次其他中文
+  voices = all.filter(v => /^zh/i.test(v.lang))
+    .sort((a, b) => (b.lang === 'zh-TW') - (a.lang === 'zh-TW'));
+  voiceSel.innerHTML = '';
+  voices.forEach((v, i) => {
+    const o = document.createElement('option');
+    o.value = i;
+    o.textContent = `${v.name}（${v.lang}）`;
+    voiceSel.appendChild(o);
+  });
+  const meijia = voices.findIndex(v => /mei-?jia|美佳/i.test(v.name));
+  if (meijia >= 0) voiceSel.value = meijia;
+  document.getElementById('warn').textContent = voices.some(v => v.lang === 'zh-TW')
+    ? '' : '這台裝置沒有台灣中文（zh-TW）的聲音，念出來可能是大陸腔。';
+}
+loadVoices();
+speechSynthesis.onvoiceschanged = loadVoices;
+
+function speak(text) {
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  const v = voices[voiceSel.value];
+  if (v) { u.voice = v; u.lang = v.lang; } else { u.lang = 'zh-TW'; }
+  u.rate = +document.getElementById('rate').value;
+  speechSynthesis.speak(u);
+}
+
+function render(list, el) {
+  for (const [word, zy, note] of list) {
+    const row = document.createElement('div');
+    row.className = 'row';
+    row.innerHTML = `<button>🔊</button><span class="word">${word}</span>
+      <span class="zy">${zy}${note ? `<br><span class="note">${note}</span>` : ''}</span>`;
+    row.querySelector('button').onclick = () => speak(word);
+    el.appendChild(row);
+  }
+}
+render(MAIN, document.getElementById('main'));
+render(TRAP, document.getElementById('trap'));
+</script>
+</body>
+</html>

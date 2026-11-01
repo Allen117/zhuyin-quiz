@@ -79,5 +79,16 @@
         { type: 'toneSentence', emoji: '🎂', text: '今(ㄐㄧㄣ)天(ㄊㄧㄢ)是(ㄕˋ)我(ㄨㄛˇ)的(˙ㄉㄜ)生(ㄕㄥ)[日(ㄖˋ)]。' },
       ],
     },
+    {
+      title: '八、聽(ㄊㄧㄥ)寫(ㄒㄧㄝˇ)（按(ㄢˋ)🔊聽(ㄊㄧㄥ)）',
+      // 只在平板上考，列印時不印。用字避開變調：三聲連三聲、一、不、輕聲
+      items: [
+        { type: 'dictation', word: '牛奶', zhuyin: ['ㄋㄧㄡˊ', 'ㄋㄞˇ'] },
+        { type: 'dictation', word: '口罩', zhuyin: ['ㄎㄡˇ', 'ㄓㄠˋ'] },
+        { type: 'dictation', word: '午餐', zhuyin: ['ㄨˇ', 'ㄘㄢ'] },
+        { type: 'dictation', word: '鉛筆盒', zhuyin: ['ㄑㄧㄢ', 'ㄅㄧˇ', 'ㄏㄜˊ'] },
+        { type: 'dictation', word: '運動會', zhuyin: ['ㄩㄣˋ', 'ㄉㄨㄥˋ', 'ㄏㄨㄟˋ'] },
+      ],
+    },
   ],
 });
