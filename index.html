@@ -49,6 +49,8 @@
   .big-zy { font-size: 34px; min-width: 64px; text-align: center; }
   .q-no { font-size: 20px; display: inline-grid; place-items: center; min-width: 2em; height: 2em; border: 2px solid transparent; border-radius: 50%; flex: none; }
   .emoji { font-size: 56px; line-height: 1; font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif; }
+  /* 情境插圖（scene 欄位，取代 emoji） */
+  .scene { width: 180px; height: 126px; flex: none; border: 2px solid #000; border-radius: 10px; }
   .paren { white-space: nowrap; }
   .slot { display: inline-grid; width: 1.2em; justify-items: center; }
   .slot > * { grid-area: 1 / 1; }
@@ -78,6 +80,9 @@
   .speak { font-size: 40px; width: 72px; height: 72px; border-radius: 50%; border: 3px solid #1565c0; background: #e3f2fd; cursor: pointer; padding: 0; flex: none; font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif; }
   .speak:active, .speak.playing { background: #90caf9; }
   .q-dictation { flex-wrap: wrap; }
+  /* 選詞填空：句子裡要填的地方畫底線 */
+  .q-pickWord { flex-wrap: wrap; }
+  .cloze { display: inline-block; width: 3.4em; height: 2.6em; border-bottom: 2px solid #000; }
 
   /* 學生作答（藍色） */
   [data-act] { cursor: pointer; user-select: none; -webkit-user-select: none; -webkit-tap-highlight-color: transparent; }
@@ -319,18 +324,24 @@ const sylBox = z =>
 
 const teacher = it => `<span class="teacher">（${it.word}）</span>`;
 
-// 把短句拆成注音；[ ] 內的字交給 blankFn 處理
+// 「睡(ㄕㄨㄟˋ)覺(ㄐㄧㄠˋ)」→ 只顯示注音（學生卷不出現國字）；plainOf 取出國字給老師看
+const zyOnly = s => [...s.matchAll(/([^()\s])\(([^)]+)\)|([^()\s])/g)]
+  .map(m => m[2] ? zy(m[2]) : `<span class="punct">${m[3]}</span>`).join('');
+const plainOf = s => s.replace(/\([^)]*\)/g, '');
+
+// 把短句拆成注音；[ ] 內的字交給 blankFn 處理（可以有好幾組 [ ]）
 function sentenceHTML(it, blankFn) {
   const parts = [];
   let inBlank = false, word = '';
   for (const m of it.text.matchAll(/\[|\]|([^()\[\]])\(([^)]+)\)|([^()\[\]])/g)) {
-    if (m[0] === '[') { inBlank = true; continue; }
+    if (m[0] === '[') { inBlank = true; if (word) word += '、'; continue; }
     if (m[0] === ']') { inBlank = false; continue; }
     if (m[3]) { parts.push(`<span class="punct">${m[3]}</span>`); continue; }
     if (inBlank) { word += m[1]; parts.push(blankFn(m[2])); }
     else parts.push(zy(m[2]));
   }
-  return `<span class="emoji">${it.emoji}</span><span class="sentence">${parts.join('')}</span>${teacher({ word })}`;
+  const pic = it.scene ? `<img class="scene" src="${it.scene}" alt="">` : `<span class="emoji">${it.emoji}</span>`;
+  return `${pic}<span class="sentence">${parts.join('')}</span>${teacher({ word })}`;
 }
 
 const render = {
@@ -365,6 +376,17 @@ const render = {
   // 短句補聲調：[ ] 包住的字只挖空聲調
   toneSentence(it) {
     return sentenceHTML(it, z => zy(z, 'tone'));
+  },
+  // 選詞填空：text 的 [ ] 是要填的地方，options 是詞語（「字(注音)」寫法），學生卷只顯示注音
+  pickWord(it) {
+    const idx = it.options.indexOf(it.answer);
+    const warn = idx < 0 ? '<span class="warn">answer 不在 options 裡</span>' : '';
+    const [before, after = ''] = it.text.split(/\[\s*\]/);
+    const opts = it.options.map((o, i) =>
+      `<span class="opt" data-act="opt" data-n="${CIRCLED[i]}"><span class="opt-n">${CIRCLED[i]}</span><span class="syls">${zyOnly(o)}</span></span>`).join('');
+    return `${paren(CIRCLED[idx] ?? '')}
+      <span class="sentence">${zyOnly(before)}<span class="cloze"></span>${zyOnly(after)}</span>
+      <div class="opts">${opts}</div>${teacher({ word: plainOf(it.answer) })}${warn}`;
   },
   match(it) {
     const n = it.pairs.length;
@@ -426,13 +448,14 @@ const grade = {
     correct: q => fillsOf(q).every(b => (b.dataset.val ?? '') === b.dataset.answer),
   },
 };
-grade.pickPic = grade.choice;
+grade.pickPic = grade.pickWord = grade.choice;
 grade.wordBlank = grade.sentence = grade.toneSentence = grade.dictation = grade.fill;
 
 // 交卷後寫在錯題後面的正確答案；連連看、圈符號直接在原處用紅色標出，不另外寫
 const fixAnswer = {
   choice: it => `${CIRCLED[it.options.indexOf(it.answer)]}${zy(it.answer)}`,
   pickPic: it => `${CIRCLED[it.options.indexOf(it.answer)]}<span class="emoji">${it.answer}</span>`,
+  pickWord: it => `${CIRCLED[it.options.indexOf(it.answer)]}<span class="syls">${zyOnly(it.answer)}</span>`,
   judge: it => it.correct ? '○' : `×${it.fix ? zy(it.fix) : ''}`,
   fill: (it, q) => fillsOf(q).map(b => {
     const a = b.dataset.answer;
@@ -451,6 +474,11 @@ const partsOf = {
   pickPic: (q, it) => {
     const e = pickedOf(q, it);
     return [LOG.part(it.zhuyin, !e ? '' : e === it.answer ? it.zhuyin : READING[e] ?? '?')];
+  },
+  // 選詞填空考的是看懂句子，不是符號，不算進弱點
+  pickWord: (q, it) => {
+    const w = pickedOf(q, it);
+    return [{ ans: plainOf(it.answer), got: w ? plainOf(w) : '', tested: [], errs: w === it.answer ? [] : w ? ['?'] : ['空白'] }];
   },
   // 錯的那題打○：表示他把寫錯的注音當成對的
   judge: (q, it) => {
@@ -481,7 +509,7 @@ const partsOf = {
 partsOf.wordBlank = partsOf.sentence = partsOf.toneSentence = partsOf.dictation = partsOf.fill;
 const wordOf = it => it.word
   ?? it.pairs?.map(p => p[2]).join('、')
-  ?? it.text?.replace(/\([^)]*\)|\[|\]/g, '')
+  ?? it.text?.replace(/\[\s*\]/, () => `[${plainOf(it.answer ?? '')}]`).replace(/\([^)]*\)|\[|\]/g, '')
   ?? it.target;
 
 // 每份試卷一個 .page，各自記住題目（page._questions）、作答與交卷狀態（.locked）
@@ -499,7 +527,7 @@ function build(E) {
     ${sec.items.length ? `<div class="items${tablet}">${sec.items.map(it => {
       QUESTIONS.push({ it });
       const body = render[it.type] ? render[it.type](it) : `<span class="warn">未知題型 ${it.type}</span>`;
-      const wide = ['choice', 'pickPic', 'sentence', 'toneSentence', 'match', 'findSym', 'judge'].includes(it.type);
+      const wide = ['choice', 'pickPic', 'pickWord', 'sentence', 'toneSentence', 'match', 'findSym', 'judge'].includes(it.type);
       return `<div class="q q-${it.type}${wide ? ' wide' : ''}" data-q="${n++}"><span class="q-no">${n}.</span>${body}</div>`;
     }).join('')}</div>` : ''}`;
   }).join('');

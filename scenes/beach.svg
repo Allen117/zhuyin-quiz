@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168"><g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#ffe2b8" stroke="none"/>
+<path d="M170 34 v-12 M140 44 l-8 -8 M200 44 l8 -8 M130 64 h-10 M210 64 h10" stroke="#f08a00" stroke-width="3"/>
+<circle cx="170" cy="66" r="24" fill="#ffb627"/>
+<rect y="66" width="240" height="40" fill="#3fa9e0" stroke="none"/>
+<line x1="0" y1="66" x2="240" y2="66"/>
+<path d="M150 74 h40 M140 82 h60 M156 90 h28" stroke="#ffe08a" stroke-width="2.5"/>
+<path d="M0 104 q15 -8 30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 L240 168 L0 168Z" fill="#f6d68f"/>
+<path d="M0 104 q15 -8 30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0" fill="none" stroke="#fff" stroke-width="3"/>
+<line x1="40" y1="70" x2="56" y2="150" stroke-width="3"/>
+<path d="M8 82 Q38 46 74 62 Q56 66 48 78 Q34 72 8 82Z" fill="#ff6b6b"/>
+<rect x="88" y="128" width="30" height="18" fill="#e9b96e"/>
+<rect x="92" y="116" width="22" height="14" fill="#e9b96e"/>
+<path d="M92 116 v-4 h4 v4 M101 116 v-4 h4 v4 M110 116 v-4 h4 v4" fill="#e9b96e"/>
+<path d="M146 134 v12 M156 134 v12" stroke-width="3"/>
+<rect x="140" y="104" width="22" height="30" rx="9" fill="#ffd34d"/>
+<circle cx="151" cy="92" r="14" fill="#ffd9b8"/><path d="M137 92 A14 14 0 0 1 165 92 Q157 84 137 92Z" fill="#3b2a20"/><circle cx="146" cy="93" r="1.8" fill="#333" stroke="none"/><circle cx="156" cy="93" r="1.8" fill="#333" stroke="none"/><circle cx="143" cy="98" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/><circle cx="159" cy="98" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/><path d="M147 98 q4 6 8 0z" fill="#c0392b" stroke-width="1.5"/>
+<path d="M141 112 l-10 6" stroke-width="3"/>
+<path d="M120 116 l12 0 l-2 14 l-8 0z" fill="#4fc3f7"/><path d="M121 116 q5 -8 10 0" fill="none"/>
+<path d="M161 112 l10 -10" stroke-width="3"/><circle cx="172" cy="100" r="3.2" fill="#ffd9b8"/>
+<path d="M200 150 l6 -10 l6 10z" fill="#ff8c69" stroke-width="1.5"/>
+<path d="M20 152 q4 -6 8 0 q4 -6 8 0" fill="none" stroke="#c28a4a"/>
+</g></svg>
