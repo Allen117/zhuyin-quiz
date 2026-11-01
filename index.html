@@ -828,7 +828,7 @@ function say(btn) {
   const v = zhVoice();
   if (v) u.voice = v;
   u.lang = 'zh-TW';
-  u.rate = 0.8;
+  u.rate = 0.7;
   btn.classList.add('playing');
   u.onend = u.onerror = () => btn.classList.remove('playing');
   speechSynthesis.speak(u);
