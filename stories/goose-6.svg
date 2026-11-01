@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168">
+<style>
+.wv{animation:wv 3s linear infinite}
+@keyframes wv{to{transform:translateX(-40px)}}
+.bobw{animation:bobw 1.6s ease-in-out infinite alternate}
+@keyframes bobw{to{transform:translateY(2px)}}
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 3s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}
+.cloud{animation:cloud 8s ease-in-out infinite alternate}
+@keyframes cloud{to{transform:translateX(24px)}}
+.lm{animation:laugh .2s ease-in-out .2s 14 alternate}
+.lg{animation:laugh .2s ease-in-out .35s 14 alternate}
+@keyframes laugh{to{transform:translateY(-4px)}}
+.pop{transform-box:fill-box;transform-origin:50% 50%;animation:pop .5s cubic-bezier(.3,1.6,.6,1) both}
+@keyframes pop{from{transform:scale(0)}to{transform:none}}
+.heart{opacity:0;animation:rise 2s ease-out infinite}
+.heart.a{animation-delay:1.2s}.heart.b{animation-delay:2s}
+@keyframes rise{0%{opacity:0;transform:translate(0,0) scale(.5)}20%{opacity:1}100%{opacity:0;transform:translate(6px,-30px) scale(1.1)}}
+.tw{transform-box:fill-box;transform-origin:50% 50%;animation:tw .9s ease-in-out infinite alternate}
+.tw.x{animation-delay:-.45s}
+@keyframes tw{from{transform:scale(.5)}to{transform:scale(1.1)}}
+.rays{transform-origin:212px 28px;animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+<g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#d6efff" stroke="none"/>
+<g class="rays" stroke="#f5b400" stroke-width="2.5"><path d="M212 4v6M212 46v6M188 28h6M230 28h6M195 11l4 4M225 41l4 4M195 45l4-4M225 15l4-4"/></g>
+<circle cx="212" cy="28" r="12" fill="#ffd54f"/>
+<path d="M30 30 q4 -12 18 -8 q10 -10 22 0 q12 0 10 10 h-46 q-8 -2 -4 -2z" fill="#fff" class="cloud"/>
+<rect y="80" width="240" height="88" fill="#9fd36b" stroke="none"/>
+<path d="M112 168 Q116 116 150 104 H240 V168Z" fill="#7fc4ec"/>
+<path d="M112 168 Q116 116 150 104 H240" fill="none" stroke="#5fae5a" stroke-width="3"/>
+<defs><clipPath id="r"><path d="M112 168 Q116 116 150 104 H240 V168Z"/></clipPath></defs>
+<g clip-path="url(#r)"><g class="wv"><path d="M-40 116q5 -4 10 0M0 116q5 -4 10 0M40 116q5 -4 10 0M80 116q5 -4 10 0M120 116q5 -4 10 0M160 116q5 -4 10 0M200 116q5 -4 10 0M240 116q5 -4 10 0M280 116q5 -4 10 0M-20 130q5 -4 10 0M20 130q5 -4 10 0M60 130q5 -4 10 0M100 130q5 -4 10 0M140 130q5 -4 10 0M180 130q5 -4 10 0M220 130q5 -4 10 0M260 130q5 -4 10 0M-40 144q5 -4 10 0M0 144q5 -4 10 0M40 144q5 -4 10 0M80 144q5 -4 10 0M120 144q5 -4 10 0M160 144q5 -4 10 0M200 144q5 -4 10 0M240 144q5 -4 10 0M280 144q5 -4 10 0M-20 158q5 -4 10 0M20 158q5 -4 10 0M60 158q5 -4 10 0M100 158q5 -4 10 0M140 158q5 -4 10 0M180 158q5 -4 10 0M220 158q5 -4 10 0M260 158q5 -4 10 0" fill="none" stroke="#fff" stroke-width="1.6" opacity=".8"/></g></g>
+<g class="lm"><g transform="translate(84 150) scale(1.25)"><path d="M10 -12 q18 -2 15 -22 q-2 -8 -8 -5" fill="none" stroke="#a0673a" stroke-width="4.5"/><ellipse cx="-8" cy="-6" rx="6" ry="7" fill="#a0673a"/><ellipse cx="8" cy="-6" rx="6" ry="7" fill="#a0673a"/><g transform="rotate(30 -16.5 -38)"><g><rect x="-20" y="-38" width="7" height="20" rx="3.5" fill="#a0673a"/><circle cx="-16.5" cy="-17" r="4" fill="#e8c39e"/></g></g><g transform="rotate(-30 16.5 -38)"><g><rect x="13" y="-38" width="7" height="20" rx="3.5" fill="#a0673a"/><circle cx="16.5" cy="-17" r="4" fill="#e8c39e"/></g></g><ellipse cy="-24" rx="15" ry="16" fill="#a0673a"/><ellipse cy="-21" rx="9" ry="11" fill="#e8c39e"/><circle cx="-17" cy="-52" r="6" fill="#e8c39e"/><circle cx="17" cy="-52" r="6" fill="#e8c39e"/><circle cy="-52" r="15" fill="#a0673a"/><ellipse cy="-48" rx="11.5" ry="10" fill="#e8c39e"/><path d="M-8 -50 q3 -4 6 0 M2 -50 q3 -4 6 0" fill="none" stroke-width="1.6"/><circle cx="-8" cy="-45" r="2.4" fill="#ff9e9e" stroke="none" opacity=".7"/><circle cx="8" cy="-45" r="2.4" fill="#ff9e9e" stroke="none" opacity=".7"/><path d="M-6 -47 q6 10 12 0z" fill="#c0392b" stroke-width="1.5"/></g></g>
+<g class="lg"><g class="bobw"><g transform="translate(170 146) scale(1.45)"><path d="M20 -16 l12 -9 l-3 14z" fill="#fff"/><path d="M-11 -14 Q-20 -30 -12 -42" stroke="#3a3a3a" stroke-width="11" fill="none"/><path d="M-11 -14 Q-20 -30 -12 -42" stroke="#fff" stroke-width="7" fill="none"/><path d="M-18 -10 q0 -13 20 -13 q22 0 24 12 q-2 11 -22 11 h-12 q-10 0 -10 -10z" fill="#fff"/><path d="M-2 -12 q10 -10 22 -2 q-10 8 -22 2z" fill="#eef1f5" stroke-width="1.5"/><circle cx="-12" cy="-44" r="7.5" fill="#fff"/><path d="M-19 -48 l-9 1.5 l9 2.5z M-19 -43 l-8 4 l8 -1.5z" fill="#ff9800" stroke-width="1.4"/><path d="M-19 -45 l-5 .5 l5 1.2z" fill="#c0392b" stroke="none"/><circle cx="-18" cy="-49.5" r="2.5" fill="#ff9800" stroke-width="1.2"/><path d="M-15 -46 q2 -3 4 0" fill="none" stroke-width="1.5"/><circle cx="-9" cy="-41" r="2" fill="#ff9e9e" stroke="none" opacity=".8"/></g></g></g>
+<path class="heart a" d="M84 58c-3-5-10-2-7 3l7 7l7-7c3-5-4-8-7-3z" fill="#ff6b8a" stroke-width="1.2"/><path class="heart b" d="M150 64c-3-5-10-2-7 3l7 7l7-7c3-5-4-8-7-3z" fill="#ff6b8a" stroke-width="1.2"/>
+<g fill="#fff59d" stroke-width="1"><path class="tw" d="M40 70l2 4 4 .6-3 2.6.8 4-3.8-2-3.8 2 .8-4-3-2.6 4-.6z"/><path class="tw x" d="M120 56l2 4 4 .6-3 2.6.8 4-3.8-2-3.8 2 .8-4-3-2.6 4-.6z"/></g>
+</g></svg>

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168">
+<style>
+.lean{transform-box:fill-box;transform-origin:50% 100%;animation:lean .5s ease-out .3s both,back .4s 2.6s forwards}
+@keyframes lean{to{transform:rotate(14deg) translateX(4px)}}
+@keyframes back{from{transform:rotate(14deg) translateX(4px)}to{transform:none}}
+.chew{transform-box:fill-box;transform-origin:50% 80%;animation:chew .2s ease-in-out 0.9s 8 alternate}
+@keyframes chew{to{transform:rotate(4deg)}}
+.f1{animation:gone .3s 2.4s forwards}
+.bn{opacity:0;animation:show .3s 2.4s forwards}
+.lick{opacity:0;animation:show .1s 3s forwards,lk .2s 3s 4 alternate}
+@keyframes lk{to{transform:translateX(2px)}}
+@keyframes gone{to{opacity:0}}
+@keyframes show{to{opacity:1}}
+.heart{opacity:0;animation:rise 2s ease-out infinite}
+.heart.a{animation-delay:3.1s}.heart.b{animation-delay:3.8s}
+@keyframes rise{0%{opacity:0;transform:translate(0,0) scale(.5)}20%{opacity:1}100%{opacity:0;transform:translate(6px,-30px) scale(1.1)}}
+.tail{transform-box:fill-box;transform-origin:0 100%;animation:tail 1s ease-in-out infinite alternate}
+@keyframes tail{to{transform:rotate(-8deg)}}
+</style>
+<g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#fde9ef" stroke="none"/>
+<rect y="132" width="240" height="36" fill="#e8b98a" stroke="none"/>
+<path d="M0 132 H240" stroke="#c99a6a" stroke-width="2"/>
+<rect x="20" y="24" width="44" height="36" rx="4" fill="#cdeeff"/><path d="M42 24v36M20 42h44"/>
+<rect x="176" y="40" width="40" height="30" rx="3" fill="#fff3b0"/><path d="M196 40v30" stroke-width="1.5"/>
+<g class="lean"><g transform="translate(96 146) scale(1.7)"><path d="M10 -6 q22 -2 18 -26" fill="none" stroke="#3a3a3a" stroke-width="9"/><path d="M10 -6 q22 -2 18 -26" fill="none" stroke="#ffa94d" stroke-width="5"/><ellipse cy="-17" rx="15" ry="17" fill="#ffa94d"/><ellipse cx="0" cy="-14" rx="8" ry="11" fill="#ffe8cc"/><ellipse cx="-6" cy="-2" rx="5.5" ry="3.5" fill="#ffa94d"/><ellipse cx="6" cy="-2" rx="5.5" ry="3.5" fill="#ffa94d"/><g class="chew"><path d="M-13 -44 l1 -15 l10 8z M13 -44 l-1 -15 l-10 8z" fill="#ffa94d"/><path d="M-10 -48 l.5 -6 l4 3z M10 -48 l-.5 -6 l-4 3z" fill="#ffc0cb" stroke="none"/><ellipse cy="-39" rx="16" ry="13" fill="#ffa94d"/><path d="M-3 -51 v4 M3 -51 v4 M0 -52 v5" stroke="#c66a1f" stroke-width="1.5"/><path d="M-8 -40 q2.5 -3 5 0 M3 -40 q2.5 -3 5 0" fill="none" stroke-width="1.6"/><path d="M-1.5 -36 h3 l-1.5 2z" fill="#ff8fab" stroke-width="1"/><path d="M-3.5 -33 q1.75 2 3.5 0 q1.75 2 3.5 0" fill="none" stroke-width="1.2"/><path class="lick" d="M1 -32 q2 4 4 0z" fill="#ff6b8a" stroke-width="1"/><path d="M-9 -35 h-8 M-9 -33 l-7 2 M9 -35 h8 M9 -33 l7 2" stroke-width="1"/><circle cx="-10" cy="-31" r="2.4" fill="#ff9e9e" stroke="none" opacity=".7"/><circle cx="10" cy="-31" r="2.4" fill="#ff9e9e" stroke="none" opacity=".7"/></g></g></g>
+<ellipse cx="160" cy="146" rx="32" ry="7" fill="#fff"/><ellipse cx="160" cy="144" rx="22" ry="3.5" fill="none" stroke="#ccc" stroke-width="1.2"/>
+<g transform="translate(160 138) scale(1.4)"><g class="bn"><path d="M-12 0 h26 M-4 -5 v10 M2 -5 v10 M8 -5 v10" fill="none" stroke="#fff" stroke-width="2.2"/><path d="M14 0 l7 -5 v10z" fill="none" stroke="#fff" stroke-width="2"/><circle cx="-14" cy="0" r="4" fill="#fff" stroke="#3a3a3a" stroke-width="1.5"/></g><g class="f1"><path d="M10 0 l10 -7 v14z" fill="#7ec8e3"/><path d="M-14 0 q12 -11 26 0 q-14 11 -26 0z" fill="#7ec8e3"/><circle cx="-7" cy="-1.5" r="1.5" fill="#333" stroke="none"/><path d="M-2 -5 q3 5 0 10" fill="none" stroke-width="1.2"/></g></g>
+<path class="heart a" d="M118 54c-3-5-10-2-7 3l7 7l7-7c3-5-4-8-7-3z" fill="#ff6b8a" stroke-width="1.2"/><path class="heart b" d="M136 44c-3-5-10-2-7 3l7 7l7-7c3-5-4-8-7-3z" fill="#ff6b8a" stroke-width="1.2"/>
+</g></svg>

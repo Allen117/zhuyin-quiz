@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168">
+<style>
+.rb{transform-origin:120px 150px;animation:rb 1.3s ease-out both}
+@keyframes rb{from{transform:scale(.2);opacity:0}to{transform:none;opacity:1}}
+.b1,.b2,.b3{animation:bounce .32s ease-out 8 alternate}
+.b1{animation-delay:1s}.b2{animation-delay:1.15s}.b3{animation-delay:1.3s}
+@keyframes bounce{to{transform:translateY(-16px)}}
+.rays{transform-origin:214px 26px;animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.heart{opacity:0;animation:rise 2s ease-out infinite}
+.heart.a{animation-delay:0.4s}.heart.b{animation-delay:1.4s}
+@keyframes rise{0%{opacity:0;transform:translate(0,0) scale(.5)}20%{opacity:1}100%{opacity:0;transform:translate(6px,-30px) scale(1.1)}}
+.tw{transform-box:fill-box;transform-origin:50% 50%;animation:tw .9s ease-in-out infinite alternate}
+.tw.x{animation-delay:-.45s}
+@keyframes tw{from{transform:scale(.5)}to{transform:scale(1.1)}}
+</style>
+<g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#cfe8ff" stroke="none"/>
+<g class="rays" stroke="#f5b400" stroke-width="2.5"><path d="M214 2v6M214 44v6M190 26h6M232 26h6M197 9l4 4M227 39l4 4M197 43l4-4M227 13l4-4"/></g>
+<circle cx="214" cy="26" r="12" fill="#ffd54f"/>
+<g class="rb" fill="none" stroke-width="8">
+<path d="M14 150 A106 106 0 0 1 226 150" stroke="#ff6b6b"/><path d="M22 150 A98 98 0 0 1 218 150" stroke="#ffa94d"/><path d="M30 150 A90 90 0 0 1 210 150" stroke="#ffe066"/><path d="M38 150 A82 82 0 0 1 202 150" stroke="#8ce99a"/><path d="M46 150 A74 74 0 0 1 194 150" stroke="#74c0fc"/><path d="M54 150 A66 66 0 0 1 186 150" stroke="#b197fc"/>
+</g>
+<path d="M20 50 q4 -12 18 -8 q10 -10 22 0 q12 0 10 10 h-46 q-8 -2 -4 -2z" fill="#fff"/>
+<rect y="140" width="240" height="28" fill="#8fbf6a" stroke="none"/>
+<ellipse cx="120" cy="153" rx="62" ry="8" fill="#8cc0ea"/>
+<g class="b2"><g transform="translate(120 150) scale(1.1)"><rect x="-10" y="-18" width="8" height="16" rx="3" fill="#e74c3c"/><rect x="2" y="-18" width="8" height="16" rx="3" fill="#e74c3c"/><ellipse cx="-6" cy="-2" rx="6.5" ry="3.5" fill="#e74c3c"/><ellipse cx="6" cy="-2" rx="6.5" ry="3.5" fill="#e74c3c"/><g transform="rotate(145 -16 -42)"><g><rect x="-20" y="-42" width="8" height="22" rx="4" fill="#ffd23f"/><circle cx="-16" cy="-19" r="4" fill="#ffd9b8"/></g></g><g transform="rotate(-145 16 -42)"><g><rect x="12" y="-42" width="8" height="22" rx="4" fill="#ffd23f"/><circle cx="16" cy="-19" r="4" fill="#ffd9b8"/></g></g><path d="M-14 -44 h28 l5 32 h-38z" fill="#ffd23f"/><path d="M0 -44v32" stroke-width="1.5"/><circle cx="-4" cy="-34" r="1.6" fill="#3a3a3a" stroke="none"/><circle cx="-4" cy="-24" r="1.6" fill="#3a3a3a" stroke="none"/><circle cy="-59" r="20" fill="#ffd23f"/><circle cy="-58" r="16" fill="#ffd9b8"/><path d="M-16 -58 A16 16 0 0 1 16 -58 Q6 -64 -16 -58Z" fill="#3b2a20"/><path d="M-9 -54 q3 -4 6 0 M3 -54 q3 -4 6 0" fill="none" stroke-width="1.6"/><circle cx="-10" cy="-49" r="3" fill="#ff9e9e" stroke="none" opacity=".7"/><circle cx="10" cy="-49" r="3" fill="#ff9e9e" stroke="none" opacity=".7"/><path d="M-5 -50 q5 8 10 0z" fill="#c0392b" stroke-width="1.5"/></g></g>
+<g class="b1"><g transform="translate(58 152) scale(1.5)"><g transform="scale(-1 1)"><path d="M-4 0 v-4 M4 0 v-4 M-7 0 h6 M1 0 h6" stroke="#f08c00" stroke-width="1.8"/><circle cy="-13" r="11" fill="#fff59d"/><path d="M-1 -24 q-1 -5 2 -7 M2 -24 q2 -4 6 -4" fill="none" stroke-width="1.5"/><path d="M1 -13 q7 -3 8 4 q-5 3 -8 -4z" fill="#ffe14d" stroke-width="1.5"/><path d="M-7 -16 q2 -3 4 0" fill="none" stroke-width="1.5"/><circle cx="-5" cy="-11" r="2" fill="#ff9e9e" stroke="none" opacity=".8"/><path d="M-10.5 -15 l-6 2.5 l6 2.5z" fill="#ff9800" stroke-width="1.4"/></g></g></g>
+<g class="b3"><g transform="translate(184 152) scale(1.4)"><ellipse cx="-5" cy="-1" rx="5" ry="2" fill="#ff9800" stroke-width="1.4"/><ellipse cx="5" cy="-1" rx="5" ry="2" fill="#ff9800" stroke-width="1.4"/><path d="M-14 -11 q0 -11 13 -11 q10 0 14 -6 q4 9 -1 16 q-4 7 -14 7 q-12 0 -12 -6z" fill="#ffd84d"/><path d="M-2 -15 q9 -5 11 2 q-6 5 -11 -2z" fill="#ffc400" stroke-width="1.5"/><circle cx="-9" cy="-29" r="8.5" fill="#ffd84d"/><path d="M-16 -29 q-9 -1 -10 3 q5 3 10 0z" fill="#ff9800" stroke-width="1.5"/><path d="M-13 -31 q2 -3 4 0" fill="none" stroke-width="1.5"/><circle cx="-6" cy="-25" r="2" fill="#ff9e9e" stroke="none" opacity=".8"/></g></g>
+<path class="heart a" d="M88 52c-3-5-10-2-7 3l7 7l7-7c3-5-4-8-7-3z" fill="#ff6b8a" stroke-width="1.2"/><path class="heart b" d="M152 48c-3-5-10-2-7 3l7 7l7-7c3-5-4-8-7-3z" fill="#ff6b8a" stroke-width="1.2"/>
+<g fill="#fff59d" stroke-width="1"><path class="tw" d="M30 96l2 4 4 .6-3 2.6.8 4-3.8-2-3.8 2 .8-4-3-2.6 4-.6z"/><path class="tw x" d="M206 92l2 4 4 .6-3 2.6.8 4-3.8-2-3.8 2 .8-4-3-2.6 4-.6z"/></g>
+</g></svg>

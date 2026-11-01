@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168">
+<style>
+.rays{transform-origin:30px 28px;animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 3s ease-in-out infinite alternate}
+.sway.b{animation-delay:-1.5s}
+@keyframes sway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+.wave{animation:wave 2s linear infinite}
+@keyframes wave{to{transform:translateX(20px)}}
+.bobw{animation:bobw 1.2s ease-in-out infinite alternate}
+@keyframes bobw{to{transform:translateY(-3px)}}
+.cheer{transform-box:fill-box;transform-origin:10% 50%;animation:flapw .25s ease-in-out .3s 12 alternate}
+@keyframes flapw{to{transform:rotate(-50deg)}}
+.momsw{animation:momsw 4s ease-in-out both}
+@keyframes momsw{to{transform:translateX(10px)}}
+.follow{animation:follow 3.6s ease-in-out both}
+@keyframes follow{from{transform:translateX(-60px)}to{transform:none}}
+.star{opacity:0;transform-box:fill-box;transform-origin:50% 50%;animation:spark .8s ease-out .4s 4 both}
+@keyframes spark{0%{opacity:0;transform:scale(0)}50%{opacity:1;transform:scale(1.2)}100%{opacity:0;transform:scale(.6)}}
+</style>
+<g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#d6efff" stroke="none"/>
+<g class="rays" stroke="#f5b400" stroke-width="2.5"><path d="M30 6v6M30 44v6M8 28h6M46 28h6M14 12l4 4M42 40l4 4M14 44l4-4M42 16l4-4"/></g>
+<circle cx="30" cy="28" r="11" fill="#ffd54f"/>
+<rect y="96" width="240" height="72" fill="#8fd4f4" stroke="none"/>
+<g class="sway"><path d="M16 140V96M24 140V104" fill="none" stroke="#4f9a3a" stroke-width="3"/><rect x="13" y="90" width="6" height="16" rx="3" fill="#8a5a3c"/><rect x="21" y="98" width="6" height="14" rx="3" fill="#8a5a3c"/></g><g class="sway"><path d="M220 140V96M228 140V104" fill="none" stroke="#4f9a3a" stroke-width="3"/><rect x="217" y="90" width="6" height="16" rx="3" fill="#8a5a3c"/><rect x="225" y="98" width="6" height="14" rx="3" fill="#8a5a3c"/></g>
+<g class="momsw"><g transform="translate(170 128)"><g class="bobw"><path d="M-6 -2l-4 4h8zM6 -2l-4 4h8z" fill="#ff9800" stroke-width="1.5"/>
+<path d="M-24 -26q-6 -6 -2 -10q6 6 10 6z" fill="#fff"/>
+<ellipse cx="0" cy="-16" rx="24" ry="15" fill="#fff"/>
+<path d="M12 -24Q10 -34 14 -40" fill="none" stroke="#fff" stroke-width="10"/>
+<circle cx="16" cy="-42" r="12" fill="#fff"/>
+<path d="M12 -26Q9 -32 10 -36M22 -32Q20 -28 18 -24" fill="none" stroke="#fff" stroke-width="6"/>
+<path d="M26 -44q10 0 12 3q-4 4-12 2z" fill="#ff9800"/>
+<circle cx="19" cy="-45" r="2.2" fill="#2b2b2b" stroke="none"/>
+<circle cx="16" cy="-38" r="2.4" fill="#ffb3b3" stroke="none"/>
+<g class="cheer"><path d="M-12 -20q12 -8 22 0q-8 12 -22 0z" fill="#fff"/></g></g></g></g>
+<g class="follow" style="animation-delay:0.0s"><g transform="translate(112 136)"><g class="bobw" style="animation-delay:0.0s"><g transform="scale(.5)"><path d="M-6 -2l-4 4h8zM6 -2l-4 4h8z" fill="#ff9800" stroke-width="1.5"/>
+<path d="M-24 -26q-6 -6 -2 -10q6 6 10 6z" fill="#ffe14d"/>
+<ellipse cx="0" cy="-16" rx="24" ry="15" fill="#ffe14d"/>
+<path d="M12 -24Q10 -34 14 -40" fill="none" stroke="#ffe14d" stroke-width="10"/>
+<circle cx="16" cy="-42" r="12" fill="#ffe14d"/>
+<path d="M12 -26Q9 -32 10 -36M22 -32Q20 -28 18 -24" fill="none" stroke="#ffe14d" stroke-width="6"/>
+<path d="M26 -44q10 0 12 3q-4 4-12 2z" fill="#ff9800"/>
+<circle cx="19" cy="-45" r="2.2" fill="#2b2b2b" stroke="none"/>
+<circle cx="16" cy="-38" r="2.4" fill="#ffb3b3" stroke="none"/>
+<g class="wing s"><path d="M-12 -20q12 -8 22 0q-8 12 -22 0z" fill="#ffe14d"/></g></g></g></g></g><g class="follow" style="animation-delay:0.2s"><g transform="translate(82 136)"><g class="bobw" style="animation-delay:-0.3s"><g transform="scale(.5)"><path d="M-6 -2l-4 4h8zM6 -2l-4 4h8z" fill="#ff9800" stroke-width="1.5"/>
+<path d="M-24 -26q-6 -6 -2 -10q6 6 10 6z" fill="#ffe14d"/>
+<ellipse cx="0" cy="-16" rx="24" ry="15" fill="#ffe14d"/>
+<path d="M12 -24Q10 -34 14 -40" fill="none" stroke="#ffe14d" stroke-width="10"/>
+<circle cx="16" cy="-42" r="12" fill="#ffe14d"/>
+<path d="M12 -26Q9 -32 10 -36M22 -32Q20 -28 18 -24" fill="none" stroke="#ffe14d" stroke-width="6"/>
+<path d="M26 -44q10 0 12 3q-4 4-12 2z" fill="#ff9800"/>
+<circle cx="19" cy="-45" r="2.2" fill="#2b2b2b" stroke="none"/>
+<circle cx="16" cy="-38" r="2.4" fill="#ffb3b3" stroke="none"/>
+<g class="wing s"><path d="M-12 -20q12 -8 22 0q-8 12 -22 0z" fill="#ffe14d"/></g></g></g></g></g><g class="follow" style="animation-delay:0.4s"><g transform="translate(52 136)"><g class="bobw" style="animation-delay:-0.6s"><g transform="scale(.5)"><path d="M-6 -2l-4 4h8zM6 -2l-4 4h8z" fill="#ff9800" stroke-width="1.5"/>
+<path d="M-24 -26q-6 -6 -2 -10q6 6 10 6z" fill="#ffe14d"/>
+<ellipse cx="0" cy="-16" rx="24" ry="15" fill="#ffe14d"/>
+<path d="M12 -24Q10 -34 14 -40" fill="none" stroke="#ffe14d" stroke-width="10"/>
+<circle cx="16" cy="-42" r="12" fill="#ffe14d"/>
+<path d="M12 -26Q9 -32 10 -36M22 -32Q20 -28 18 -24" fill="none" stroke="#ffe14d" stroke-width="6"/>
+<path d="M26 -44q10 0 12 3q-4 4-12 2z" fill="#ff9800"/>
+<circle cx="19" cy="-45" r="2.2" fill="#2b2b2b" stroke="none"/>
+<circle cx="16" cy="-38" r="2.4" fill="#ffb3b3" stroke="none"/>
+<g class="wing s"><path d="M-12 -20q12 -8 22 0q-8 12 -22 0z" fill="#ffe14d"/></g></g></g></g></g>
+<g class="wave"><path d="M-20 132q10-5 20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0t20 0V170H-20Z" fill="#6ec6f0" stroke="#3a8fc0"/></g>
+<g class="star"><path d="M206 64l3 7 7 3-7 3-3 7-3-7-7-3 7-3z" fill="#ffd54f" stroke-width="1.5"/><path d="M226 84l2 4 4 2-4 2-2 4-2-4-4-2 4-2z" fill="#ffd54f" stroke-width="1.2"/></g>
+</g></svg>

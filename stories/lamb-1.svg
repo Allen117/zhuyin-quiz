@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168">
+<style>
+.sky{opacity:0;animation:fade 1.6s ease-out both}
+@keyframes fade{to{opacity:1}}
+.rise{transform:translateY(80px);animation:rise 1.6s ease-out both}
+@keyframes rise{from{transform:translate(0,100px)}to{transform:translate(0,40px)}}
+.rays{transform-box:fill-box;transform-origin:50% 50%;animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.walk{animation:walk 2.6s ease-in-out 1.4s both}
+@keyframes walk{from{transform:translateX(-40px)}to{transform:translateX(110px)}}
+.bob{animation:bob .3s ease-in-out 1.4s 9 alternate}
+@keyframes bob{to{transform:translateY(-4px)}}
+</style>
+<g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#ffe0b2" stroke="none"/>
+<rect class="sky" width="240" height="168" fill="#d6efff" stroke="none"/>
+<g class="rise"><g class="rays" stroke="#f5b400" stroke-width="2.5"><path d="M176 -22v6M176 16v6M154 0h6M192 0h6M160 -16l4 4M188 12l4 4M160 16l4-4M188 -12l4-4"/></g><circle cx="176" cy="0" r="11" fill="#ffd54f"/></g>
+<path d="M110 140L176 48L250 140Z" fill="#8bc77a"/><path d="M163 66l13 -18l13 18q-6 5 -13 0q-6 5 -13 0z" fill="#fff"/>
+<path d="M60 140L110 84L160 140Z" fill="#a5d68f"/>
+<ellipse cx="120" cy="146" rx="150" ry="40" fill="#bfe5a6" stroke="none"/>
+<rect y="140" width="240" height="28" fill="#9fd36b" stroke="none"/>
+
+<g class="walk"><g transform="translate(0 146)"><g class="bob"><g transform="scale(1.25)"><g fill="#4a4a4a"><rect x="-14" y="-10" width="5" height="10" rx="2"/><rect x="-4" y="-10" width="5" height="10" rx="2"/><rect x="4" y="-10" width="5" height="10" rx="2"/><rect x="11" y="-10" width="5" height="10" rx="2"/></g>
+<g fill="#fff"><circle cx="-14" cy="-18" r="10"/><circle cx="-4" cy="-24" r="11"/><circle cx="8" cy="-20" r="10"/><circle cx="-8" cy="-12" r="10"/><circle cx="4" cy="-12" r="10"/><circle cx="-20" cy="-12" r="7"/></g>
+<g class=""><ellipse cx="12" cy="-38" rx="7" ry="4" fill="#ffd9c4" transform="rotate(30 12 -38)"/>
+<ellipse cx="22" cy="-34" rx="10" ry="11" fill="#ffd9c4"/>
+<circle cx="18" cy="-44" r="6" fill="#fff"/><circle cx="24" cy="-45" r="5" fill="#fff"/>
+<circle cx="25" cy="-37" r="2" fill="#2b2b2b" stroke="none"/>
+<circle cx="22" cy="-31" r="2.4" fill="#ffb3b3" stroke="none"/><path d="M22 -30q3 3 6 0" fill="none" stroke-width="1.4"/></g></g></g></g></g>
+</g></svg>

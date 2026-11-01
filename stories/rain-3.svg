@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168">
+<style>
+.fall{animation:fall .5s linear infinite}
+@keyframes fall{from{transform:translate(3px,-28px)}to{transform:translate(0,0)}}
+.hx{animation:hx 2.4s linear both}
+@keyframes hx{to{transform:translateX(130px)}}
+.hy{animation:hy 2.4s both}
+@keyframes hy{0%,33.3%,66.6%,100%{transform:translateY(0);animation-timing-function:ease-out}16.6%,50%,83.3%{transform:translateY(-30px);animation-timing-function:ease-in}}
+.sq{transform-box:fill-box;transform-origin:50% 100%;animation:sq .3s ease-out 2.4s}
+@keyframes sq{50%{transform:scale(1.12,.86)}}
+.upl{transform-box:fill-box;transform-origin:50% 0;animation:upl .3s ease-out 2.5s both}
+@keyframes upl{to{transform:rotate(145deg)}}
+.upr{transform-box:fill-box;transform-origin:50% 0;animation:upr .3s ease-out 2.5s both}
+@keyframes upr{to{transform:rotate(-145deg)}}
+.splash{transform-origin:166px 148px;animation:burst .5s ease-out 2.4s both,gone .4s 3.1s forwards}
+@keyframes burst{from{transform:scale(.1);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes gone{to{opacity:0}}
+.rip{transform-box:fill-box;transform-origin:50% 50%;animation:rip 1.4s ease-out infinite}
+@keyframes rip{from{transform:scale(.3);opacity:1}to{transform:scale(1);opacity:0}}
+</style>
+<g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#b9c7d6" stroke="none"/>
+<path d="M-10 30 q6 -20 30 -14 q14 -18 36 -6 q22 -6 26 12 q10 10 -6 18 h-80 q-14 -2 -6 -10z" fill="#9aa8b8"/>
+<path d="M140 22 q6 -18 30 -12 q16 -16 36 -2 q24 -4 26 14 q10 10 -6 16 h-80 q-14 -2 -6 -16z" fill="#8d9bab"/>
+<rect y="140" width="240" height="28" fill="#8fbf6a" stroke="none"/>
+<g fill="#6aa84f"><circle cx="16" cy="140" r="14"/><circle cx="36" cy="142" r="11"/><circle cx="222" cy="140" r="14"/></g>
+<ellipse cx="166" cy="150" rx="40" ry="9" fill="#8cc0ea"/>
+<ellipse class="rip" cx="166" cy="150" rx="30" ry="6" fill="none" stroke="#fff" stroke-width="1.5"/>
+<g class="hx"><g class="hy"><g class="sq"><g transform="translate(36 147) scale(1.1)"><rect x="-10" y="-18" width="8" height="16" rx="3" fill="#e74c3c"/><rect x="2" y="-18" width="8" height="16" rx="3" fill="#e74c3c"/><ellipse cx="-6" cy="-2" rx="6.5" ry="3.5" fill="#e74c3c"/><ellipse cx="6" cy="-2" rx="6.5" ry="3.5" fill="#e74c3c"/><g class="upl"><rect x="-20" y="-42" width="8" height="22" rx="4" fill="#ffd23f"/><circle cx="-16" cy="-19" r="4" fill="#ffd9b8"/></g><g class="upr"><rect x="12" y="-42" width="8" height="22" rx="4" fill="#ffd23f"/><circle cx="16" cy="-19" r="4" fill="#ffd9b8"/></g><path d="M-14 -44 h28 l5 32 h-38z" fill="#ffd23f"/><path d="M0 -44v32" stroke-width="1.5"/><circle cx="-4" cy="-34" r="1.6" fill="#3a3a3a" stroke="none"/><circle cx="-4" cy="-24" r="1.6" fill="#3a3a3a" stroke="none"/><circle cy="-59" r="20" fill="#ffd23f"/><circle cy="-58" r="16" fill="#ffd9b8"/><path d="M-16 -58 A16 16 0 0 1 16 -58 Q6 -64 -16 -58Z" fill="#3b2a20"/><circle cx="-6" cy="-55" r="2" fill="#333" stroke="none"/><circle cx="6" cy="-55" r="2" fill="#333" stroke="none"/><circle cx="-10" cy="-49" r="3" fill="#ff9e9e" stroke="none" opacity=".7"/><circle cx="10" cy="-49" r="3" fill="#ff9e9e" stroke="none" opacity=".7"/><path d="M-5 -50 q5 8 10 0z" fill="#c0392b" stroke-width="1.5"/></g></g></g></g>
+<g class="splash" fill="#8cc0ea" stroke-width="1.5"><path d="M134 132 q-4 6 0 8 q4 -2 0 -8z"/><path d="M126 144 q-4 6 0 8 q4 -2 0 -8z"/><path d="M146 124 q-4 6 0 8 q4 -2 0 -8z"/><path d="M198 132 q-4 6 0 8 q4 -2 0 -8z"/><path d="M206 144 q-4 6 0 8 q4 -2 0 -8z"/><path d="M186 124 q-4 6 0 8 q4 -2 0 -8z"/></g>
+<g class="fall"><path d="M13 -15l-3 8M39 -27l-3 8M64 -17l-3 8M89 -23l-3 8M122 -23l-3 8M153 -16l-3 8M188 -21l-3 8M214 -22l-3 8M243 -20l-3 8M16 2l-3 8M49 1l-3 8M76 6l-3 8M105 8l-3 8M136 10l-3 8M164 12l-3 8M186 1l-3 8M214 12l-3 8M237 11l-3 8M17 33l-3 8M50 39l-3 8M80 37l-3 8M107 40l-3 8M139 39l-3 8M170 35l-3 8M203 32l-3 8M227 35l-3 8M8 63l-3 8M42 62l-3 8M66 66l-3 8M98 69l-3 8M121 66l-3 8M145 61l-3 8M179 61l-3 8M202 62l-3 8M236 64l-3 8M2 88l-3 8M37 91l-3 8M69 94l-3 8M97 85l-3 8M127 90l-3 8M163 85l-3 8M197 95l-3 8M228 85l-3 8M12 120l-3 8M43 118l-3 8M75 120l-3 8M105 125l-3 8M128 117l-3 8M159 120l-3 8M185 116l-3 8M213 122l-3 8M238 113l-3 8M19 153l-3 8M53 152l-3 8M81 145l-3 8M107 154l-3 8M130 151l-3 8M152 145l-3 8M183 153l-3 8M215 145l-3 8M240 147l-3 8M2 170l-3 8M36 170l-3 8M59 176l-3 8M93 178l-3 8M126 174l-3 8M153 181l-3 8M181 177l-3 8M207 170l-3 8M241 175l-3 8" stroke="#fff" stroke-width="1.8" opacity=".85"/></g>
+</g></svg>

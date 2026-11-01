@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168">
+<style>
+.wv{animation:wv 3s linear infinite}
+@keyframes wv{to{transform:translateX(-40px)}}
+.bobw{animation:bobw 1.6s ease-in-out infinite alternate}
+@keyframes bobw{to{transform:translateY(2px)}}
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 3s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}
+.cloud{animation:cloud 8s ease-in-out infinite alternate}
+@keyframes cloud{to{transform:translateX(24px)}}
+.flap{transform-box:fill-box;transform-origin:10% 60%;animation:flap .22s ease-in-out .2s 10 alternate}
+@keyframes flap{to{transform:rotate(-35deg)}}
+.pad{animation:pad 2.4s ease-in-out .2s both}
+@keyframes pad{25%{transform:translateX(-12px)}75%{transform:translateX(10px)}}
+.gtalk{transform-box:fill-box;transform-origin:80% 80%;animation:gtalk .2s ease-in-out 12 alternate}
+@keyframes gtalk{to{transform:rotate(8deg)}}
+.nod{animation:nod .2s ease-in-out 2.8s 6 alternate}
+@keyframes nod{to{transform:translateY(4px)}}
+.ok{transform-box:fill-box;transform-origin:50% 0;animation:ok .4s ease-out 2.8s both}
+@keyframes ok{to{transform:rotate(-140deg)}}
+</style>
+<g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#d6efff" stroke="none"/>
+<path d="M30 30 q4 -12 18 -8 q10 -10 22 0 q12 0 10 10 h-46 q-8 -2 -4 -2z" fill="#fff" class="cloud"/>
+<rect y="80" width="240" height="88" fill="#9fd36b" stroke="none"/>
+<path d="M104 168 Q108 112 150 100 H240 V168Z" fill="#7fc4ec"/>
+<path d="M104 168 Q108 112 150 100 H240" fill="none" stroke="#5fae5a" stroke-width="3"/>
+<defs><clipPath id="r"><path d="M104 168 Q108 112 150 100 H240 V168Z"/></clipPath></defs>
+<g clip-path="url(#r)"><g class="wv"><path d="M-40 112q5 -4 10 0M0 112q5 -4 10 0M40 112q5 -4 10 0M80 112q5 -4 10 0M120 112q5 -4 10 0M160 112q5 -4 10 0M200 112q5 -4 10 0M240 112q5 -4 10 0M280 112q5 -4 10 0M-20 126q5 -4 10 0M20 126q5 -4 10 0M60 126q5 -4 10 0M100 126q5 -4 10 0M140 126q5 -4 10 0M180 126q5 -4 10 0M220 126q5 -4 10 0M260 126q5 -4 10 0M-40 140q5 -4 10 0M0 140q5 -4 10 0M40 140q5 -4 10 0M80 140q5 -4 10 0M120 140q5 -4 10 0M160 140q5 -4 10 0M200 140q5 -4 10 0M240 140q5 -4 10 0M280 140q5 -4 10 0M-20 154q5 -4 10 0M20 154q5 -4 10 0M60 154q5 -4 10 0M100 154q5 -4 10 0M140 154q5 -4 10 0M180 154q5 -4 10 0M220 154q5 -4 10 0M260 154q5 -4 10 0" fill="none" stroke="#fff" stroke-width="1.6" opacity=".8"/></g></g>
+<g class="sway" fill="none" stroke="#5f9e3a" stroke-width="2.5"><path d="M208 102q-2 -16 -6 -24M212 102q0 -18 2 -28M216 102q3 -14 8 -20"/><ellipse cx="214" cy="76" rx="2.5" ry="6" fill="#8a5a3c" stroke-width="1.5"/></g>
+<g class="nod"><g transform="translate(58 150) scale(1.2)"><path d="M10 -12 q18 -2 15 -22 q-2 -8 -8 -5" fill="none" stroke="#a0673a" stroke-width="4.5"/><ellipse cx="-8" cy="-6" rx="6" ry="7" fill="#a0673a"/><ellipse cx="8" cy="-6" rx="6" ry="7" fill="#a0673a"/><g><rect x="-20" y="-38" width="7" height="20" rx="3.5" fill="#a0673a"/><circle cx="-16.5" cy="-17" r="4" fill="#e8c39e"/></g><g class="ok"><rect x="13" y="-38" width="7" height="20" rx="3.5" fill="#a0673a"/><circle cx="16.5" cy="-17" r="4" fill="#e8c39e"/></g><ellipse cy="-24" rx="15" ry="16" fill="#a0673a"/><ellipse cy="-21" rx="9" ry="11" fill="#e8c39e"/><circle cx="-17" cy="-52" r="6" fill="#e8c39e"/><circle cx="17" cy="-52" r="6" fill="#e8c39e"/><circle cy="-52" r="15" fill="#a0673a"/><ellipse cy="-48" rx="11.5" ry="10" fill="#e8c39e"/><circle cx="-5" cy="-51" r="2" fill="#333" stroke="none"/><circle cx="5" cy="-51" r="2" fill="#333" stroke="none"/><circle cx="-8" cy="-45" r="2.4" fill="#ff9e9e" stroke="none" opacity=".7"/><circle cx="8" cy="-45" r="2.4" fill="#ff9e9e" stroke="none" opacity=".7"/><path d="M-5 -46 q5 8 10 0z" fill="#c0392b" stroke-width="1.5"/></g></g>
+<g class="pad"><g class="bobw"><g transform="translate(176 146) scale(1.45)"><path d="M20 -16 l12 -9 l-3 14z" fill="#fff"/><path d="M-11 -14 Q-20 -30 -12 -42" stroke="#3a3a3a" stroke-width="11" fill="none"/><path d="M-11 -14 Q-20 -30 -12 -42" stroke="#fff" stroke-width="7" fill="none"/><path d="M-18 -10 q0 -13 20 -13 q22 0 24 12 q-2 11 -22 11 h-12 q-10 0 -10 -10z" fill="#fff"/><g class="flap"><path d="M-2 -12 q10 -10 22 -2 q-10 8 -22 2z" fill="#eef1f5" stroke-width="1.5"/></g><g class="gtalk"><circle cx="-12" cy="-44" r="7.5" fill="#fff"/><path d="M-19 -48 l-9 1.5 l9 2.5z M-19 -43 l-8 4 l8 -1.5z" fill="#ff9800" stroke-width="1.4"/><path d="M-19 -45 l-5 .5 l5 1.2z" fill="#c0392b" stroke="none"/><circle cx="-18" cy="-49.5" r="2.5" fill="#ff9800" stroke-width="1.2"/><circle cx="-13" cy="-46" r="1.7" fill="#333" stroke="none"/><circle cx="-9" cy="-41" r="2" fill="#ff9e9e" stroke="none" opacity=".8"/></g></g></g></g>
+</g></svg>

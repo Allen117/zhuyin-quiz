@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168">
+<style>
+.rays{animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 3s ease-in-out infinite alternate}
+.sway.b{animation-delay:-1.5s}
+@keyframes sway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+.drift{animation:drift 8s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateX(18px)}}
+@keyframes fadein{to{opacity:1}}
+@keyframes fadeout{to{opacity:0}}
+@keyframes pop{0%{opacity:0;transform:scale(0)}70%{opacity:1;transform:scale(1.2)}100%{opacity:1;transform:scale(1)}}
+
+.walk{animation:walk 3s ease-out both}
+@keyframes walk{from{transform:translateX(-40px)}to{transform:translateX(56px)}}
+.bob{animation:bob .3s ease-in-out 10 alternate}
+@keyframes bob{to{transform:translateY(-4px)}}
+.point{transform-box:fill-box;transform-origin:0 0;animation:point 1.2s ease-out 3.1s both}
+@keyframes point{0%{transform:none}40%,100%{transform:rotate(-115deg)}}
+</style>
+<g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#d6efff" stroke="none"/>
+<g class="rays" style="transform-origin:30px 28px"><path d="M30 11v6M30 39v6M13 28h6M41 28h6M19 17l4 4M37 35l4 4M19 39l4-4M37 21l4-4" stroke="#f5b400" stroke-width="2.5"/></g>
+<circle cx="30" cy="28" r="11" fill="#ffd54f"/>
+<g class="drift"><path d="M84 20q4-10 14-6q6-8 15 0q9 0 7 8h-36q-5-1 0-2z" fill="#fff"/></g>
+<path d="M100 140L170 34L240 120V140Z" fill="#9ccc8a"/><path d="M156 55L170 34L184 55Q177 50 170 56Q163 50 156 55Z" fill="#fff"/>
+<path d="M60 140L120 70L170 140Z" fill="#b5dca0"/>
+<rect y="138" width="240" height="30" fill="#9fd36b" stroke="none"/>
+<path d="M0 154Q120 146 240 150" fill="none" stroke="#e8d3a3" stroke-width="6"/>
+<g class="sway b"><rect x="208" y="96" width="12" height="46" rx="3" fill="#8a5a3c"/><circle cx="202" cy="88" r="17" fill="#5fb04a"/><circle cx="226" cy="86" r="17" fill="#5fb04a"/><circle cx="214" cy="70" r="19" fill="#6cc055"/></g>
+<g class="walk"><g transform="translate(10 148)"><g class="bob">
+<path d="M-7 -32v32M7 -32v32" stroke-width="6"/>
+<rect x="-15" y="-82" width="30" height="46" rx="10" fill="#4caf50"/>
+<rect x="-14" y="-42" width="28" height="14" rx="4" fill="#8d6e63"/>
+<g class=""><path d="M-13 -76l-10 22" stroke-width="5"/><circle cx="-23" cy="-52" r="4" fill="#ffd9b8"/></g>
+<g class=""><path d="M13 -76l8 40" stroke-width="5"/><circle cx="21" cy="-34" r="4" fill="#ffd9b8"/></g>
+<circle cy="-97" r="15" fill="#ffd9b8"/>
+<path d="M-15 -98Q-16 -114 0 -114Q16 -114 15 -98Q8 -107 -15 -98Z" fill="#2e2016"/>
+<circle cx="-5" cy="-96" r="1.8" fill="#333" stroke="none"/><circle cx="5" cy="-96" r="1.8" fill="#333" stroke="none"/>
+<circle cx="-9" cy="-90" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/><circle cx="9" cy="-90" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/>
+<path d="M-5 -90q5 6 10 0z" fill="#c0392b" stroke-width="1.5"/>
+<g transform="translate(38 0)"><path d="M-6 -18v18M6 -18v18" stroke-width="5"/>
+<rect x="-21" y="-48" width="13" height="24" rx="4" fill="#4fa3e0"/>
+<rect x="-13" y="-50" width="26" height="34" rx="9" fill="#ffb74d"/>
+<g class=""><path d="M-11 -44l-5 10" stroke-width="4"/><circle cx="-16" cy="-34" r="3.5" fill="#ffd9b8"/></g>
+<g class="point"><path d="M11 -44l8 16" stroke-width="4"/><circle cx="19" cy="-27" r="3.5" fill="#ffd9b8"/></g>
+<circle cy="-64" r="14" fill="#ffd9b8"/>
+<path d="M-14 -66A14 14 0 0 1 14 -66Z" fill="#ffd54f"/><path d="M10 -66h9" stroke-width="3"/>
+<circle cx="-5" cy="-63" r="1.8" fill="#333" stroke="none"/><circle cx="5" cy="-63" r="1.8" fill="#333" stroke="none"/>
+<circle cx="-8" cy="-58" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/><circle cx="8" cy="-58" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/>
+<path d="M-4 -58q4 6 8 0z" fill="#c0392b" stroke-width="1.5"/></g>
+</g></g></g>
+</g></svg>

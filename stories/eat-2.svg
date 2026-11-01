@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168">
+<style>
+.feed{animation:feed .45s ease-in-out .2s 6 alternate}
+@keyframes feed{to{transform:translate(-3px,3px)}}
+.b3{animation:gone .15s .6s forwards}.b2{animation:gone .15s 1.5s forwards}.b1{animation:gone .15s 2.4s forwards}
+@keyframes gone{to{opacity:0}}
+@keyframes show{to{opacity:1}}
+.mo{transform-box:fill-box;transform-origin:50% 0;animation:mo .2s ease-in-out .2s 14 alternate}
+@keyframes mo{to{transform:scaleY(.3)}}
+.hp{opacity:0;animation:show .1s 3s forwards}
+.sad{animation:gone .1s 3s forwards}
+.heart{opacity:0;animation:rise 2s ease-out infinite}
+.heart.a{animation-delay:3.1s}.heart.b{animation-delay:3.8s}
+@keyframes rise{0%{opacity:0;transform:translate(0,0) scale(.5)}20%{opacity:1}100%{opacity:0;transform:translate(6px,-30px) scale(1.1)}}
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 3s ease-in-out infinite alternate}
+.sway.b{animation-delay:-1.5s}
+@keyframes sway{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}
+</style>
+<g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#fff3d6" stroke="none"/>
+<rect y="140" width="240" height="28" fill="#c9e59a" stroke="none"/>
+<g class="sway"><rect x="26" y="40" width="16" height="104" rx="4" fill="#8a5a3c"/><circle cx="18" cy="34" r="24" fill="#5cb85c"/><circle cx="58" cy="28" r="22" fill="#6cc76c"/><circle cx="34" cy="10" r="20" fill="#5cb85c"/>
+<g fill="#ffe14d" stroke-width="1.5"><path d="M50 46 q-6 12 2 20 q2 -10 4 -18z"/><path d="M56 46 q0 14 8 18 q-2 -10 -2 -18z"/><path d="M62 44 q6 12 14 14 q-6 -8 -8 -16z"/></g></g>
+<g class="sway b"><rect x="200" y="70" width="12" height="74" rx="3" fill="#8a5a3c"/><circle cx="194" cy="66" r="18" fill="#6cc76c"/><circle cx="218" cy="62" r="18" fill="#5cb85c"/></g>
+<g transform="translate(126 148) scale(1.5)"><path d="M10 -12 q18 -2 15 -22 q-2 -8 -8 -5" fill="none" stroke="#a0673a" stroke-width="4.5"/><ellipse cx="-8" cy="-6" rx="6" ry="7" fill="#a0673a"/><ellipse cx="8" cy="-6" rx="6" ry="7" fill="#a0673a"/><g><rect x="-20" y="-38" width="7" height="20" rx="3.5" fill="#a0673a"/><circle cx="-16.5" cy="-17" r="4" fill="#e8c39e"/></g><g class="feed"><path d="M14 -32 Q26 -34 24 -42" fill="none" stroke="#3a3a3a" stroke-width="10"/><path d="M14 -32 Q26 -34 24 -42" fill="none" stroke="#a0673a" stroke-width="6.5"/><g class="b1"><path d="M23 -44 L18 -52" stroke="#3a3a3a" stroke-width="10"/><path d="M23 -44 L18 -52" stroke="#ffe14d" stroke-width="6.5"/></g><g class="b2"><path d="M18 -52 L12 -57" stroke="#3a3a3a" stroke-width="10"/><path d="M18 -52 L12 -57" stroke="#ffe14d" stroke-width="6.5"/></g><g class="b3"><path d="M12 -57 L6 -60" stroke="#3a3a3a" stroke-width="10"/><path d="M12 -57 L6 -60" stroke="#ffe14d" stroke-width="6.5"/></g><path d="M23 -44 q-6 6 -10 4 M23 -44 q2 8 -1 12 M23 -44 q8 4 9 10" fill="#ffe14d" stroke-width="1.5"/><circle cx="24" cy="-43" r="4" fill="#e8c39e"/></g><ellipse cy="-24" rx="15" ry="16" fill="#a0673a"/><ellipse cy="-21" rx="9" ry="11" fill="#e8c39e"/><circle cx="-17" cy="-52" r="6" fill="#e8c39e"/><circle cx="17" cy="-52" r="6" fill="#e8c39e"/><circle cy="-52" r="15" fill="#a0673a"/><ellipse cy="-48" rx="11.5" ry="10" fill="#e8c39e"/><path d="M-8 -50 q3 -4 6 0 M2 -50 q3 -4 6 0" fill="none" stroke-width="1.6"/><circle cx="-8" cy="-45" r="2.4" fill="#ff9e9e" stroke="none" opacity=".7"/><circle cx="8" cy="-45" r="2.4" fill="#ff9e9e" stroke="none" opacity=".7"/><g class="sad"><ellipse class="mo" cx="0" cy="-45" rx="3.5" ry="3" fill="#c0392b" stroke-width="1.5"/></g><path class="hp" d="M-5 -46 q5 7 10 0z" fill="#c0392b" stroke-width="1.5"/></g>
+<path class="heart a" d="M104 52c-3-5-10-2-7 3l7 7l7-7c3-5-4-8-7-3z" fill="#ff6b8a" stroke-width="1.2"/><path class="heart b" d="M150 46c-3-5-10-2-7 3l7 7l7-7c3-5-4-8-7-3z" fill="#ff6b8a" stroke-width="1.2"/>
+</g></svg>

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168">
+<style>
+.rays{animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 3s ease-in-out infinite alternate}
+.sway.b{animation-delay:-1.5s}
+@keyframes sway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+.drift{animation:drift 8s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateX(18px)}}
+@keyframes fadein{to{opacity:1}}
+@keyframes fadeout{to{opacity:0}}
+@keyframes pop{0%{opacity:0;transform:scale(0)}70%{opacity:1;transform:scale(1.2)}100%{opacity:1;transform:scale(1)}}
+
+.jump{animation:jump .8s ease-in-out .1s 2 both}
+@keyframes jump{0%,100%{transform:none}45%{transform:translateY(-18px)}}
+.cheerl{transform-box:fill-box;transform-origin:100% 0;animation:cl .5s ease-out .1s both}
+.cheerr{transform-box:fill-box;transform-origin:0 0;animation:cr .5s ease-out .1s both}
+@keyframes cl{to{transform:rotate(130deg)}}
+@keyframes cr{to{transform:rotate(-130deg)}}
+.say{opacity:0;animation:say 1.4s ease-out .4s both}
+.say.b{animation-delay:.7s}
+@keyframes say{0%{opacity:0;transform:none}25%,70%{opacity:1}100%{opacity:0;transform:translateX(-12px)}}
+.down{animation:fadeout .1s 2s forwards}
+.thumb{opacity:0;transform-box:fill-box;transform-origin:0 100%;animation:pop .5s ease-out 2s both}
+.nod{animation:nod .8s ease-in-out 2.5s both}
+@keyframes nod{0%,100%{transform:none}25%,75%{transform:translateY(4px)}50%{transform:none}}
+.s{opacity:0;transform-box:fill-box;transform-origin:50% 50%;animation:pop .5s ease-out both}
+.s0{animation-delay:3.1s}.s1{animation-delay:3.4s}.s2{animation-delay:3.7s}
+.flag{transform-box:fill-box;transform-origin:0 50%;animation:flag 1s ease-in-out infinite alternate}
+@keyframes flag{to{transform:skewY(8deg) scaleX(.9)}}
+</style>
+<g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#cfeaff" stroke="none"/>
+<g class="rays" style="transform-origin:214px 24px"><path d="M214 7v6M214 35v6M197 24h6M225 24h6M203 13l4 4M221 31l4 4M203 35l4-4M221 17l4-4" stroke="#f5b400" stroke-width="2.5"/></g>
+<circle cx="214" cy="24" r="11" fill="#ffd54f"/>
+<path d="M0 120q20-10 40 0q20-10 40 0v20H0z M170 128q20-10 40 0q15-8 30 0v14h-70z" fill="#fff" stroke="none"/>
+<path d="M-10 168L60 100Q120 74 180 100L250 168Z" fill="#9ccc8a"/>
+<path d="M120 84V44" stroke-width="2.5"/>
+<path class="flag" d="M121 45h20l-5 6l5 6h-20z" fill="#ff6b6b"/>
+<g class="nod"><g transform="translate(150 150)">
+<path d="M-7 -32v32M7 -32v32" stroke-width="6"/>
+<rect x="-15" y="-82" width="30" height="46" rx="10" fill="#4caf50"/>
+<rect x="-14" y="-42" width="28" height="14" rx="4" fill="#8d6e63"/>
+<g class=""><path d="M-13 -76l-10 22" stroke-width="5"/><circle cx="-23" cy="-52" r="4" fill="#ffd9b8"/></g>
+<g class="down"><path d="M13 -76l10 22" stroke-width="5"/><circle cx="23" cy="-52" r="4" fill="#ffd9b8"/></g>
+<g class="thumb"><path d="M13 -76l14 -14" stroke-width="5"/><rect x="25.5" y="-104" width="5" height="9" rx="2.5" fill="#ffd9b8" stroke-width="1.5"/><circle cx="28" cy="-92" r="5" fill="#ffd9b8" stroke-width="1.5"/></g>
+<circle cy="-97" r="15" fill="#ffd9b8"/>
+<path d="M-15 -98Q-16 -114 0 -114Q16 -114 15 -98Q8 -107 -15 -98Z" fill="#2e2016"/>
+<path d="M-7 -96q2-3 4 0M3 -96q2-3 4 0" fill="none" stroke-width="1.5"/>
+<circle cx="-9" cy="-90" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/><circle cx="9" cy="-90" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/>
+<path d="M-5 -90q5 6 10 0z" fill="#c0392b" stroke-width="1.5"/>
+</g></g>
+<g class="jump"><g transform="translate(86 150)">
+<path d="M-6 -18v18M6 -18v18" stroke-width="5"/>
+<rect x="-21" y="-48" width="13" height="24" rx="4" fill="#4fa3e0"/>
+<rect x="-13" y="-50" width="26" height="34" rx="9" fill="#ffb74d"/>
+<g class="cheerl"><path d="M-11 -44l-8 16" stroke-width="4"/><circle cx="-19" cy="-27" r="3.5" fill="#ffd9b8"/></g>
+<g class="cheerr"><path d="M11 -44l8 16" stroke-width="4"/><circle cx="19" cy="-27" r="3.5" fill="#ffd9b8"/></g>
+<circle cy="-64" r="14" fill="#ffd9b8"/>
+<path d="M-14 -66A14 14 0 0 1 14 -66Z" fill="#ffd54f"/><path d="M10 -66h9" stroke-width="3"/>
+<path d="M-7 -63q2-3 4 0M3 -63q2-3 4 0" fill="none" stroke-width="1.5"/>
+<circle cx="-8" cy="-58" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/><circle cx="8" cy="-58" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/>
+<path d="M-4 -58q4 6 8 0z" fill="#c0392b" stroke-width="1.5"/>
+</g></g>
+<g fill="none" stroke="#f5a000" stroke-width="2.2">
+<path class="say" d="M108 82q4 6 0 12"/>
+<path class="say b" d="M114 78q6 10 0 20"/>
+</g>
+<g class="s s0"><path d="M64.0 44.0L66.1 49.1L71.6 49.5L67.4 53.1L68.7 58.5L64.0 55.6L59.3 58.5L60.6 53.1L56.4 49.5L61.9 49.1Z" fill="#ffd54f"/></g>
+<g class="s s1"><path transform="translate(100 40) scale(1)" d="M0 4c-7-5-9-9-6-12c2-2 5-1 6 1c1-2 4-3 6-1c3 3 1 7-6 12z" fill="#ff6b8b" stroke-width="1.5"/></g>
+<g class="s s2"><path d="M186.0 28.0L188.1 33.1L193.6 33.5L189.4 37.1L190.7 42.5L186.0 39.6L181.3 42.5L182.6 37.1L178.4 33.5L183.9 33.1Z" fill="#ffd54f"/></g>
+</g></svg>

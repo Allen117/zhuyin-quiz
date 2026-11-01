@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168">
+<style>
+.wv{animation:wv 3s linear infinite}
+@keyframes wv{to{transform:translateX(-40px)}}
+.bobw{animation:bobw 1.6s ease-in-out infinite alternate}
+@keyframes bobw{to{transform:translateY(2px)}}
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 3s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}
+.cloud{animation:cloud 8s ease-in-out infinite alternate}
+@keyframes cloud{to{transform:translateX(24px)}}
+.swim{animation:swim 4s ease-in-out both}
+@keyframes swim{from{transform:translateX(70px)}to{transform:translateX(-90px)}}
+.rp{transform-box:fill-box;transform-origin:0 50%;animation:rp .8s ease-out infinite}
+@keyframes rp{from{transform:scaleX(.4);opacity:1}to{transform:scaleX(1.1);opacity:0}}
+.fish{animation:fish 2.4s ease-in-out infinite}
+@keyframes fish{0%,60%,100%{transform:translateY(10px);opacity:0}75%{transform:translateY(-6px);opacity:1}90%{transform:translateY(4px);opacity:1}}
+</style>
+<g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#d6efff" stroke="none"/>
+<path d="M30 30 q4 -12 18 -8 q10 -10 22 0 q12 0 10 10 h-46 q-8 -2 -4 -2z" fill="#fff" class="cloud"/>
+<rect y="52" width="240" height="22" fill="#9fd36b" stroke="none"/>
+<g class="sway" fill="none" stroke="#5f9e3a" stroke-width="2.5"><path d="M20 74q-2 -16 -6 -24M24 74q0 -18 2 -28M28 74q3 -14 8 -20"/><ellipse cx="26" cy="48" rx="2.5" ry="6" fill="#8a5a3c" stroke-width="1.5"/></g><g class="sway" fill="none" stroke="#5f9e3a" stroke-width="2.5"><path d="M190 74q-2 -16 -6 -24M194 74q0 -18 2 -28M198 74q3 -14 8 -20"/><ellipse cx="196" cy="48" rx="2.5" ry="6" fill="#8a5a3c" stroke-width="1.5"/></g>
+<rect y="72" width="240" height="96" fill="#7fc4ec" stroke="none"/>
+<path d="M0 72 H240" stroke="#5fae5a" stroke-width="3"/>
+<g class="wv"><path d="M-40 90q5 -4 10 0M0 90q5 -4 10 0M40 90q5 -4 10 0M80 90q5 -4 10 0M120 90q5 -4 10 0M160 90q5 -4 10 0M200 90q5 -4 10 0M240 90q5 -4 10 0M280 90q5 -4 10 0M-20 106q5 -4 10 0M20 106q5 -4 10 0M60 106q5 -4 10 0M100 106q5 -4 10 0M140 106q5 -4 10 0M180 106q5 -4 10 0M220 106q5 -4 10 0M260 106q5 -4 10 0M-40 122q5 -4 10 0M0 122q5 -4 10 0M40 122q5 -4 10 0M80 122q5 -4 10 0M120 122q5 -4 10 0M160 122q5 -4 10 0M200 122q5 -4 10 0M240 122q5 -4 10 0M280 122q5 -4 10 0M-20 138q5 -4 10 0M20 138q5 -4 10 0M60 138q5 -4 10 0M100 138q5 -4 10 0M140 138q5 -4 10 0M180 138q5 -4 10 0M220 138q5 -4 10 0M260 138q5 -4 10 0M-40 154q5 -4 10 0M0 154q5 -4 10 0M40 154q5 -4 10 0M80 154q5 -4 10 0M120 154q5 -4 10 0M160 154q5 -4 10 0M200 154q5 -4 10 0M240 154q5 -4 10 0M280 154q5 -4 10 0" fill="none" stroke="#fff" stroke-width="1.6" opacity=".8"/></g>
+<g fill="#6cc055"><ellipse cx="40" cy="146" rx="14" ry="5"/><ellipse cx="208" cy="100" rx="12" ry="4"/></g>
+<circle cx="44" cy="144" r="3" fill="#ff8fb1" stroke-width="1"/>
+<g class="swim"><g class="bobw"><g transform="translate(140 130) scale(1.6)"><path d="M20 -16 l12 -9 l-3 14z" fill="#fff"/><path d="M-11 -14 Q-20 -30 -12 -42" stroke="#3a3a3a" stroke-width="11" fill="none"/><path d="M-11 -14 Q-20 -30 -12 -42" stroke="#fff" stroke-width="7" fill="none"/><path d="M-18 -10 q0 -13 20 -13 q22 0 24 12 q-2 11 -22 11 h-12 q-10 0 -10 -10z" fill="#fff"/><path d="M-2 -12 q10 -10 22 -2 q-10 8 -22 2z" fill="#eef1f5" stroke-width="1.5"/><circle cx="-12" cy="-44" r="7.5" fill="#fff"/><path d="M-19 -47 l-9 3 l9 3z" fill="#ff9800" stroke-width="1.4"/><circle cx="-18" cy="-49.5" r="2.5" fill="#ff9800" stroke-width="1.2"/><circle cx="-13" cy="-46" r="1.7" fill="#333" stroke="none"/><circle cx="-9" cy="-41" r="2" fill="#ff9e9e" stroke="none" opacity=".8"/><g fill="none" stroke="#fff" stroke-width="2"><path class="rp" d="M30 -2 q10 -3 20 2"/><path class="rp" d="M30 2 q10 3 20 8"/></g></g></g></g>
+</g></svg>

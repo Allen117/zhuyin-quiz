@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168">
+<style>
+.rays{transform-origin:30px 28px;animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fly{animation:fly 6s ease-in-out infinite}
+@keyframes fly{25%{transform:translate(30px,-14px)}50%{transform:translate(64px,2px)}75%{transform:translate(28px,12px)}}
+.flap{transform-box:fill-box;transform-origin:50% 50%;animation:flap .2s linear infinite alternate}
+@keyframes flap{to{transform:scaleX(.3)}}
+.grow{transform-box:fill-box;transform-origin:50% 100%;animation:grow .8s ease-out both}
+@keyframes grow{from{transform:scaleY(0)}to{transform:none}}
+.bloom{transform-box:fill-box;transform-origin:50% 50%;animation:bloom .7s cubic-bezier(.3,1.6,.6,1) both}
+@keyframes bloom{from{transform:scale(0) rotate(-90deg)}to{transform:none}}
+.cloud{animation:drift 8s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateX(-30px)}}
+</style>
+<g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#d6efff" stroke="none"/>
+<g class="rays" stroke="#f5b400" stroke-width="2.5"><path d="M30 6v6M30 44v6M8 28h6M46 28h6M14 12l4 4M42 40l4 4M14 44l4-4M42 16l4-4"/></g>
+<circle cx="30" cy="28" r="11" fill="#ffd54f"/>
+<ellipse cx="120" cy="146" rx="150" ry="40" fill="#bfe5a6" stroke="none"/>
+<rect y="140" width="240" height="28" fill="#9fd36b" stroke="none"/>
+<g class="grow" style="animation-delay:0.0s"><path d="M62 142V104" fill="none" stroke="#4f9a3a" stroke-width="3"/><path d="M62 127q10-8 14-2q-7 6-14 2z" fill="#6cc055" stroke-width="1.5"/></g><g class="bloom" style="animation-delay:0.7s"><g fill="#ff6b6b" stroke-width="1.5"><circle cx="62.0" cy="97.4" r="6"/><circle cx="68.3" cy="102.0" r="6"/><circle cx="65.9" cy="109.3" r="6"/><circle cx="58.1" cy="109.3" r="6"/><circle cx="55.7" cy="102.0" r="6"/></g><circle cx="62" cy="104" r="4.2" fill="#ffd54f" stroke-width="1.5"/></g>
+<g class="grow" style="animation-delay:0.5s"><path d="M100 142V96" fill="none" stroke="#4f9a3a" stroke-width="3"/><path d="M100 123q10-8 14-2q-7 6-14 2z" fill="#6cc055" stroke-width="1.5"/></g><g class="bloom" style="animation-delay:1.2s"><g fill="#ffe082" stroke-width="1.5"><circle cx="100.0" cy="89.4" r="6"/><circle cx="106.3" cy="94.0" r="6"/><circle cx="103.9" cy="101.3" r="6"/><circle cx="96.1" cy="101.3" r="6"/><circle cx="93.7" cy="94.0" r="6"/></g><circle cx="100" cy="96" r="4.2" fill="#ffd54f" stroke-width="1.5"/></g>
+<g class="grow" style="animation-delay:1.0s"><path d="M138 142V106" fill="none" stroke="#4f9a3a" stroke-width="3"/><path d="M138 128q10-8 14-2q-7 6-14 2z" fill="#6cc055" stroke-width="1.5"/></g><g class="bloom" style="animation-delay:1.7s"><g fill="#ff8fb1" stroke-width="1.5"><circle cx="138.0" cy="99.4" r="6"/><circle cx="144.3" cy="104.0" r="6"/><circle cx="141.9" cy="111.3" r="6"/><circle cx="134.1" cy="111.3" r="6"/><circle cx="131.7" cy="104.0" r="6"/></g><circle cx="138" cy="106" r="4.2" fill="#ffd54f" stroke-width="1.5"/></g>
+<g class="grow" style="animation-delay:1.5s"><path d="M176 142V98" fill="none" stroke="#4f9a3a" stroke-width="3"/><path d="M176 124q10-8 14-2q-7 6-14 2z" fill="#6cc055" stroke-width="1.5"/></g><g class="bloom" style="animation-delay:2.2s"><g fill="#b39ddb" stroke-width="1.5"><circle cx="176.0" cy="91.4" r="6"/><circle cx="182.3" cy="96.0" r="6"/><circle cx="179.9" cy="103.3" r="6"/><circle cx="172.1" cy="103.3" r="6"/><circle cx="169.7" cy="96.0" r="6"/></g><circle cx="176" cy="98" r="4.2" fill="#ffd54f" stroke-width="1.5"/></g>
+<g class="grow" style="animation-delay:2.0s"><path d="M212 142V108" fill="none" stroke="#4f9a3a" stroke-width="3"/><path d="M212 129q10-8 14-2q-7 6-14 2z" fill="#6cc055" stroke-width="1.5"/></g><g class="bloom" style="animation-delay:2.7s"><g fill="#ff6b6b" stroke-width="1.5"><circle cx="212.0" cy="101.4" r="6"/><circle cx="218.3" cy="106.0" r="6"/><circle cx="215.9" cy="113.3" r="6"/><circle cx="208.1" cy="113.3" r="6"/><circle cx="205.7" cy="106.0" r="6"/></g><circle cx="212" cy="108" r="4.2" fill="#ffd54f" stroke-width="1.5"/></g>
+<g class="fly"><g transform="translate(100 50)"><g class="flap"><path d="M0 0q-9-9-12 0q3 7 12 0zM0 0q9-9 12 0q-3 7-12 0z" fill="#80cbc4" stroke-width="1.2"/></g></g></g>
+<g class="cloud"><path d="M150 40q0-12 14-10q6-10 18-4q14-2 14 10q8 4 0 10h-42q-10-2-4-6z" fill="#fff"/></g>
+</g></svg>

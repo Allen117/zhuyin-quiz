@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168">
+<style>
+.rays{animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 3s ease-in-out infinite alternate}
+.sway.b{animation-delay:-1.5s}
+@keyframes sway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+.drift{animation:drift 8s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateX(18px)}}
+@keyframes fadein{to{opacity:1}}
+@keyframes fadeout{to{opacity:0}}
+@keyframes pop{0%{opacity:0;transform:scale(0)}70%{opacity:1;transform:scale(1.2)}100%{opacity:1;transform:scale(1)}}
+
+.plane{animation:plane 4s linear both}
+@keyframes plane{from{transform:translate(-60px,14px)}to{transform:translate(290px,-8px)}}
+.trail{transform-box:fill-box;transform-origin:0 50%;animation:trail 4s linear both}
+@keyframes trail{from{transform:scaleX(0)}to{transform:none}}
+.point{transform-box:fill-box;transform-origin:0 0;animation:point .6s ease-out .6s both}
+@keyframes point{to{transform:rotate(-140deg)}}
+.point2{transform-box:fill-box;transform-origin:0 0;animation:point2 .6s ease-out 1.4s both}
+@keyframes point2{to{transform:rotate(-130deg)}}
+</style>
+<g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#cfeaff" stroke="none"/>
+<g class="rays" style="transform-origin:214px 22px"><path d="M214 6v6M214 32v6M198 22h6M224 22h6M204 12l4 4M220 28l4 4M204 32l4-4M220 16l4-4" stroke="#f5b400" stroke-width="2.5"/></g>
+<circle cx="214" cy="22" r="10" fill="#ffd54f"/>
+<g class="drift"><path d="M40 70q4-10 14-6q6-8 15 0q9 0 7 8h-36q-5-1 0-2z" fill="#fff"/></g>
+<g class="drift"><path d="M150 92q4-10 14-6q6-8 15 0q9 0 7 8h-36q-5-1 0-2z" fill="#fff"/></g>
+<path d="M0 134Q60 120 120 128T240 124V168H0Z" fill="#8fd16a"/>
+<path class="trail" d="M-80 60L240 38" fill="none" stroke="#fff" stroke-width="5" opacity=".9"/>
+<g class="plane"><g transform="translate(0 50) rotate(-4)">
+<path d="M-6 -2L-16 -18H-10L4 -2Z" fill="#ff6b6b"/>
+<path d="M-24 0Q-24 -7 -14 -7H16Q26 -6 28 0Q26 6 16 6H-14Q-24 6 -24 0Z" fill="#fff"/>
+<path d="M-26 -1L-32 -14H-24L-16 -3Z" fill="#ff6b6b"/>
+<path d="M-4 3L-12 15H-5L8 3Z" fill="#ff6b6b"/>
+<g fill="#7fc4ff" stroke-width="1.2"><circle cx="0" cy="-1" r="2"/><circle cx="7" cy="-1" r="2"/><circle cx="14" cy="-1" r="2"/></g>
+<path d="M20 -5Q26 -3 27 0H20Z" fill="#7fc4ff" stroke-width="1.2"/>
+</g></g>
+<g transform="translate(96 160) scale(.85)"><path d="M-7 -32v32M7 -32v32" stroke-width="6"/>
+<rect x="-15" y="-82" width="30" height="46" rx="10" fill="#4caf50"/>
+<rect x="-14" y="-42" width="28" height="14" rx="4" fill="#8d6e63"/>
+<g class=""><path d="M-13 -76l-10 22" stroke-width="5"/><circle cx="-23" cy="-52" r="4" fill="#ffd9b8"/></g>
+<g class="point2"><path d="M13 -76l10 22" stroke-width="5"/><circle cx="23" cy="-52" r="4" fill="#ffd9b8"/></g>
+<circle cy="-97" r="15" fill="#ffd9b8"/>
+<path d="M-15 -98Q-16 -114 0 -114Q16 -114 15 -98Q8 -107 -15 -98Z" fill="#2e2016"/>
+<circle cx="-5" cy="-97.5" r="1.8" fill="#333" stroke="none"/><circle cx="5" cy="-97.5" r="1.8" fill="#333" stroke="none"/>
+<circle cx="-9" cy="-90" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/><circle cx="9" cy="-90" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/>
+<path d="M-5 -90q5 6 10 0z" fill="#c0392b" stroke-width="1.5"/><g transform="translate(40 0)"><path d="M-6 -18v18M6 -18v18" stroke-width="5"/>
+<rect x="-21" y="-48" width="13" height="24" rx="4" fill="#4fa3e0"/>
+<rect x="-13" y="-50" width="26" height="34" rx="9" fill="#ffb74d"/>
+<g class=""><path d="M-11 -44l-8 16" stroke-width="4"/><circle cx="-19" cy="-27" r="3.5" fill="#ffd9b8"/></g>
+<g class="point"><path d="M11 -44l8 16" stroke-width="4"/><circle cx="19" cy="-27" r="3.5" fill="#ffd9b8"/></g>
+<circle cy="-64" r="14" fill="#ffd9b8"/>
+<path d="M-14 -66A14 14 0 0 1 14 -66Z" fill="#ffd54f"/><path d="M10 -66h9" stroke-width="3"/>
+<circle cx="-5" cy="-64.5" r="1.8" fill="#333" stroke="none"/><circle cx="5" cy="-64.5" r="1.8" fill="#333" stroke="none"/>
+<circle cx="-8" cy="-58" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/><circle cx="8" cy="-58" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/>
+<path d="M-4 -58q4 6 8 0z" fill="#c0392b" stroke-width="1.5"/></g></g>
+</g></svg>

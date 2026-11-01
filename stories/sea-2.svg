@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168">
+<style>
+.cl{animation:drift 7s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateX(22px)}}
+.wv{animation:wv 2s ease-in-out infinite alternate}
+@keyframes wv{to{transform:translateX(8px)}}
+.gull{animation:gull 5s ease-in-out infinite alternate}
+@keyframes gull{to{transform:translate(40px,-8px)}}
+.pop{transform-box:fill-box;transform-origin:center;animation:pop .5s cubic-bezier(.3,1.6,.6,1) both}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+@keyframes on{from{opacity:0}to{opacity:1}}
+@keyframes off{to{opacity:0}}
+.up{opacity:0;animation:up 1.2s ease-out both}
+@keyframes up{0%{opacity:0;transform:translateY(8px)}30%{opacity:1}100%{opacity:1;transform:translateY(-8px)}}
+.rays{transform-origin:208px 28px;animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.sky{animation:sky 1.4s ease-in-out 1.9s both}
+@keyframes sky{from{fill:#eef6fb}to{fill:#55b4ff}}
+.sea{animation:sea 1.4s ease-in-out .3s both}
+@keyframes sea{from{fill:#d6eef9}to{fill:#1f7fd6}}
+.boat{animation:boat 1.6s ease-in-out infinite alternate}
+@keyframes boat{to{transform:translate(-6px,2px)}}
+.pt{transform-origin:13px -44px;animation:pt 3.4s ease-in-out both}
+@keyframes pt{0%{transform:rotate(0)}12%,48%{transform:rotate(-80deg)}62%,100%{transform:rotate(-155deg)}}
+</style>
+<g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#a8dcff" stroke="none"/>
+<rect class="sky" width="240" height="70" fill="#eef6fb" stroke="none"/><g class="rays" stroke="#f5b400" stroke-width="2.5"><path d="M208 6v6M208 44v6M186 28h6M224 28h6M192 12l4 4M220 40l4 4M192 44l4-4M220 16l4-4"/></g><circle cx="208" cy="28" r="11" fill="#ffd54f"/><g class="cl"><path d="M40 26q6-10 16-4q8-6 14 2q8 0 6 8h-36q-6-2 0-6z" fill="#fff"/></g><g class="gull"><path d="M96 30q5-5 10 0q5-5 10 0M126 40q4-4 8 0q4-4 8 0" fill="none" stroke-width="1.8"/></g><rect class="sea" y="58" width="240" height="60" fill="#d6eef9" stroke="none"/><path d="M0 58H240"/><g class="wv"><path d="M14 70q8-4 16 0t16 0M120 82q8-4 16 0t16 0M176 68q8-4 16 0t16 0" fill="none" stroke="#fff" stroke-width="2"/></g><path d="M-10 112q15-8 30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0L250 168L-10 168Z" fill="#f6d68f"/><g class="wv"><path d="M-10 112q15-8 30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0 t30 0" fill="none" stroke="#fff" stroke-width="3"/></g><g class="boat"><path d="M150 84h30l-5 8h-20z" fill="#ff8a65"/><path d="M165 84V62l12 18z" fill="#fff"/><path d="M165 84V62"/></g><g transform="translate(52 152)"><rect x="-10" y="-24" width="8" height="21" rx="3" fill="#4a6fa5"/><rect x="2" y="-24" width="8" height="21" rx="3" fill="#4a6fa5"/><ellipse cx="-6" cy="-2" rx="6" ry="3.5" fill="#5a4030"/><ellipse cx="6" cy="-2" rx="6" ry="3.5" fill="#5a4030"/><rect x="-14" y="-48" width="28" height="27" rx="9" fill="#ffd34d"/><circle cx="0" cy="-63" r="15" fill="#ffd9b8"/><path d="M-15 -63A15 15 0 0 1 15 -63Q7 -71 -15 -63Z" fill="#6b3a1e"/><circle cx="-5" cy="-63" r="1.9" fill="#333" stroke="none"/><circle cx="5" cy="-63" r="1.9" fill="#333" stroke="none"/><circle cx="-9.5" cy="-58" r="2.6" fill="#ff9e9e" stroke="none" opacity=".7"/><circle cx="9.5" cy="-58" r="2.6" fill="#ff9e9e" stroke="none" opacity=".7"/><path d="M-6 -58.5q6 9 12 0z" fill="#c0392b" stroke-width="1.5"/><path d="M-13 -44 L-16.9 -25" fill="none" stroke-width="9"/><path d="M-13 -44 L-16.9 -25" fill="none" stroke="#ffd34d" stroke-width="5.5"/><circle cx="-16.9" cy="-25" r="3.8" fill="#ffd9b8"/><g class="pt"><path d="M13 -44 L17 -25" fill="none" stroke-width="9"/><path d="M13 -44 L17 -25" fill="none" stroke="#ffd34d" stroke-width="5.5"/><circle cx="17" cy="-25" r="3.8" fill="#ffd9b8"/></g></g>
+</g></svg>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168">
+<style>
+.pat{transform-box:fill-box;transform-origin:50% 6%;animation:pat .4s ease-in-out 8 alternate both}
+@keyframes pat{from{transform:rotate(150deg)}to{transform:rotate(170deg)}}
+.heart{opacity:0;transform-box:fill-box;transform-origin:50% 100%;animation:rise 1.4s ease-out forwards}
+@keyframes rise{0%{opacity:0;transform:translateY(10px) scale(.3)}40%{opacity:1;transform:scale(1.2)}100%{opacity:1;transform:translateY(-6px)}}
+</style>
+<g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#fff4dc" stroke="none"/>
+<rect y="140" width="240" height="28" fill="#e2b98a" stroke="none"/>
+<rect x="160" y="18" width="56" height="44" rx="4" fill="#cfefff"/><path d="M188 18v44M160 40h56"/>
+<circle cx="40" cy="26" r="12" fill="#fff"/><path d="M40 26V19M40 26l5 3" fill="none" stroke-width="1.5"/>
+<rect x="56" y="62" width="48" height="60" rx="8" fill="#c98a4b"/>
+<g transform="translate(80 110)"><path d="M-20 10V-14Q-20 -24 -10 -24H10Q20 -24 20 -14V10Z" fill="#64b5f6"/>
+<circle cx="0" cy="-42" r="17" fill="#ffd9b8"/>
+<path d="M-17 -44Q-18 -62 0 -61Q18 -62 17 -44Q12 -52 4 -50Q-4 -56 -17 -44Z" fill="#3b2a20"/>
+<circle cx="-6" cy="-40" r="2.2" fill="#2b2b2b" stroke="none"/><circle cx="6" cy="-40" r="2.2" fill="#2b2b2b" stroke="none"/>
+<circle cx="-11" cy="-34" r="2.6" fill="#ffb3b3" stroke="none"/><circle cx="11" cy="-34" r="2.6" fill="#ffb3b3" stroke="none"/>
+<path d="M-6 -34q6 7 12 0z" fill="#c0392b" stroke-width="1.5"/></g>
+<g transform="translate(152 146)"><rect x="-9" y="-14" width="7" height="14" rx="3" fill="#ffd9b8"/><rect x="2" y="-14" width="7" height="14" rx="3" fill="#ffd9b8"/>
+<path d="M-26 -82Q-30 -60 -22 -52H22Q30 -60 26 -82Z" fill="#4a2f22"/>
+<g class="pat"><g transform="rotate(10 -18 -62)"><rect x="-22" y="-62" width="8" height="28" rx="4" fill="#ffd9b8"/><circle cx="-18" cy="-32" r="6" fill="#ffd9b8"/><rect x="-15" y="-28" width="5" height="10" rx="2.5" fill="#ffd9b8" stroke-width="1.5"/></g></g>
+<g class=""><rect x="14" y="-62" width="8" height="28" rx="4" fill="#ffd9b8"/></g>
+<path d="M-20 -12L-13 -64H13L20 -12Z" fill="#ffb74d"/>
+<path d="M-9 -44H9L12 -18H-12Z" fill="#fff3e0" stroke-width="1.5"/>
+<circle cx="0" cy="-82" r="18" fill="#ffd9b8"/>
+<path d="M-19 -82Q-20 -102 0 -101Q20 -102 19 -82Q10 -94 0 -90Q-10 -94 -19 -82Z" fill="#4a2f22"/>
+<circle cx="-6" cy="-80" r="2.2" fill="#2b2b2b" stroke="none"/><circle cx="6" cy="-80" r="2.2" fill="#2b2b2b" stroke="none"/>
+<circle cx="-11" cy="-74" r="2.6" fill="#ffb3b3" stroke="none"/><circle cx="11" cy="-74" r="2.6" fill="#ffb3b3" stroke="none"/>
+<path d="M-5 -73q5 4 10 0" fill="none" stroke-width="1.5"/></g>
+<rect x="30" y="110" width="140" height="10" rx="3" fill="#a0714f"/>
+<rect x="38" y="120" width="8" height="24" fill="#8a5a3c"/><rect x="154" y="120" width="8" height="24" fill="#8a5a3c"/>
+<path d="M66 102h28q-2 12-14 12q-12 0-14-12z" fill="#ef9a9a"/><ellipse cx="80" cy="102" rx="14" ry="3" fill="#fff" stroke-width="1.5"/>
+<g class="heart" style="animation-delay:1.2s"><path d="M112 36q-10-8-6-14q4-5 6 1q2-6 6-1q4 6-6 14z" fill="#ff6b8a" stroke-width="1.5"/></g><g class="heart" style="animation-delay:1.7999999999999998s"><path d="M140 24q-10-8-6-14q4-5 6 1q2-6 6-1q4 6-6 14z" fill="#ff6b8a" stroke-width="1.5"/></g><g class="heart" style="animation-delay:2.4s"><path d="M60 32q-10-8-6-14q4-5 6 1q2-6 6-1q4 6-6 14z" fill="#ff6b8a" stroke-width="1.5"/></g>
+</g></svg>

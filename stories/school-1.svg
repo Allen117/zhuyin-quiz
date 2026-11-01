@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168">
+<style>
+.rays{animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 3s ease-in-out infinite alternate}
+.sway.b{animation-delay:-1.5s}
+@keyframes sway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+.drift{animation:drift 8s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translateX(18px)}}
+@keyframes fadein{to{opacity:1}}
+@keyframes fadeout{to{opacity:0}}
+@keyframes pop{0%{opacity:0;transform:scale(0)}70%{opacity:1;transform:scale(1.2)}100%{opacity:1;transform:scale(1)}}
+
+.sunup{animation:sunup 2s ease-out both}
+@keyframes sunup{from{transform:translateY(62px)}to{transform:none}}
+.night{opacity:.7;animation:fadeout 1.8s ease-in forwards}
+.walk{animation:walk 2.4s ease-in-out 1.8s both}
+@keyframes walk{to{transform:translateX(128px)}}
+.bob{animation:bob .3s ease-in-out 1.8s 8 alternate}
+@keyframes bob{to{transform:translateY(-4px)}}
+.wave{transform-box:fill-box;transform-origin:0 0;animation:wave 1.2s ease-in-out 4.2s both}
+@keyframes wave{0%,100%{transform:rotate(0)}25%,75%{transform:rotate(-125deg)}50%{transform:rotate(-150deg)}}
+.tw{animation:tw 1s ease-in-out infinite alternate}
+@keyframes tw{to{opacity:.3}}
+</style>
+<g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#d6efff" stroke="none"/>
+<g class="sunup"><g class="rays" style="transform-origin:198px 44px"><path d="M198 25v6M198 57v6M179 44h6M211 44h6M185 31l4 4M207 53l4 4M185 57l4-4M207 35l4-4" stroke="#f5b400" stroke-width="2.5"/></g>
+<circle cx="198" cy="44" r="13" fill="#ffd54f"/></g>
+<path d="M100 30q4-10 14-6q6-8 15 0q9 0 7 8h-36q-5-1 0-2z" fill="#fff"/>
+<ellipse cx="196" cy="152" rx="90" ry="62" fill="#bfe5a6" stroke="none"/>
+<rect y="140" width="240" height="28" fill="#9fd36b" stroke="none"/>
+<path d="M14 84L50 54L86 84Z" fill="#e07b5a"/>
+<rect x="20" y="84" width="60" height="56" fill="#fff3d6"/>
+<rect x="38" y="104" width="22" height="36" rx="3" fill="#8a5a3c"/><circle cx="55" cy="123" r="1.6" fill="#ffd54f" stroke="none"/>
+<rect x="64" y="94" width="12" height="12" fill="#cdeeff"/>
+<g class="sway b"><rect x="144" y="96" width="12" height="46" rx="3" fill="#8a5a3c"/><circle cx="138" cy="88" r="17" fill="#5fb04a"/><circle cx="162" cy="86" r="17" fill="#5fb04a"/><circle cx="150" cy="70" r="19" fill="#6cc055"/></g>
+<g class="walk"><g transform="translate(49 146)"><g class="bob">
+<path d="M-6 -18v18M6 -18v18" stroke-width="5"/>
+<rect x="-21" y="-48" width="13" height="24" rx="4" fill="#e74c3c"/>
+<rect x="-13" y="-50" width="26" height="34" rx="9" fill="#5dade2"/>
+<g class=""><path d="M-11 -44l-8 16" stroke-width="4"/><circle cx="-19" cy="-27" r="3.5" fill="#ffd9b8"/></g>
+<g class="wave"><path d="M11 -44l8 16" stroke-width="4"/><circle cx="19" cy="-27" r="3.5" fill="#ffd9b8"/></g>
+<circle cy="-64" r="14" fill="#ffd9b8"/>
+<path d="M-14 -64A14 14 0 0 1 14 -64Q6 -72 -14 -64Z" fill="#3b2a20"/>
+<circle cx="-5" cy="-63" r="1.8" fill="#333" stroke="none"/><circle cx="5" cy="-63" r="1.8" fill="#333" stroke="none"/>
+<circle cx="-8" cy="-58" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/><circle cx="8" cy="-58" r="2.5" fill="#ff9e9e" stroke="none" opacity=".7"/>
+<path d="M-4 -58q4 6 8 0z" fill="#c0392b" stroke-width="1.5"/>
+</g></g></g>
+<rect class="night" width="240" height="168" fill="#1f2a5c" stroke="none"/>
+<g class="night" fill="#fff6b0" stroke="none"><circle class="tw" cx="30" cy="20" r="2"/><circle cx="80" cy="14" r="1.6"/><circle class="tw" cx="130" cy="24" r="2"/><circle cx="170" cy="12" r="1.6"/></g>
+</g></svg>
