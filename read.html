@@ -180,9 +180,10 @@ main.addEventListener('click', e => {
 document.getElementById('home-btn').onclick = home;
 
 // ---- 卡片：一次一張，念對按 ✓、念不出來按「再練」 ----
-// review：從「再練」清單來的，念對就從清單拿掉；「✓ 會」要等 3 秒才能按，讓孩子先真的念一次
+// review：從「🔁 再練」清單來的，念對就從清單拿掉
+// lock：再練的時候（「🔁 再練」清單、練完後的「再練這些」），「✓ 會」要等 3 秒才能按，讓孩子先真的念一次
 const WAIT = 3;
-function cards(list, { key, review = false }) {
+function cards(list, { key, review = false, lock = review }) {
   const deck = shuffle(list);
   const missed = [];
   let i = 0;
@@ -210,7 +211,7 @@ function cards(list, { key, review = false }) {
         <button class="no" data-a="no">${ruby('✗ 再(ㄗㄞˋ)練(ㄌㄧㄢˋ)')}</button>
         <button class="yes" data-a="yes">${ruby('✓ 會(ㄏㄨㄟˋ)')}</button>
       </div>`;
-    if (review) countdown();
+    if (lock) countdown();
   }
   function finish() {
     if (key) markDone(key);
@@ -243,7 +244,7 @@ function cards(list, { key, review = false }) {
         <button class="yes" data-a="next">${ruby('→ 繼(ㄐㄧˋ)續(ㄒㄩˋ)')}</button>`;
     }
     if (a === 'next') { i++; show(); }
-    if (a === 'again') { main.onclick = null; cards(missed, { review }); }
+    if (a === 'again') { main.onclick = null; cards(missed, { review, lock: true }); }
     if (a === 'home') { main.onclick = null; home(); }
   };
   show();
