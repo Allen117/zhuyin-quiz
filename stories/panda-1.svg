@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 168">
+<style>
+.sway{transform-box:fill-box;transform-origin:50% 100%;animation:sway 3s ease-in-out infinite alternate}
+.sway.b{animation-delay:-1.5s}
+@keyframes sway{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}
+.walk{animation:walk 3.2s ease-out both}
+@keyframes walk{from{transform:translate(-60px,0)}to{transform:translate(118px,0)}}
+.bob{animation:bob .4s ease-in-out 8 alternate}
+@keyframes bob{to{transform:translateY(-5px)}}
+.wave{transform-box:fill-box;transform-origin:50% 10%;animation:wave 2.2s ease-in-out 3.3s both}
+@keyframes wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-120deg)}40%,80%{transform:rotate(-150deg)}}
+.rays{transform-origin:30px 28px;animation:spin 12s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fly{animation:fly 6s ease-in-out infinite}
+@keyframes fly{25%{transform:translate(30px,-14px)}50%{transform:translate(64px,2px)}75%{transform:translate(28px,12px)}}
+.flap{transform-box:fill-box;transform-origin:50% 50%;animation:flap .2s linear infinite alternate}
+@keyframes flap{to{transform:scaleX(.3)}}
+</style>
+<g stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+<rect width="240" height="168" fill="#d6efff" stroke="none"/>
+<g class="rays" stroke="#f5b400" stroke-width="2.5"><path d="M30 6v6M30 44v6M8 28h6M46 28h6M14 12l4 4M42 40l4 4M14 44l4-4M42 16l4-4"/></g>
+<circle cx="30" cy="28" r="11" fill="#ffd54f"/>
+<ellipse cx="120" cy="146" rx="150" ry="40" fill="#bfe5a6" stroke="none"/>
+<rect y="140" width="240" height="28" fill="#9fd36b" stroke="none"/>
+<g class="sway"><rect x="34" y="96" width="12" height="48" rx="3" fill="#8a5a3c"/><circle cx="28" cy="88" r="18" fill="#5fb04a"/><circle cx="52" cy="86" r="18" fill="#5fb04a"/><circle cx="40" cy="68" r="20" fill="#6cc055"/></g>
+<g class="sway b"><rect x="200" y="90" width="14" height="54" rx="3" fill="#8a5a3c"/><circle cx="192" cy="82" r="20" fill="#5fb04a"/><circle cx="222" cy="80" r="20" fill="#5fb04a"/><circle cx="207" cy="58" r="23" fill="#6cc055"/></g>
+<g class="sway b" fill="#8bcf5a"><rect x="160" y="62" width="7" height="82" rx="3"/><rect x="172" y="74" width="7" height="70" rx="3"/><path d="M160 88h7M160 112h7M172 96h7M172 120h7"/><path d="M167 70q10-8 16-2q-8 4-16 2z" fill="#6cc055"/><path d="M179 84q8-10 15-4q-7 5-15 4z" fill="#6cc055"/></g>
+<g fill="#ff8fb1" stroke-width="1.2"><circle cx="70" cy="146" r="3"/><circle cx="150" cy="150" r="3"/><circle cx="226" cy="152" r="3"/></g>
+<g class="fly"><g transform="translate(70 50)"><g class="flap"><path d="M0 0q-9-9-12 0q3 7 12 0zM0 0q9-9 12 0q-3 7-12 0z" fill="#ffb74d" stroke-width="1.2"/></g></g></g>
+<g class="walk"><g transform="translate(0 150)"><g class="bob">
+<ellipse cx="-15" cy="-6" rx="11" ry="8" fill="#2b2b2b"/>
+<ellipse cx="15" cy="-6" rx="11" ry="8" fill="#2b2b2b"/>
+<ellipse cx="0" cy="-28" rx="29" ry="27" fill="#fff"/>
+<ellipse cx="0" cy="-24" rx="16" ry="14" fill="#f1f1f1" stroke="none"/>
+<rect x="-35" y="-48" width="12" height="26" rx="6" fill="#2b2b2b"/>
+<rect class="wave" x="23" y="-48" width="12" height="26" rx="6" fill="#2b2b2b"/>
+<circle cx="-17" cy="-80" r="7" fill="#2b2b2b"/>
+<circle cx="17" cy="-80" r="7" fill="#2b2b2b"/>
+<circle cx="0" cy="-62" r="22" fill="#fff"/>
+<ellipse cx="-8" cy="-64" rx="5.5" ry="7.5" fill="#2b2b2b" transform="rotate(30 -8 -64)"/>
+<ellipse cx="8" cy="-64" rx="5.5" ry="7.5" fill="#2b2b2b" transform="rotate(-30 8 -64)"/>
+<circle cx="-7" cy="-65" r="2" fill="#fff" stroke="none"/>
+<circle cx="7" cy="-65" r="2" fill="#fff" stroke="none"/>
+<ellipse cx="0" cy="-56" rx="3.5" ry="2.5" fill="#2b2b2b"/>
+<circle cx="-14" cy="-54" r="3" fill="#ffb3b3" stroke="none"/>
+<circle cx="14" cy="-54" r="3" fill="#ffb3b3" stroke="none"/>
+<path d="M-4 -51 q2 2.5 4 0 q2 2.5 4 0" fill="none" stroke-width="1.5"/>
+</g></g></g>
+</g></svg>
