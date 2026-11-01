@@ -193,5 +193,24 @@ ${data.map(d => `  ${JSON.stringify(d)},`).join('\n')}
 `;
   }
 
-  return { recognize, exportTemplates, SYMS, warmUp: () => { if (!templates) buildTemplates(); } };
+  // 聲調：筆畫很簡單，直接看形狀判斷，不用範本
+  // size 是寫字格的邊長（用來判斷「很小的一點」＝輕聲）。回傳 '' 一聲（沒寫或寫一橫）、'ˊ' 'ˇ' 'ˋ' '˙'
+  function recognizeTone(strokes, size) {
+    const pts = strokes.flat();
+    if (!pts.length) return '';
+    const xs = pts.map(p => p.x), ys = pts.map(p => p.y);
+    const x0 = Math.min(...xs), x1 = Math.max(...xs), y0 = Math.min(...ys), y1 = Math.max(...ys);
+    const w = x1 - x0, h = y1 - y0;
+    if (Math.max(w, h) < size * 0.2) return '˙';
+    if (h < w * 0.3) return '';                     // 一橫：一聲
+    // 最左、最右的點都比最低點高很多 → 打勾的 ˇ
+    const yAt = x => pts.find(p => p.x === x).y;
+    if (w > h * 0.4 && y1 - yAt(x0) > h * 0.4 && y1 - yAt(x1) > h * 0.4) return 'ˇ';
+    // 往右上斜是 ˊ，往右下斜是 ˋ（畫布的 y 往下變大）
+    const mx = xs.reduce((s, v) => s + v, 0) / pts.length, my = ys.reduce((s, v) => s + v, 0) / pts.length;
+    const cov = pts.reduce((s, p) => s + (p.x - mx) * (p.y - my), 0);
+    return cov < 0 ? 'ˊ' : 'ˋ';
+  }
+
+  return { recognize, recognizeTone, exportTemplates, SYMS, warmUp: () => { if (!templates) buildTemplates(); } };
 })();
