@@ -147,7 +147,16 @@
   .pad-actions .ok { background: #1565c0; border-color: #1565c0; color: #fff; font-weight: bold; padding: 12px 56px; }
   .result { text-align: center; padding: 20px 10px; }
   .result .score { font-size: 120px; color: #c62828; font-family: system-ui, sans-serif; font-weight: bold; margin: 10px 0 20px; }
-  .result button { font-family: system-ui, sans-serif; font-size: 28px; padding: 12px 60px; border-radius: 12px; border: 0; background: #1565c0; color: #fff; cursor: pointer; }
+  .hint { font: 20px/1.6 system-ui, sans-serif; padding: 24px 28px; }
+  .hint h2 { margin: 0 0 8px; font-size: 28px; }
+  .hint ol { padding-left: 1.4em; margin: 0; }
+  .hint li { margin: 10px 0; }
+  .hint .share { display: inline-block; border: 1px solid #999; border-radius: 4px; padding: 0 4px; }
+  .hint .danger { color: #c62828; font-weight: bold; }
+  .hint .ok-note { color: #2e7d32; font-weight: bold; }
+  .hint .again { color: #888; margin: 14px 0; }
+  .hint button { display: block; margin: 0 auto; }
+  .result button, .hint button { font-family: system-ui, sans-serif; font-size: 28px; padding: 12px 60px; border-radius: 12px; border: 0; background: #1565c0; color: #fff; cursor: pointer; }
 
   @media (max-width: 840px) { .page { width: auto; margin: 0; } }
   @media (max-height: 900px) { .pad-preview { font-size: 56px; } }
@@ -178,6 +187,7 @@
   <button id="clear" data-label="清(ㄑㄧㄥ)除(ㄔㄨˊ)作(ㄗㄨㄛˋ)答(ㄉㄚˊ)"></button>
   <button onclick="window.print()" data-label="列(ㄌㄧㄝˋ)印(ㄧㄣˋ)"></button>
   <button onclick="location.href = 'report.html'" data-label="📊 紀(ㄐㄧˋ)錄(ㄌㄨˋ)"></button>
+  <button id="hint-open" data-label="💡 提(ㄊㄧˊ)示(ㄕˋ)"></button>
 </div>
 <div id="pages"></div>
 
@@ -218,6 +228,24 @@
     <div class="score" id="result-score"></div>
     <p id="result-note" style="font: 18px system-ui, sans-serif; color: #888"></p>
     <button id="result-close" data-label="好(ㄏㄠˇ)"></button>
+  </div>
+</div>
+
+<!-- 使用提示（給老師、家長）：第一次用、這台裝置什麼紀錄都沒有時自動跳出 -->
+<div class="overlay" id="hint" hidden>
+  <div class="panel hint">
+    <h2>💡 使用前請先看</h2>
+    <ol>
+      <li><b>建議用 iPad 作答</b>：可以直接點選、手寫注音、聽寫。電腦適合用來列印考卷。</li>
+      <li><b>iPad 請直拿</b>：手寫的格子比較大，比較好寫。</li>
+      <li><b>一定要「加入主畫面」</b>：在 Safari 按下方的分享鍵 <span class="share">⬆︎</span> →「加入主畫面」，以後都從主畫面的圖示開。<br>
+        <span class="danger">直接在 Safari 分頁裡開的話，7 天沒開，作答紀錄和自己出的試卷都會被清掉。</span>
+        <div id="hint-standalone" class="ok-note" hidden>✅ 現在已經是從主畫面開的，不會被清掉。</div></li>
+      <li><b>主畫面和 Safari 的資料是分開的</b>：在 Safari 裡交卷的紀錄，從主畫面開看不到。可以先在「📊 紀錄」頁匯出，再到主畫面版匯入。</li>
+      <li><b>定期備份</b>：紀錄只存在這台裝置，不會上傳。刪掉主畫面圖示、清除 Safari 網站資料、用私密瀏覽，資料都會不見。建議每週到「📊 紀錄」頁按「匯出」。</li>
+    </ol>
+    <p class="again">以後要再看，按上方的「💡 提示」。</p>
+    <button id="hint-close" data-label="好(ㄏㄠˇ)"></button>
   </div>
 </div>
 
@@ -873,6 +901,27 @@ function submit(page) {
   result.hidden = false;
 }
 document.getElementById('result-close').onclick = () => { result.hidden = true; };
+
+// ---- 使用提示 ----
+// 這台裝置什麼都沒存過（沒看過提示、沒交過卷、沒出過新卷）就自動跳出；
+// 資料被 Safari 清掉後也會再跳一次，剛好提醒加入主畫面
+const hint = document.getElementById('hint');
+const HINT_KEY = 'zhuyin-hint-seen';
+function openHint() {
+  const standalone = navigator.standalone || matchMedia('(display-mode: standalone)').matches;
+  document.getElementById('hint-standalone').hidden = !standalone;
+  hint.hidden = false;
+  document.body.classList.add('pad-open');
+}
+document.getElementById('hint-open').onclick = openHint;
+document.getElementById('hint-close').onclick = () => {
+  hint.hidden = true;
+  document.body.classList.remove('pad-open');
+  try { localStorage.setItem(HINT_KEY, '1'); } catch {}
+};
+try {
+  if (!['zhuyin-log-v1', 'zhuyin-gen-v1', HINT_KEY].some(k => localStorage.getItem(k) !== null)) openHint();
+} catch { openHint(); }
 
 // 自動出一份新卷，存好後重新載入頁面並切到那一份
 document.getElementById('gen').onclick = () => {
