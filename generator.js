@@ -1,4 +1,4 @@
-// 自動出題：從 bank.js 的用字庫抽字，組成和試卷1～3 一樣結構的考卷（8 大題、35 題）。
+// 自動出題：從 bank.js 的用字庫抽字，組成和試卷1～3 一樣結構的考卷（9 大題、35 題）。
 // 有作答紀錄時，會多抽含有學生弱點符號的字，誘答選項也優先用他常混淆的符號。
 // 出好的考卷存在這台裝置的瀏覽器裡，最多留 MAX_SAVED 份。
 window.GEN = (() => {
@@ -48,24 +48,33 @@ window.GEN = (() => {
     choice: '三、看(ㄎㄢˋ)圖(ㄊㄨˊ)選(ㄒㄩㄢˇ)注(ㄓㄨˋ)音(ㄧㄣ)',
     pickPic: '四、看(ㄎㄢˋ)注(ㄓㄨˋ)音(ㄧㄣ)選(ㄒㄩㄢˇ)圖(ㄊㄨˊ)',
     judge: '五、對(ㄉㄨㄟˋ)的(˙ㄉㄜ)打(ㄉㄚˇ)○，錯(ㄘㄨㄛˋ)的(˙ㄉㄜ)打(ㄉㄚˇ)×',
-    fill: '六、補(ㄅㄨˇ)注(ㄓㄨˋ)音(ㄧㄣ)',
+    pickWord: '六、選(ㄒㄩㄢˇ)詞(ㄘˊ)填(ㄊㄧㄢˊ)空(ㄎㄨㄥˋ)',
+    fill: '七、補(ㄅㄨˇ)注(ㄓㄨˋ)音(ㄧㄣ)',
     wordBlank: '（一）看(ㄎㄢˋ)圖(ㄊㄨˊ)補(ㄅㄨˇ)注(ㄓㄨˋ)音(ㄧㄣ)',
     sentence: '（二）看(ㄎㄢˋ)圖(ㄊㄨˊ)完(ㄨㄢˊ)成(ㄔㄥˊ)句(ㄐㄩˋ)子(˙ㄗ)',
-    toneSentence: '七、補(ㄅㄨˇ)上(ㄕㄤˋ)聲(ㄕㄥ)調(ㄉㄧㄠˋ)符(ㄈㄨˊ)號(ㄏㄠˋ)',
-    dictation: '八、聽(ㄊㄧㄥ)寫(ㄒㄧㄝˇ)（按(ㄢˋ)🔊聽(ㄊㄧㄥ)）',
+    toneSentence: '八、補(ㄅㄨˇ)上(ㄕㄤˋ)聲(ㄕㄥ)調(ㄉㄧㄠˋ)符(ㄈㄨˊ)號(ㄏㄠˋ)',
+    dictation: '九、聽(ㄊㄧㄥ)寫(ㄒㄧㄝˇ)（按(ㄢˋ)🔊聽(ㄊㄧㄥ)）',
   };
 
   // ---- 用字庫 ----
+  // groups：每組 [ ] 裡有幾個字
   function parseSentence(text) {
-    const blank = [], ctx = [];
+    const blank = [], ctx = [], groups = [];
     let inBlank = false, w = '';
     for (const m of text.matchAll(/\[|\]|([^()\[\]])\(([^)]+)\)/g)) {
-      if (m[0] === '[') inBlank = true;
+      if (m[0] === '[') { inBlank = true; groups.push(0); }
       else if (m[0] === ']') inBlank = false;
-      else if (inBlank) { blank.push(m[2]); w += m[1]; }
+      else if (inBlank) { blank.push(m[2]); w += m[1]; groups[groups.length - 1]++; }
       else ctx.push(m[2]);
     }
-    return { blank, ctx, w };
+    return { blank, ctx, w, groups };
+  }
+  const sylsOf = s => [...s.matchAll(/\(([^)]+)\)/g)].map(m => m[1]);
+  // 選詞填空：[ ] 裡是正確的詞，考卷上換成空的 [ ]
+  function parsePick([text, wrong]) {
+    const m = text.match(/\[([^\]]*)\]/);
+    const ans = m?.[1] ?? '';
+    return { text: text.replace(/\[[^\]]*\]/, '[ ]'), ans, wrong, w: ans.replace(/\([^)]*\)/g, ''), syls: [...sylsOf(text), ...sylsOf(wrong)] };
   }
   const B = window.BANK;
   const SINGLE = B.single.map(([w, z, e, c]) => ({ w, z: [z], e, c }));
@@ -73,6 +82,7 @@ window.GEN = (() => {
   const SENTS = B.sentences.map(([e, text]) => ({ e, text, ...parseSentence(text) }));
   const TONES = B.toneSentences.map(([e, text]) => ({ e, text, ...parseSentence(text) }));
   const DICT = B.dictation.map(([w, z]) => ({ w, z: z.split(' ') }));
+  const PICKS = B.pickWords.map(parsePick);
 
   // 檢查用字庫有沒有打錯（老師頁會列出來）
   function check() {
@@ -92,8 +102,13 @@ window.GEN = (() => {
     });
     SENTS.forEach(x => {
       [...x.blank, ...x.ctx].forEach(z => syl(x.text, z));
-      if (x.blank.length < 1 || x.blank.length > 2) bad.push(`${x.text}：[ ] 裡要有 1～2 個字`);
+      if (x.groups.length !== 2 || x.groups.some(n => n !== 1)) bad.push(`${x.text}：要有兩組 [ ]，各包住一個字`);
       if (x.blank.some(z => z.includes('˙'))) bad.push(`${x.text}：挖空的字不能是輕聲`);
+    });
+    PICKS.forEach(x => {
+      x.syls.forEach(z => syl(x.text, z));
+      if (!x.ans || (x.text.match(/\[/g) ?? []).length !== 1) bad.push(`${x.text}：要有一組 [ ] 包住正確的詞`);
+      if (!sylsOf(x.wrong).length) bad.push(`${x.text}：錯的詞要用「字(注音)」寫法`);
     });
     TONES.forEach(x => {
       [...x.blank, ...x.ctx].forEach(z => syl(x.text, z));
@@ -119,8 +134,14 @@ window.GEN = (() => {
     return list[list.length - 1];
   }
   const insertAt = (arr, x, i) => [...arr.slice(0, i), x, ...arr.slice(i)];
-  // 答案位置要分散：①②③ 各一次，多的隨機，再打亂
-  const positions = n => shuffle(Array.from({ length: n }, (_, i) => i < 3 ? i : rand(3)));
+  // 答案位置要分散：①②③ 不重複地用，題數多於 3 時多的隨機，再打亂
+  const positions = n => {
+    const p = shuffle([0, 1, 2]);
+    while (p.length < n) p.push(rand(3));
+    return shuffle(p.slice(0, n));
+  };
+  // 兩個選項：①② 各一半
+  const positions2 = n => shuffle(Array.from({ length: n }, (_, i) => i % 2));
 
   const RETRY = Symbol('retry');
 
@@ -145,7 +166,7 @@ window.GEN = (() => {
       (p.emojis ?? []).forEach(e => used.emoji.add(e));
       if (cat) used.cat[cat] = (used.cat[cat] ?? 0) + 1;
     };
-    const keyOf = x => x.w + (x.text ?? '');
+    const keyOf = x => x.text ?? x.w;   // 和 recentKeys 記的一樣：句子記 text，其他記國字
     // 從 pool 抽 n 題；plan(x) 回傳 null（這個字不能用）或 { ans, shown, emojis, weight, item }
     function draw(pool, n, plan) {
       const out = [];
@@ -234,16 +255,16 @@ window.GEN = (() => {
       };
     });
 
-    const choicePos = positions(4);
-    const choice = draw(SINGLE, 4, x => {
+    const choicePos = positions(2);
+    const choice = draw(SINGLE, 2, x => {
       const d = distractors(x.z[0]);
       if (!d) return null;
       return { ans: x.z, shown: d, emojis: [x.e], weight: weightOf(x.z), item: { type: 'choice', emoji: x.e, word: x.w, d, answer: x.z[0] } };
     }).map(({ d, ...it }, k) => ({ ...it, options: insertAt(d, it.answer, choicePos[k]) }));
 
     // 看注音選圖：誘答圖挑讀音相近、沒在別題出現過的
-    const picPos = positions(3);
-    const pickPic = draw(SINGLE, 3, x => {
+    const picPos = positions(2);
+    const pickPic = draw(SINGLE, 2, x => {
       const a = slots(x.z[0]);
       let pool = SINGLE.filter(y => y !== x && y.z[0] !== x.z[0] && !used.emoji.has(y.e));
       const ds = [];
@@ -264,17 +285,20 @@ window.GEN = (() => {
     do right = shuffle([0, 1, 2, 3]); while (right.some((p, i) => p === i));
     const match = [{ type: 'match', pairs: m.map(x => [x.e, x.z[0], x.w]), right }];
 
-    // 圈符號：挑兩組長得像的，目標符號優先挑學生弱的
-    let groups = LOOKALIKE;
-    const findSym = [0, 1].map(() => {
-      const g = wpick(groups, g => 1 + 3 * g.reduce((a, s) => a + W(s), 0));
-      groups = groups.filter(x => x !== g);
-      const target = wpick(g, s => 1 + 3 * W(s));
-      const [o1, o2] = g.filter(s => s !== target);
-      let row;
-      do row = shuffle([target, target, target, o1, o1, o2, o2]); while (row.some((s, i) => s === row[i + 1]));  // 一樣的不要相鄰
-      return { type: 'findSym', target, row };
-    });
+    // 選詞填空：整句和兩個選項的注音都會顯示，所以最後抽，避開別題的答案
+    const pickPos = positions2(4);
+    const pickWord = draw(PICKS, 4, x => ({
+      ans: [], shown: x.syls, weight: 1,
+      item: { type: 'pickWord', text: x.text, answer: x.ans, wrong: x.wrong },
+    })).map(({ wrong, ...it }, k) => ({ ...it, options: insertAt([wrong], it.answer, pickPos[k]) }));
+
+    // 圈符號：挑一組長得像的，目標符號優先挑學生弱的
+    const group = wpick(LOOKALIKE, g => 1 + 3 * g.reduce((a, s) => a + W(s), 0));
+    const target = wpick(group, s => 1 + 3 * W(s));
+    const [o1, o2] = group.filter(s => s !== target);
+    let row;
+    do row = shuffle([target, target, target, o1, o1, o2, o2]); while (row.some((s, i) => s === row[i + 1]));  // 一樣的不要相鄰
+    const findSym = [{ type: 'findSym', target, row }];
 
     return {
       name: `新卷${no}`,
@@ -285,6 +309,7 @@ window.GEN = (() => {
         { title: T.choice, items: choice },
         { title: T.pickPic, items: pickPic },
         { title: T.judge, items: judge },
+        { title: T.pickWord, items: pickWord },
         { title: T.fill, items: [] },
         { title: T.wordBlank, sub: true, items: wordBlank },
         { title: T.sentence, sub: true, items: sentence },
