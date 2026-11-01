@@ -183,18 +183,19 @@ document.getElementById('home-btn').onclick = home;
 // ---- 卡片：一次一張，念對按 ✓、念不出來按「再練」 ----
 // review：從「🔁 再練」清單來的，念對就從清單拿掉
 // lock：再練的時候（「🔁 再練」清單、練完後的「再練這些」），「✓ 會」要等 3 秒才能按，讓孩子先真的念一次
+// 第一輪按了「再練」之後，「→ 繼續」也要等 3 秒，讓他跟著念一次才換下一張
 const WAIT = 3;
 function cards(list, { key, review = false, lock = review }) {
   const deck = shuffle(list);
   const missed = [];
   let i = 0;
   let timer = null;
-  function countdown() {
-    const yes = main.querySelector('[data-a="yes"]');
+  function countdown(act = 'yes', label = '✓ 會(ㄏㄨㄟˋ)') {
+    const btn = main.querySelector(`[data-a="${act}"]`);
     let left = WAIT;
     const tick = () => {
-      yes.disabled = left > 0;
-      yes.innerHTML = ruby('✓ 會(ㄏㄨㄟˋ)') + (left > 0 ? ` ${left}` : '');
+      btn.disabled = left > 0;
+      btn.innerHTML = ruby(label) + (left > 0 ? ` ${left}` : '');
       if (left-- <= 0) clearInterval(timer);
     };
     tick();
@@ -242,7 +243,8 @@ function cards(list, { key, review = false, lock = review }) {
       main.querySelector('.card').classList.add('missed');
       main.querySelector('.actions').innerHTML = `
         <button class="listen" data-a="listen">${ruby('🔊 聽(ㄊㄧㄥ)')}</button>
-        <button class="yes" data-a="next">${ruby('→ 繼(ㄐㄧˋ)續(ㄒㄩˋ)')}</button>`;
+        <button class="yes" data-a="next"></button>`;
+      countdown('next', '→ 繼(ㄐㄧˋ)續(ㄒㄩˋ)');
     }
     if (a === 'next') { i++; show(); }
     if (a === 'again') { main.onclick = null; cards(missed, { review, lock: true }); }
