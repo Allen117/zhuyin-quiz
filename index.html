@@ -16,13 +16,20 @@
 
   .toolbar { position: sticky; top: 0; z-index: 10; display: flex; justify-content: center; gap: 12px; padding: 10px; background: #333; font-family: system-ui, sans-serif; }
   .toolbar button { font-size: 20px; padding: 8px 28px; cursor: pointer; border: 0; border-radius: 6px; background: #fff; }
+  .toolbar .tabs { display: flex; gap: 6px; margin-right: 24px; }
+  .toolbar .tabs button { background: #666; color: #fff; }
+  .toolbar .tabs button.on { background: #ffb74d; color: #000; font-weight: bold; }
 
   /* 注音：符號直排，聲調在右，輕聲點在上 */
   .zy { display: inline-flex; align-items: flex-end; vertical-align: middle; line-height: 1; }
   .zy-col { display: inline-flex; flex-direction: column; align-items: center; }
   .zy-s { display: block; height: 1em; }
   .zy-light { display: block; font-size: .6em; height: .7em; line-height: .7em; }
-  .zy-tone { display: inline-block; width: .55em; font-size: .6em; margin-bottom: 1.1em; }
+  .zy-tone { display: inline-block; width: .8em; font-size: .6em; margin-bottom: 1.1em; }
+  /* 聲調用線條畫，不靠字型：iPad 沒有標楷體，系統字型的 ˊˇˋ 小得像一個點 */
+  .tn { display: block; width: .8em; height: 1em; }
+  .zy-light .tn { width: 1em; height: .7em; }
+  .pad-keys .tn { display: inline-block; width: .8em; height: 1em; vertical-align: middle; }
   .zy-blank { width: 1.15em; height: 1.15em; border: 2px solid #000; margin: 1px 0; display: flex; align-items: center; justify-content: center; }
 
   /* 國字＋小注音 */
@@ -85,8 +92,8 @@
   .warn { color: #fff; background: #d00; font-size: 14px; padding: 2px 6px; font-family: system-ui, sans-serif; }
 
   .submit-wrap { text-align: center; margin: 36px 0 8px; }
-  #submit { font-size: 34px; padding: 18px 90px; border: 0; border-radius: 16px; background: #2e7d32; color: #fff; cursor: pointer; font-family: inherit; }
-  .locked #submit { background: #9e9e9e; }
+  .submit { font-size: 34px; padding: 18px 90px; border: 0; border-radius: 16px; background: #2e7d32; color: #fff; cursor: pointer; font-family: inherit; }
+  .locked .submit { background: #9e9e9e; }
 
   /* 大視窗（注音鍵盤、成績） */
   .overlay { position: fixed; inset: 0; z-index: 100; background: rgba(0, 0, 0, .45); display: flex; align-items: center; justify-content: center; }
@@ -98,6 +105,20 @@
   .pad-keys button:active { background: #bbdefb; }
   .pad-keys.tones button { width: 96px; background: #fff3e0; font-family: system-ui, sans-serif; font-weight: bold; }
   .pad-keys.tones button.on { background: #ffb74d; border-color: #e65100; }
+  .pad-modes { display: flex; gap: 8px; margin-bottom: 12px; font-family: system-ui, sans-serif; }
+  .pad-modes button { flex: 1; font-size: 22px; padding: 10px; border-radius: 10px; border: 2px solid #999; background: #fff; cursor: pointer; }
+  .pad-modes button.on { background: #1565c0; border-color: #1565c0; color: #fff; }
+  /* 手寫：左邊寫字格、右邊候選字 */
+  .hw { display: flex; gap: 14px; margin-bottom: 12px; }
+  .hw-board { position: relative; width: 340px; height: 340px; flex: none; border: 3px solid #1565c0; border-radius: 12px; touch-action: none;
+    background: linear-gradient(#e3f2fd, #e3f2fd) center / 2px 100% no-repeat, linear-gradient(#e3f2fd, #e3f2fd) center / 100% 2px no-repeat, #fff; }
+  .hw-board canvas { width: 100%; height: 100%; display: block; }
+  .hw-side { flex: 1; display: flex; flex-direction: column; gap: 10px; }
+  .hw-hint { font-size: 18px; color: #666; font-family: system-ui, sans-serif; }
+  .hw-cands { display: flex; flex-wrap: wrap; gap: 10px; }
+  .hw-cands button { font: inherit; font-size: 46px; width: 84px; height: 84px; border-radius: 12px; border: 2px solid #999; background: #f5f5f5; cursor: pointer; padding: 0; }
+  .hw-cands button:first-child { border-color: #1565c0; background: #e3f2fd; }
+  .hw-side .hw-clear { font-size: 22px; padding: 10px; border-radius: 10px; border: 2px solid #999; background: #fff; cursor: pointer; font-family: system-ui, sans-serif; margin-top: auto; }
   .pad-actions { display: flex; gap: 12px; justify-content: flex-end; font-family: system-ui, sans-serif; }
   .pad-actions button { font-size: 24px; padding: 12px 28px; border-radius: 10px; border: 2px solid #999; background: #fff; cursor: pointer; }
   .pad-actions .ok { background: #1565c0; border-color: #1565c0; color: #fff; font-weight: bold; padding: 12px 56px; }
@@ -106,6 +127,7 @@
   .result button { font-size: 28px; padding: 12px 60px; border-radius: 12px; border: 0; background: #1565c0; color: #fff; cursor: pointer; }
 
   @media (max-width: 840px) { .page { width: auto; margin: 0; } }
+  @media (max-height: 900px) { .pad-preview { font-size: 56px; } .hw-board { width: 290px; height: 290px; } }
   @media print {
     body { background: #fff; }
     .page { margin: 0; padding: 0; width: auto; min-height: 0; }
@@ -115,16 +137,29 @@
 </head>
 <body>
 <div class="toolbar">
+  <div class="tabs" id="tabs"></div>
   <button id="clear">清除作答</button>
   <button onclick="window.print()">列印</button>
 </div>
-<div class="page" id="page"></div>
+<div id="pages"></div>
 
 <!-- 注音鍵盤 -->
 <div class="overlay" id="pad" hidden>
   <div class="panel">
     <div class="pad-preview" id="pad-preview"></div>
+    <div class="pad-modes" id="pad-modes">
+      <button data-mode="keys">⌨ 鍵盤</button>
+      <button data-mode="hw">✍ 手寫</button>
+    </div>
     <div id="pad-syms"></div>
+    <div class="hw" id="pad-hw">
+      <div class="hw-board"><canvas id="hw-canvas"></canvas></div>
+      <div class="hw-side">
+        <div class="hw-hint">在左邊寫一個注音符號，再點下面的字。</div>
+        <div class="hw-cands" id="hw-cands"></div>
+        <button class="hw-clear" data-hw="clear">重寫</button>
+      </div>
+    </div>
     <div class="pad-keys tones" id="pad-tones"></div>
     <div class="pad-actions">
       <button data-pad="back">⌫ 刪除</button>
@@ -143,10 +178,27 @@
   </div>
 </div>
 
-<script src="questions.js"></script>
+<!-- 每個檔案是一份試卷，依載入順序排在上方的切換按鈕 -->
+<script src="questions1.js"></script>
+<script src="questions2.js"></script>
+<script src="questions3.js"></script>
+<script src="hw-templates.js"></script>
+<script src="handwriting.js"></script>
 <script>
 const TONES = 'ˊˇˋ';
 const CIRCLED = '①②③④⑤⑥';
+
+// 聲調符號畫成 SVG（顏色跟著文字顏色走）
+const TONE_PATH = {
+  'ˊ': '<path d="M2.5 8 L5.5 2"/>',
+  'ˇ': '<path d="M1.5 3 L4 7.5 L6.5 3"/>',
+  'ˋ': '<path d="M2.5 2 L5.5 8"/>',
+  '˙': '<circle cx="4" cy="5" r="1.4" fill="currentColor" stroke="none"/>',
+  'ˉ': '<path d="M1.5 5 L6.5 5"/>',
+};
+const toneSVG = t => TONE_PATH[t]
+  ? `<svg class="tn" viewBox="0 0 8 10" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">${TONE_PATH[t]}</svg>`
+  : '';
 
 function parseZy(z) {
   const light = z.includes('˙');
@@ -168,10 +220,10 @@ function zy(z, blank = -1) {
   const syms = p.syms.map((s, i) => i === blank
     ? `<span class="zy-s zy-blank"><span class="ans">${s}</span></span>`
     : `<span class="zy-s">${s}</span>`).join('');
-  const light = p.light && blank !== 'tone' ? '<span class="zy-light">˙</span>' : '';
+  const light = p.light && blank !== 'tone' ? `<span class="zy-light">${toneSVG('˙')}</span>` : '';
   const tone = blank === 'tone'
-    ? `<span class="zy-tone tone-box" data-act="fill" data-mode="tone" data-answer="${p.light ? '˙' : p.tone}" data-base="${p.syms.join('')}"><span class="ans">${p.light ? '˙' : p.tone}</span><span class="user"></span></span>`
-    : `<span class="zy-tone">${p.tone}</span>`;
+    ? `<span class="zy-tone tone-box" data-act="fill" data-mode="tone" data-answer="${p.light ? '˙' : p.tone}" data-base="${p.syms.join('')}"><span class="ans">${toneSVG(p.light ? '˙' : p.tone)}</span><span class="user"></span></span>`
+    : `<span class="zy-tone">${toneSVG(p.tone)}</span>`;
   return `<span class="zy"><span class="zy-col">${light}${syms}</span>${tone}</span>`;
 }
 
@@ -295,10 +347,12 @@ const grade = {
 grade.pickPic = grade.choice;
 grade.wordBlank = grade.sentence = grade.toneSentence = grade.fill;
 
-const QUESTIONS = [];   // { it, el }
-
-function build() {
-  const E = window.EXAM;
+// 每份試卷一個 .page，各自記住題目（page._questions）、作答與交卷狀態（.locked）
+function build(E) {
+  const page = document.createElement('div');
+  page.className = 'page';
+  page.hidden = true;
+  const QUESTIONS = page._questions = [];   // { it, el }
   let n = 0;
   const sections = E.sections.map(sec => `
     <h2${sec.sub ? ' class="sub"' : ''}>${ruby(sec.title)}</h2>
@@ -309,21 +363,45 @@ function build() {
       return `<div class="q${wide ? ' wide' : ''}" data-q="${n++}"><span class="q-no">${n}.</span>${body}</div>`;
     }).join('')}</div>` : ''}`).join('');
 
-  document.getElementById('page').innerHTML = `
+  page.innerHTML = `
     <h1>${ruby(E.title)}</h1>
     <div class="info">
       <span>${ruby('年(ㄋㄧㄢˊ)班(ㄅㄢ)')}：<span class="line"></span></span>
       <span>${ruby('座(ㄗㄨㄛˋ)號(ㄏㄠˋ)')}：<span class="line"></span></span>
       <span>${ruby('姓(ㄒㄧㄥˋ)名(ㄇㄧㄥˊ)')}：<span class="line"></span></span>
-      <span>${ruby('分(ㄈㄣ)數(ㄕㄨˋ)')}：<span class="line" id="score-line"></span></span>
+      <span>${ruby('分(ㄈㄣ)數(ㄕㄨˋ)')}：<span class="line score-line"></span></span>
     </div>
     ${sections}
-    <div class="submit-wrap"><button id="submit">${ruby('交(ㄐㄧㄠ)卷(ㄐㄩㄢˋ)')}</button></div>`;
-  document.querySelectorAll('.q').forEach(el => { QUESTIONS[el.dataset.q].el = el; });
+    <div class="submit-wrap"><button class="submit">${ruby('交(ㄐㄧㄠ)卷(ㄐㄩㄢˋ)')}</button></div>`;
+  page.querySelectorAll('.q').forEach(el => { QUESTIONS[el.dataset.q].el = el; });
+  document.getElementById('pages').append(page);
+  return page;
 }
 
-build();
-if (new URLSearchParams(location.search).has('answers')) document.body.classList.add('show-answers');
+const PAGES = window.EXAMS.map(build);
+const curPage = () => PAGES.find(p => !p.hidden);
+
+// ---- 切換試卷（網址 ?exam=2 可直接開第 2 份；切換時作答會保留） ----
+const tabs = document.getElementById('tabs');
+tabs.innerHTML = window.EXAMS.map((E, k) => `<button data-k="${k}">${E.name}</button>`).join('');
+function showExam(k) {
+  PAGES.forEach((p, i) => { p.hidden = i !== k; });
+  tabs.querySelectorAll('button').forEach((b, i) => b.classList.toggle('on', i === k));
+  document.title = `注音符號測驗 - ${window.EXAMS[k].name}`;
+  const url = new URL(location);
+  url.searchParams.set('exam', k + 1);
+  history.replaceState(null, '', url);
+  scrollTo(0, 0);
+}
+tabs.addEventListener('click', e => {
+  const b = e.target.closest('button');
+  if (b) showExam(Number(b.dataset.k));
+});
+
+const params = new URLSearchParams(location.search);
+const startExam = Number(params.get('exam')) - 1;
+showExam(startExam >= 0 && startExam < PAGES.length ? startExam : 0);
+if (params.has('answers')) document.body.classList.add('show-answers');
 
 // ---- 連連看：每個 .match 記住 links（左 → 右）與目前選到的那一端 ----
 function drawLinks(m) {
@@ -352,6 +430,7 @@ const SYM_GROUPS = ['ㄅㄆㄇㄈㄉㄊㄋㄌㄍㄎㄏㄐㄑㄒㄓㄔㄕㄖㄗ�
 const pad = document.getElementById('pad');
 let padBox = null;                       // 目前在填的框
 let padCur = { syms: [], tone: '' };     // tone: '' 一聲、'ˊ' 'ˇ' 'ˋ'、'˙' 輕聲
+let padInput = 'keys';                   // 'keys' 鍵盤、'hw' 手寫（記住上次的選擇）
 
 document.getElementById('pad-syms').innerHTML = SYM_GROUPS.map(g =>
   `<div class="pad-keys">${[...g].map(s => `<button data-sym="${s}">${s}</button>`).join('')}</div>`).join('');
@@ -360,10 +439,13 @@ const padValue = () => (padCur.tone === '˙' ? '˙' : '') + padCur.syms.join('')
 
 function padRender() {
   const tone = padBox.dataset.mode === 'tone';
-  document.getElementById('pad-syms').hidden = tone;
+  document.getElementById('pad-modes').hidden = tone;
+  document.getElementById('pad-syms').hidden = tone || padInput !== 'keys';
+  document.getElementById('pad-hw').hidden = tone || padInput !== 'hw';
+  document.querySelectorAll('#pad-modes button').forEach(b => b.classList.toggle('on', b.dataset.mode === padInput));
   const tones = tone ? ['ˊ', 'ˇ', 'ˋ', '˙'] : ['', 'ˊ', 'ˇ', 'ˋ', '˙'];
   document.getElementById('pad-tones').innerHTML = tones.map(t =>
-    `<button data-tone="${t}" class="${t === padCur.tone ? 'on' : ''}">${t || 'ˉ'}</button>`).join('');
+    `<button data-tone="${t}" class="${t === padCur.tone ? 'on' : ''}">${toneSVG(t || 'ˉ')}</button>`).join('');
   const preview = tone
     ? zy((padCur.tone === '˙' ? '˙' : '') + padBox.dataset.base + (TONES.includes(padCur.tone) ? padCur.tone : ''))
     : zy(padValue());
@@ -377,13 +459,15 @@ function padOpen(box) {
     ? { syms: [], tone: box.dataset.val ?? '' }
     : { syms: p.syms, tone: p.light ? '˙' : p.tone };
   pad.hidden = false;
+  hwClear();
   padRender();
+  if (padInput === 'hw') hwFit();
 }
 
 function padCommit() {
   const val = padBox.dataset.mode === 'tone' ? padCur.tone : (padCur.syms.length ? padValue() : '');
   if (val) padBox.dataset.val = val; else delete padBox.dataset.val;
-  padBox.querySelector('.user').innerHTML = padBox.dataset.mode === 'tone' ? val : (val ? zy(val) : '');
+  padBox.querySelector('.user').innerHTML = padBox.dataset.mode === 'tone' ? toneSVG(val) : (val ? zy(val) : '');
   pad.hidden = true;
 }
 
@@ -391,7 +475,9 @@ pad.addEventListener('click', e => {
   if (e.target === pad) { pad.hidden = true; return; }     // 點視窗外面＝取消
   const b = e.target.closest('button');
   if (!b) return;
-  if (b.dataset.sym && padCur.syms.length < 3) padCur.syms.push(b.dataset.sym);
+  if (b.dataset.mode) { padInput = b.dataset.mode; padRender(); if (padInput === 'hw') { hwFit(); HW.warmUp(); } return; }
+  if (b.dataset.hw === 'clear') { hwClear(); return; }
+  if (b.dataset.sym && padCur.syms.length < 3) { padCur.syms.push(b.dataset.sym); hwClear(); }
   if (b.dataset.tone !== undefined) padCur.tone = b.dataset.tone;
   if (b.dataset.pad === 'back') {
     if (padBox.dataset.mode === 'tone' || !padCur.syms.length) padCur.tone = '';
@@ -402,10 +488,66 @@ pad.addEventListener('click', e => {
   padRender();
 });
 
+// ---- 手寫板 ----
+const hwCanvas = document.getElementById('hw-canvas');
+const hwCtx = hwCanvas.getContext('2d');
+let hwStrokes = [];
+let hwTimer = null;
+
+// 依實際大小設定畫布解析度（平板高解析度螢幕才不會糊）
+function hwFit() {
+  const r = hwCanvas.getBoundingClientRect();
+  const dpr = window.devicePixelRatio || 1;
+  hwCanvas.width = r.width * dpr;
+  hwCanvas.height = r.height * dpr;
+  hwCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  hwRedraw();
+}
+function hwRedraw() {
+  hwCtx.clearRect(0, 0, hwCanvas.width, hwCanvas.height);
+  hwCtx.lineWidth = 10;
+  hwCtx.lineCap = hwCtx.lineJoin = 'round';
+  hwCtx.strokeStyle = '#000';
+  for (const st of hwStrokes) {
+    hwCtx.beginPath();
+    st.forEach((p, i) => i ? hwCtx.lineTo(p.x, p.y) : hwCtx.moveTo(p.x, p.y));
+    if (st.length === 1) hwCtx.lineTo(st[0].x + .1, st[0].y);
+    hwCtx.stroke();
+  }
+}
+function hwClear() {
+  hwStrokes = [];
+  clearTimeout(hwTimer);
+  document.getElementById('hw-cands').innerHTML = '';
+  hwRedraw();
+}
+function hwRecognize() {
+  const cands = HW.recognize(hwStrokes, 5);
+  document.getElementById('hw-cands').innerHTML = cands.map(c => `<button data-sym="${c.sym}">${c.sym}</button>`).join('');
+}
+const hwPoint = e => { const r = hwCanvas.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; };
+hwCanvas.addEventListener('pointerdown', e => {
+  hwCanvas.setPointerCapture(e.pointerId);
+  clearTimeout(hwTimer);
+  hwStrokes.push([hwPoint(e)]);
+  hwRedraw();
+});
+hwCanvas.addEventListener('pointermove', e => {
+  if (!hwCanvas.hasPointerCapture(e.pointerId)) return;
+  hwStrokes[hwStrokes.length - 1].push(hwPoint(e));
+  hwRedraw();
+});
+hwCanvas.addEventListener('pointerup', () => {
+  clearTimeout(hwTimer);
+  hwTimer = setTimeout(hwRecognize, 400);   // 停筆一下才辨識，寫多筆畫不會被打斷
+});
+
 // ---- 作答 ----
-document.getElementById('page').addEventListener('click', e => {
-  if (e.target.closest('#submit')) { submit(); return; }
-  if (document.body.classList.contains('locked')) return;
+document.getElementById('pages').addEventListener('click', e => {
+  const page = e.target.closest('.page');
+  if (!page) return;
+  if (e.target.closest('.submit')) { submit(page); return; }
+  if (page.classList.contains('locked')) return;
   const t = e.target.closest('[data-act]');
   if (!t) return;
   const q = t.closest('.q');
@@ -435,31 +577,36 @@ document.getElementById('page').addEventListener('click', e => {
 
 // ---- 交卷、改分數 ----
 const result = document.getElementById('result');
-function submit() {
-  if (document.body.classList.contains('locked')) { result.hidden = false; return; }
-  const g = ({ it }) => grade[it.type];
-  const blank = QUESTIONS.filter(x => g(x) && !g(x).answered(x.el, x.it)).length;
-  if (blank && !confirm(`還有 ${blank} 題沒有寫，確定要交卷嗎？`)) return;
-  const right = QUESTIONS.filter(x => g(x)?.correct(x.el, x.it)).length;
-  const score = `${right} / ${QUESTIONS.length}`;
+function submit(page) {
+  const QUESTIONS = page._questions;
+  const score = () => page.querySelector('.score-line').textContent;
+  if (!page.classList.contains('locked')) {
+    const g = ({ it }) => grade[it.type];
+    const blank = QUESTIONS.filter(x => g(x) && !g(x).answered(x.el, x.it)).length;
+    if (blank && !confirm(`還有 ${blank} 題沒有寫，確定要交卷嗎？`)) return;
+    const right = QUESTIONS.filter(x => g(x)?.correct(x.el, x.it)).length;
+    page.querySelector('.score-line').textContent = `${right} / ${QUESTIONS.length}`;
+    page.classList.add('locked');
+  }
   document.getElementById('result-title').innerHTML = ruby('答(ㄉㄚˊ)對(ㄉㄨㄟˋ)');
-  document.getElementById('result-score').textContent = score;
-  document.getElementById('score-line').textContent = score;
-  document.body.classList.add('locked');
+  document.getElementById('result-score').textContent = score();
   result.hidden = false;
 }
 document.getElementById('result-close').onclick = () => { result.hidden = true; };
 
+// 只清除目前這份試卷
 document.getElementById('clear').onclick = () => {
-  if (!confirm('確定要清除所有作答嗎？')) return;
-  document.querySelectorAll('.picked').forEach(el => el.classList.remove('picked'));
-  document.querySelectorAll('.circled').forEach(el => el.classList.remove('circled'));
-  document.querySelectorAll('.user').forEach(el => { el.innerHTML = ''; });
-  document.querySelectorAll('[data-val]').forEach(el => { delete el.dataset.val; });
-  document.querySelectorAll('.match .sel').forEach(el => el.classList.remove('sel'));
-  document.querySelectorAll('.match').forEach(m => { m._links = new Map(); m._pending = null; drawLinks(m); });
-  document.getElementById('score-line').textContent = '';
-  document.body.classList.remove('locked');
+  const page = curPage();
+  const name = window.EXAMS[PAGES.indexOf(page)].name;
+  if (!confirm(`確定要清除「${name}」的所有作答嗎？`)) return;
+  page.querySelectorAll('.picked').forEach(el => el.classList.remove('picked'));
+  page.querySelectorAll('.circled').forEach(el => el.classList.remove('circled'));
+  page.querySelectorAll('.user').forEach(el => { el.innerHTML = ''; });
+  page.querySelectorAll('[data-val]').forEach(el => { delete el.dataset.val; });
+  page.querySelectorAll('.match .sel').forEach(el => el.classList.remove('sel'));
+  page.querySelectorAll('.match').forEach(m => { m._links = new Map(); m._pending = null; drawLinks(m); });
+  page.querySelector('.score-line').textContent = '';
+  page.classList.remove('locked');
 };
 </script>
 </body>
